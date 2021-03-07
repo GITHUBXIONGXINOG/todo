@@ -58,7 +58,7 @@
       <div class="passwd_wrap">
         <input
           type="text"
-          @blur="checkPwd2"
+          @keyup="checkPwd2"
           placeholder="请再次输入密码"
           v-model="password2"
           minlength="6"
@@ -119,10 +119,29 @@ export default {
       }
       let result = await reqPwdLogin({account,password})
        if (result.status===1000) {
-             console.log("登录成功");
+            //  console.log("登录成功");
              const user = result.data
              this.$store.dispatch('recordUser',user)
+             this.$message({//ele注册弹窗
+             message: '登录成功!',
+             type: 'success'
+            });
+            this.$router.replace('/index')
+         } else if (result.status===1001) {
+            this.$message({//ele注册弹窗
+             message: '密码错误,请重新输入!',
+             type: 'warning'
+            });
+            this.password = ''
+         } else if(result.status===1002) {
+            this.$message({//ele注册弹窗
+             message: '该账号不存在,请重新输入!',
+             type: 'error'
+            });
+            this.password = ''
+            this.account = ''
          }
+        //  console.log(result);
     //   console.log(result.data[0].account);
     },
     //注册
@@ -131,9 +150,24 @@ export default {
         const { account, password } = this;
          let result = await reqPwdRegist({account,password})
          if (result.status===1000) {
-             console.log("注册成功");
+            //  console.log("注册成功");
+             this.$message({//ele注册弹窗
+             message: '恭喜你，注册成功!',
+             type: 'success'
+            });
+            this.$router.replace('/login')
+         } else if (result.status===1001) {
+               this.$message({
+                message: '该用户名已被注册,请重新输入!',
+                type: 'warning'
+             });
+
          }
-         console.log(result);
+        //  console.log(result);
+        //清空输入框
+        this.account = ''
+        this.password = ''
+        this.password2 = ''
       }
     },
     showAlert(alertText) {
