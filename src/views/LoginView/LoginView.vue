@@ -1,6 +1,6 @@
 <template>
     <div class="loginView">
-        <login-panel title="登入" :order="1"/>
+        <login-panel :order="1"/>
     </div>
 </template>
 <script>

@@ -1,23 +1,84 @@
 <template>
   <div class="loginPanel">
-      <img src="@/assets/img/microsoft_logo.svg" alt="" class="mic_log">
-    <h2>{{ title }}</h2>
-    <input type="text" placeholder="用户名" />
-    <div class="moreOpea" v-show="order">
-      沒有账户吗?
-      <router-link to="/regist">立即创建新账户!</router-link>
+    <!-- <img src="@/assets/img/microsoft_logo.svg" alt="" class="mic_log" /> -->
+    <div class="login_show" v-if="order">
+      <h2>登入</h2>
+      <input
+        type="text"
+        placeholder="用户名"
+        v-model="account"
+        autofocus
+        maxlength="20"
+      />
+      <input
+        type="password"
+        placeholder="密码"
+        v-model="password"
+        v-if="!showPwd"
+        maxlength="20"
+      />
+      <input
+        type="text"
+        placeholder="密码"
+        v-model="password"
+        v-else-if="showPwd"
+        maxlength="20"
+      />
+      <p>
+        <input type="checkbox" id="showPw" @click="showPwd = !showPwd" />
+        <label for="showPw">显示密码</label>
+      </p>
+      <div class="moreOpea">
+        沒有账户吗?
+        <router-link to="/regist">立即创建新账户!</router-link>
+      </div>
+
+      <button @click.prevent="clickToLogin">登录</button>
     </div>
-    <button>下一步</button>
+    <div class="regist_show" v-else>
+      <h2>建立账户</h2>
+      <input
+        type="text"
+        placeholder="请输入用户名"
+        v-model="account"
+        maxlength="20"
+        autofocus
+      />
+      <div class="passwd_wrap">
+        <input
+          type="text"
+          @blur="checkPwd"
+          placeholder="请输入密码(6-20位且只能包含字母,数字,下划线)"
+          v-model="password"
+          minlength="6"
+          maxlength="20"
+        />
+        <font id="passwordMSG"></font>
+      </div>
+      <div class="passwd_wrap">
+        <input
+          type="text"
+          @blur="checkPwd2"
+          placeholder="请再次输入密码"
+          v-model="password2"
+          minlength="6"
+          maxlength="20"
+        /><font id="passwordMSG2"></font>
+      </div>
+
+      <router-link to="/login" class="back_login"
+        >已有账户,前往登录!</router-link
+      >
+
+      <button @click.prevent="clickToRegist">注册</button>
+    </div>
+    <!-- <AlertTip :alertText="alertText" v-show="alertShow" @closeTip="closeTip"/> -->
   </div>
 </template>
 <script>
+// import {reqPwdRegist} from '../../utils/api'
 export default {
   props: {
-    title: {
-      //标题
-      typeof: String,
-      required: true,
-    },
     order: {
       //序列 0为注册,1为登录
       typeof: Number,
@@ -25,17 +86,74 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      account: "", //账户名
+      password: "", //密码
+      password2: "", //确认密码
+      showPwd: false, //显示密码
+      FlagPwd: false, //密码验证
+      FlagPwd2: false, //重复密码验证
+      timeoutID: "", //定时器id
+    };
   },
-  methods: {},
-  watch: {
- 
+  methods: {
+    //   //登录
+      clickToLogin(){
+          //前台表单验证
+         const {account, password} = this
+         if (!account) {
+             //用户名必须指定
+             this.showAlert('用户名必须指定')
+             return
+         }else if (!password) {
+              //密码必须指定
+             this.showAlert('密码必须指定')
+             return
+         }
+      },
+      //注册
+      async clickToRegist(){
+          if (this.FlagPwd&&this.FlagPwd2) {
+              console.log('验证通过');
+
+          }
+      },
+    //验证密码格式
+    checkPwd() {
+      var passwordMSG = document.getElementById("passwordMSG");
+
+      var reg = /^[a-zA-Z0-9_]\w{5,19}$/;
+      var flag = reg.test(this.password);
+      if (!flag) {
+        passwordMSG.innerHTML = "<font color='red'>密码格式有误！</font>";
+        this.FlagPwd = false;
+      } else {
+        passwordMSG.innerHTML = "<font color='green'><b>√</b></font>";
+        this.FlagPwd = true;
+      }
+    },
+    //验证密码重复
+    checkPwd2() {
+      var passwordMSG2 = document.getElementById("passwordMSG2");
+      clearTimeout(this.timeoutID);
+      this.timeoutID = setTimeout(() => {
+        if (this.password == this.password2) {
+          passwordMSG2.innerHTML = "<font color='green'><b>√</b></font>";
+          this.FlagPwd2 = true;
+        } else {
+          passwordMSG2.innerHTML = "<font color='red'>请检查密码！</font>";
+          this.FlagPwd2 = false;
+        }
+      }, 500);
+    },
   },
+  watch: {},
 };
 </script>
 <style scoped lang="scss">
 //登录面板
-.loginPanel {
+.login_show,
+.regist_show {
   background: #ffffff;
   width: 440px;
   height: 300px;
@@ -45,32 +163,58 @@ export default {
   flex-direction: column;
   justify-content: space-around;
   box-sizing: border-box;
-  padding: 30px;
-  //log
-  .mic_log {
-      width:  120px;
+  padding: 30px 40px;
+  //   position: relative;
+  //显示密码按钮
+  > P {
+    display: flex;
+    align-items: center;
+    line-height: 22px;
   }
 }
 //标题
-h2{
-    font-size: 24px;
-    font-weight: bold;
+h2 {
+  font-size: 24px;
+  font-weight: bold;
 }
 //输入
-input{
-    border-bottom: 1px solid #000;
-    height: 20px;
-    font-size: 15px;
-    // margin: 20px 0;
-    padding: 5px 0;
+input {
+  border-bottom: 1px solid #000;
+  height: 20px;
+  font-size: 15px;
+  padding: 5px 0;
+  &:focus {
+    border-color: #0067b8;
+  }
+}
+
+.back_login {
+  width: 40%;
 }
 //按钮
-button{
-    width: 108px;
-    height: 32px;
-    color: #ffffff;
-    background: #0067B8;
-    margin-top: 20px;
-    align-self: flex-end;//设置按钮位置
+button {
+  width: 108px;
+  height: 32px;
+  color: #ffffff;
+  background: #0067b8;
+  margin-top: 10px;
+  align-self: flex-end; //设置按钮位置
+}
+.passwd_wrap {
+  // border: 1px solid red;
+  position: relative;
+  display: flex;
+  align-items: center;
+  input {
+    width: 100%;
+  }
+}
+
+//密码验证
+#passwordMSG,
+#passwordMSG2 {
+  // border: 1px solid red;
+  position: absolute;
+  right: 10px;
 }
 </style>

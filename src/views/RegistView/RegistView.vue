@@ -1,6 +1,6 @@
 <template>
     <div class="loginView">
-        <login-panel title="创建账户" :order="0"/>
+        <login-panel :order="0"/>
     </div>
 </template>
 <script>
