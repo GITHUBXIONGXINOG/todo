@@ -72,11 +72,13 @@
 
       <button @click.prevent="clickToRegist">注册</button>
     </div>
-    <!-- <AlertTip :alertText="alertText" v-show="alertShow" @closeTip="closeTip"/> -->
+    <AlertTip :alertText="alertText" v-show="alertShow" @closeTip="closeTip" />
   </div>
 </template>
 <script>
-// import {reqPwdRegist} from '../../utils/api'
+import {reqPwdLogin,reqPwdRegist} from '../../utils/api'
+import AlertTip from "../../components/AlertTip/AlertTip.vue";
+
 export default {
   props: {
     order: {
@@ -84,6 +86,9 @@ export default {
       typeof: Number,
       required: true,
     },
+  },
+  components: {
+    AlertTip,
   },
   data() {
     return {
@@ -94,30 +99,52 @@ export default {
       FlagPwd: false, //密码验证
       FlagPwd2: false, //重复密码验证
       timeoutID: "", //定时器id
+      alertText: "", // 提示文本
+      alertShow: false, // 是否显示警告框
     };
   },
   methods: {
-    //   //登录
-      clickToLogin(){
-          //前台表单验证
-         const {account, password} = this
-         if (!account) {
-             //用户名必须指定
-             this.showAlert('用户名必须指定')
-             return
-         }else if (!password) {
-              //密码必须指定
-             this.showAlert('密码必须指定')
-             return
+    //登录
+    async clickToLogin() {
+      //前台表单验证
+      const { account, password } = this;
+      if (!account) {
+        //用户名必须指定
+        this.showAlert("用户名必须指定");
+        return;
+      } else if (!password) {
+        //密码必须指定
+        this.showAlert("密码必须指定");
+        return;
+      }
+      let result = await reqPwdLogin({account,password})
+       if (result.status===1000) {
+             console.log("登录成功");
+             const user = result.data
+             this.$store.dispatch('recordUser',user)
          }
-      },
-      //注册
-      async clickToRegist(){
-          if (this.FlagPwd&&this.FlagPwd2) {
-              console.log('验证通过');
-
-          }
-      },
+    //   console.log(result.data[0].account);
+    },
+    //注册
+    async clickToRegist() {
+      if (this.FlagPwd && this.FlagPwd2) {
+        const { account, password } = this;
+         let result = await reqPwdRegist({account,password})
+         if (result.status===1000) {
+             console.log("注册成功");
+         }
+         console.log(result);
+      }
+    },
+    showAlert(alertText) {
+      this.alertShow = true;
+      this.alertText = alertText;
+    },
+    // 关闭警告框
+    closeTip() {
+      this.alertShow = false;
+      this.alertText = "";
+    },
     //验证密码格式
     checkPwd() {
       var passwordMSG = document.getElementById("passwordMSG");
@@ -147,6 +174,7 @@ export default {
       }, 500);
     },
   },
+
   watch: {},
 };
 </script>
