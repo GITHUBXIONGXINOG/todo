@@ -13,7 +13,24 @@ const routes = [
   {
     path: '/home',
     name: "Home",
-    component: HomeView
+    component: HomeView,
+    children:[
+      {
+        path: 'tasks',
+        name: 'Tasks',
+        component: ()=> import('../views/Tasks/Tasks.vue') 
+      },
+      {
+        path: 'myday',
+        name: 'Myday',
+        component: () => import('../views/Myday/Myday.vue')
+      },
+      {
+        path: 'important',
+        name: 'Important',
+        component: () => import('../views/Important/Important.vue')
+      },
+    ]
   },
   {
     path: '/login',
@@ -25,6 +42,7 @@ const routes = [
     name: 'Regist',
     component: () => import('../views/RegistView/RegistView')
   },
+
  
  
 ]

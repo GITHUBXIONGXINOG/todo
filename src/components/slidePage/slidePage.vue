@@ -5,29 +5,42 @@
         <use xlink:href="#icon-caidan"></use>
       </svg>
     </div>
-    <router-link to="/myday" class="myday">
+    <router-link to="/home/myday" class="myday">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-taiyang"></use>
       </svg>
       <span>Myday</span>
     </router-link>
-    <router-link to="/important" class="important">
+    <router-link to="/home/important" class="important">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-xingxing1"></use>
       </svg>
       <span>Important</span>
     </router-link>
-    <router-link to="/tasks" class="tasks">
+    <router-link to="/home/tasks" class="tasks">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-fangzi"></use>
       </svg>
       <span>Tasks</span>  
       </router-link>
   </div>
-  <router-view></router-view>
+ <!--  -->
 </template>
 <script>
- 
+ export default {
+   data(){
+     return{
+       title:'',
+     }
+   },
+   methods: {
+     setTitle(event){
+       if (event.target.text) {
+          this.title = event.target.text;
+       }
+     }
+   }
+ }
 </script>
 <style scoped lang="scss">
 .slidePage {
@@ -56,9 +69,12 @@
     &:hover {
       cursor: pointer;
     }
+    width: 20px;
+    height: 100%;
   }
   .show-change {
     margin: 20px 0;
+    height: 20px;
   }
 }
 </style>

@@ -26,25 +26,32 @@
     </div>
     <!-- 右侧设置区域 -->
     <div class="right_part">
+      <!-- 设置按钮 -->
       <div class="settingWrap">
         <svg class="icon setting" aria-hidden="true">
           <use xlink:href="#icon-shezhi"></use>
         </svg>
       </div>
-
-      <div class="userInfoWrap">
+      <!-- 个人信息 -->
+      <div class="userInfoWrap" @click="showUserPanel=!showUserPanel" :class="{clickStyle:showUserPanel}">
         <svg class="icon userInfo" aria-hidden="true">
           <use xlink:href="#icon-yonghu1"></use>
         </svg>
       </div>
+        <!-- 个人信息面板 -->
+         <div class="user-info-panel" v-show="showUserPanel">
+          <user-panel />
+        </div>
     </div>
   </div>
 </template>
 <script>
+import UserPanel from '../Panel/UserPanel.vue';
 export default {
   data() {
     return {
       searchInput: "", //输入
+      showUserPanel:false,//显示个人信息面板
     };
   },
   methods: {
@@ -53,6 +60,9 @@ export default {
       this.searchInput = "";
     },
   },
+  components:{
+    UserPanel
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -135,6 +145,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  position: relative;
 }
 
 //设置
@@ -151,9 +162,7 @@ export default {
 }
 //设置图标
 .setting {
-  font-size: 20px;
   height: 50%;
-  color: #ffffff;
 }
 //用户
 .userInfoWrap {
@@ -176,6 +185,7 @@ export default {
     border-radius: 50%;
     z-index: 1;
   }
+  
 }
 //图标背景
 .userInfoWrap::after {
@@ -194,4 +204,26 @@ export default {
   z-index: 2;
   height: 50%;
 }
+//点击后显示样式
+.clickStyle{
+  background: #005a9e;
+  position: relative;
+  &::after{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    position:absolute;
+    bottom: 0;
+  }
+}
+//用户信息面板
+.user-info-panel{
+  width: 320px;
+  height: 180px;
+  position: absolute;
+  top: 50px;
+  right: 0px;
+}
+
 </style>

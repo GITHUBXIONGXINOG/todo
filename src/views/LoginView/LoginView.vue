@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import LoginPanel from '../../components/LoginPanel/LoginPanel.vue'
+import LoginPanel from '../../components/Panel/LoginPanel.vue'
 export default {
      components:{
         LoginPanel
