@@ -42,21 +42,29 @@ import CreateTask from '../task/createTask.vue'
   flex: 1;
   width: 100%;
   position: relative;
+  //标题
   nav{
     color: #0078d7;
     font-size: 25px;
     margin: 12px 0;
   }
+  //背景
   .page-background {
     position: fixed;
     top: 100px;
-    width: 80%;
-
+    width: 79%;
+    z-index: -100;
     li {
       height: 52px;
       border-bottom: 2px solid #e5e5e5;
       margin: 0 30px 0 0;
     }
   }
+
+  .list{
+    overflow: auto;
+  }
+
+
 }
 </style>
