@@ -126,7 +126,9 @@ export default {
              message: '登录成功!',
              type: 'success'
             });
-            this.$router.replace('/index')
+            //存储user信息
+            window.localStorage.setItem("token",result.data[0].account)
+            this.$router.push({path:'/home'})
          } else if (result.status===1001) {
             this.$message({//ele注册弹窗
              message: '密码错误,请重新输入!',
