@@ -67,22 +67,22 @@ const router = new VueRouter({
   }
 }) */
 
-router.beforeEach((to, from, next) => {
-  //如果cookie存在
-  if (store.state.userInfo.length&&document.cookie) {
-    if (to.path === '/login' || to.path === '/regist') {
-      next('/home')
-    }
-    next()
-  } else {//cookie不存在
-    if (to.path === '/login' || to.path === '/regist') {
-      next()
-    } else {
-      next('/login')
-    }
-  }
+// router.beforeEach((to, from, next) => {
+//   //如果cookie存在
+//   if (store.state.userInfo.length&&document.cookie) {
+//     if (to.path === '/login' || to.path === '/regist') {
+//       next('/home')
+//     }
+//     next()
+//   } else {//cookie不存在
+//     if (to.path === '/login' || to.path === '/regist') {
+//       next()
+//     } else {
+//       next('/login')
+//     }
+//   }
 
-})
+// })
 
 
 export default router

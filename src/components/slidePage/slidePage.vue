@@ -21,26 +21,57 @@
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-fangzi"></use>
       </svg>
-      <span>Tasks</span>  
-      </router-link>
+      <span>Tasks</span>
+    </router-link>
+    <nav class="nav-wrap">
+      <ul class="nav-ul">
+        <li>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-caidan1"></use>
+          </svg>
+          <span>test</span>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-caidan1"></use>
+          </svg>
+          <span>test</span>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-caidan1"></use>
+          </svg>
+          <span>test</span>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-caidan1"></use>
+          </svg>
+          <span>test</span>
+        </li>
+      </ul>
+      <create-list />
+    </nav>
   </div>
- <!--  -->
+  <!--  -->
 </template>
 <script>
- export default {
-   data(){
-     return{
-       title:'',
-     }
-   },
-   methods: {
-     setTitle(event){
-       if (event.target.text) {
-          this.title = event.target.text;
-       }
-     }
-   }
- }
+import createList from "../task/createList.vue";
+export default {
+  components: { createList },
+  data() {
+    return {
+      title: "",
+    };
+  },
+  methods: {
+    setTitle(event) {
+      if (event.target.text) {
+        this.title = event.target.text;
+      }
+    },
+  },
+};
 </script>
 <style scoped lang="scss">
 .slidePage {
@@ -75,6 +106,27 @@
   .show-change {
     margin: 20px 0;
     height: 20px;
+  }
+  //自定义清单
+  .nav-wrap {
+    border: 1px solid red;
+    margin: 20px 0 0 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    ul {
+      li {
+        border: 1px solid red;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        &:hover {
+          background: #fafafa;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
 </style>

@@ -28,7 +28,7 @@ export default {
     methods: {
       async signOut(){
         let result = await reqLogout()
-        console.log(result);
+        // console.log(result);
       }
     },
    

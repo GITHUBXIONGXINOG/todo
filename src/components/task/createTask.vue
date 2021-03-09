@@ -6,7 +6,7 @@
     <svg class="icon" aria-hidden="true" v-show="!changeIcon">
       <use xlink:href="#icon-danxuanxiangweixuanzhong"></use>
     </svg>
-    <input type="text" placeholder="Add a task" />
+    <input type="text" placeholder="Add a task"  />
   </div>
 </template>
 <script>
@@ -38,10 +38,10 @@ input {
   border: 1px solid redss;
   font-size: 16px;
   width: 100%;
-  height: 20px;
+  // height: 20px;
   padding: 17px 0 17px 30px;
-    border-bottom: 1px solid #bfc6d1;
-    padding-bottom: 16px;
+  border-bottom: 1px solid #bfc6d1;
+  // padding-bottom: 16px;
   &::-webkit-input-placeholder {
     /* WebKit browsers */
     color: #0078d7;
@@ -61,7 +61,7 @@ input {
   }
   &:focus {
     border-bottom: 1px solid #0078d7;
-    padding-bottom: 16px;
+    // padding-bottom: 16px;
     &::-webkit-input-placeholder {
       /* WebKit browsers */
       color: #bfc6d1;
