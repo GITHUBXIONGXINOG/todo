@@ -38,6 +38,8 @@ export default {
       height: 100%;
       box-shadow: 5px 10px 15px #ddd;
       animation: panelMove 0.1s;
+      z-index: 999;
+      position: relative;
     }
 
     

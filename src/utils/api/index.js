@@ -14,5 +14,6 @@ export const reqPwdLogin = ({account, password}) => ajax(BASE_URL+'/user/login',
 export const reqUserInfo = () => ajax(BASE_URL+'/userinfo')
 // 4、用户登出
 export const reqLogout = () => ajax(BASE_URL+'/logout')
-
+//传输task
+export const reqStorageTask = ({task,steps,today,pick,files,note}) => ajax(BASE_URL+'/task',{task,steps,today,pick,files,note},'POST')
 

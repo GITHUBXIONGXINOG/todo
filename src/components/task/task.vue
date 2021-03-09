@@ -16,11 +16,18 @@ export default {};
 .task {
   height: 52px;
   width: 97%;
-  border: 1px solid transparent;
-  // border: 1px solid red;
+//   border: 1px solid transparent;
+  border: 2px solid #e5e5e5;
+  border-left: none;
+  border-right: none;
+
+background-color: #fff;
+
+    //   border-bottom: 1px solid red;
 
   // position:absolute;
   // top: 50px;
+//   z-index: 10;
   display: flex;
   align-items: center;
   .icon {
