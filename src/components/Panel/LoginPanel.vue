@@ -46,7 +46,7 @@
       />
       <div class="passwd_wrap">
         <input
-          type="text"
+          type="password"
           @blur="checkPwd"
           placeholder="请输入密码(6-20位且只能包含字母,数字,下划线)"
           v-model="password"
@@ -57,7 +57,7 @@
       </div>
       <div class="passwd_wrap">
         <input
-          type="text"
+          type="password"
           @keyup="checkPwd2"
           placeholder="请再次输入密码"
           v-model="password2"

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/LoginView/LoginView'
 import HomeView from '../views/HomeView/HomeView'
+import store from '../store/index'
 Vue.use(VueRouter)
 
 const routes = [
@@ -68,7 +69,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   //如果cookie存在
-  if (document.cookie) {
+  if (store.state.userInfo.length&&document.cookie) {
     if (to.path === '/login' || to.path === '/regist') {
       next('/home')
     }

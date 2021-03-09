@@ -1,11 +1,14 @@
 <template>
   <div class="user_panel">
-    <router-link to="/login" @click="signOut" class="sign-out-button">Sign out</router-link>
+    <!-- <router-link to="/login" @click="signOut" class="sign-out-button">Sign out</router-link> -->
+    <div to="/login" @click="signOut" class="sign-out-button">Sign out</div>
+
     <h2>{{userInfo}}</h2>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import {reqLogout} from '../../utils/api'
 
 export default {
   data(){
@@ -23,9 +26,9 @@ export default {
 
   },
     methods: {
-      signOut(){
-        //  window.localStorage.setItem("token","")
-
+      async signOut(){
+        let result = await reqLogout()
+        console.log(result);
       }
     },
    
