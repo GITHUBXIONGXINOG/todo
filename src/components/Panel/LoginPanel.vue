@@ -78,7 +78,6 @@
 <script>
 import {reqPwdLogin,reqPwdRegist} from '../../utils/api'
 import AlertTip from "../../components/AlertTip/AlertTip.vue";
-
 export default {
   props: {
     order: {
@@ -127,6 +126,7 @@ export default {
              type: 'success'
             });
             //存储user信息
+            console.log(result);
             window.localStorage.setItem("token",result.data[0].account)
             this.$router.push({path:'/home'})
          } else if (result.status===1001) {
@@ -150,6 +150,10 @@ export default {
     async clickToRegist() {
       if (this.FlagPwd && this.FlagPwd2) {
         const { account, password } = this;
+        //生成随机数
+        // const salt = await bcrypt.genSalt(10)
+        //使用密码和随机数生成hash
+        // password = await bcrypt.hash(password,salt)
          let result = await reqPwdRegist({account,password})
          if (result.status===1000) {
             //  console.log("注册成功");
@@ -170,6 +174,9 @@ export default {
         this.account = ''
         this.password = ''
         this.password2 = ''
+        this.FlagPwd = false
+        this.FlagPwd2 = false
+
       }
     },
     showAlert(alertText) {
