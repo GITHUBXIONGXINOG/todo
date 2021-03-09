@@ -21,9 +21,9 @@
         <task />
       </li>
     </ul> -->
-    <ul class="page-background">
+    <!-- <ul class="page-background">
       <li v-for="(n, index) in tabelLength" :key="index"></li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 <script>
@@ -35,22 +35,14 @@ export default {
     return {
       tabelLength: 20,
       emojis: [
-        "😀 😁 😂 🤣 😃",
-        "😄 😅 😆 😉 😊",
-        "😫 😴 😌 😛 😜",
-       "😀 😁 😂 🤣 😃",
-              "😫 😴 😌 😛 😜",
-       "😀 😁 😂 🤣 😃",
-              "😫 😴 😌 😛 😜",
-       "😀 😁 😂 🤣 😃",
-              "😫 😴 😌 😛 😜",
-       "😀 😁 😂 🤣 😃",
-        
-             "😫 😴 😌 😛 😜",
-       "😀 😁 😂 🤣 😃",
-              "😫 😴 😌 😛 😜",
-       "😀 😁 😂 🤣 😃",
-        
+      //   "😀 😁 😂 🤣 😃",
+      //   "😄 😅 😆 😉 😊",
+      //   "😫 😴 😌 😛 😜",
+      //  "😀 😁 😂 🤣 😃",
+      //         "😫 😴 😌 😛 😜",
+      //  "😀 😁 😂 🤣 😃",
+      //         "😫 😴 😌 😛 😜",
+ 
       ],
     };
   },
@@ -110,17 +102,19 @@ export default {
     margin: 12px 0;
   }
   //背景
-  .page-background {
-    position: fixed;
-    top: 100px;
-    width: 79%;
-    z-index: -100;
-    li {
-      height: 52px;
-      border-bottom: 2px solid #e5e5e5;
-      margin: 0 30px 0 0;
-    }
-  }
+  // .page-background {
+  //   position: fixed;
+  //   top: 100px;
+  //   // width: 100%;
+  //   z-index: -100;
+  //   li {
+  //     height: 52px;
+  //     border-bottom: 2px solid #e5e5e5;
+  //     width: 90%;
+  //     // margin: 0 30px 0 0;
+
+  //   }
+  // }
 
   // .list {
   //   overflow: auto;
@@ -129,6 +123,7 @@ export default {
   .scroll-wrapper {
     // height: 400px;
     height: 600px;
+    width: 100%;
     position: relative;
     overflow: hidden;
     .scroll-item {

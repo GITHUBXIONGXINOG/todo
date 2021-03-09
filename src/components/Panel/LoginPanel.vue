@@ -117,18 +117,18 @@ export default {
         return;
       }
       let result = await reqPwdLogin({account,password})
+
        if (result.status===1000) {
             //  console.log("登录成功");
              const user = result.data
+             //dispath 调用action的异步方法,存储用户信息
              this.$store.dispatch('recordUser',user)
              this.$message({//ele注册弹窗
              message: '登录成功!',
              type: 'success'
             });
-            //存储user信息
-            console.log(result);
-            window.localStorage.setItem("token",result.data[0].account)
             this.$router.push({path:'/home'})
+
          } else if (result.status===1001) {
             this.$message({//ele注册弹窗
              message: '密码错误,请重新输入!',

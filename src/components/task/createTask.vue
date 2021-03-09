@@ -11,14 +11,12 @@
 </template>
 <script>
 export default {
-    data(){
-        return{
-            changeIcon:true,
-        }
-    },
-    methods: {
-        
-    }
+  data() {
+    return {
+      changeIcon: true,
+    };
+  },
+  methods: {},
 };
 </script>
 <style scoped lang="scss">
@@ -29,13 +27,12 @@ export default {
   top: 50px;
   display: flex;
   align-items: center;
-  .icon{
+  .icon {
     width: 20px;
     height: 20px;
     position: absolute;
     fill: #0078d7;
   }
-
 }
 input {
   border: 1px solid redss;
@@ -43,7 +40,8 @@ input {
   width: 100%;
   height: 20px;
   padding: 17px 0 17px 30px;
-
+    border-bottom: 1px solid #bfc6d1;
+    padding-bottom: 16px;
   &::-webkit-input-placeholder {
     /* WebKit browsers */
     color: #0078d7;
@@ -63,20 +61,16 @@ input {
   }
   &:focus {
     border-bottom: 1px solid #0078d7;
-     padding-bottom: 16px;
+    padding-bottom: 16px;
     &::-webkit-input-placeholder {
-    /* WebKit browsers */
-    color: #bfc6d1;
-  }
+      /* WebKit browsers */
+      color: #bfc6d1;
+    }
 
-  &::-moz-placeholder {
-    /* Mozilla Firefox 19+ */
-    color: #bfc6d1;
-  }
-
-
- 
-
+    &::-moz-placeholder {
+      /* Mozilla Firefox 19+ */
+      color: #bfc6d1;
+    }
   }
 }
 </style>

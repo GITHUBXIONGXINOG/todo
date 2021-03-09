@@ -14,11 +14,15 @@ const routes = [
     path: '/home',
     name: "Home",
     component: HomeView,
-    children:[
+    children: [
+      {
+        path: '/',
+        redirect: 'myday'
+      },
       {
         path: 'tasks',
         name: 'Tasks',
-        component: ()=> import('../views/Tasks/Tasks.vue') 
+        component: () => import('../views/Tasks/Tasks.vue')
       },
       {
         path: 'myday',
@@ -43,8 +47,8 @@ const routes = [
     component: () => import('../views/RegistView/RegistView')
   },
 
- 
- 
+
+
 ]
 
 const router = new VueRouter({
@@ -52,12 +56,32 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-router.beforeEach((to,from,next)=>{
+/* router.beforeEach((to,from,next)=>{
+
   if (to.path === '/login' || to.path === '/regist' ) {
    next() 
   } else {
     let token = localStorage.getItem('token')
     token ? next() : next('/login')
   }
+}) */
+
+router.beforeEach((to, from, next) => {
+  //如果cookie存在
+  if (document.cookie) {
+    if (to.path === '/login' || to.path === '/regist') {
+      next('/home')
+    }
+    next()
+  } else {//cookie不存在
+    if (to.path === '/login' || to.path === '/regist') {
+      next()
+    } else {
+      next('/login')
+    }
+  }
+
 })
+
+
 export default router
