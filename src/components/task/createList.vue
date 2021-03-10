@@ -7,6 +7,8 @@
   </label>
 </template>
 <script>
+import {reqTaskClassAdd} from '../../utils/api'
+
 export default {
   data() {
     return {
@@ -14,8 +16,10 @@ export default {
     };
   },
   methods: {
-    addTask(){
+    async addTask(){
       console.log(this.addTaskTitle);
+      let res = await reqTaskClassAdd({taskClass:'tom'})
+      console.log(res);
     }
   },
 };

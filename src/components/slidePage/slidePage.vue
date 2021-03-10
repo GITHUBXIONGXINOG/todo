@@ -49,6 +49,31 @@
           </svg>
           <span>test</span>
         </li>
+                <li>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-caidan1"></use>
+          </svg>
+          <span>test</span>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-caidan1"></use>
+          </svg>
+          <span>test</span>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-caidan1"></use>
+          </svg>
+          <span>test</span>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-caidan1"></use>
+          </svg>
+          <span>test</span>
+        </li>
+        
       </ul>
       <create-list />
     </nav>

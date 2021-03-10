@@ -17,3 +17,5 @@ export const reqLogout = () => ajax(BASE_URL+'/logout')
 //传输task
 export const reqStorageTask = ({task,steps,today,pick,files,note}) => ajax(BASE_URL+'/task',{task,steps,today,pick,files,note},'POST')
 
+//5.存储文章分类
+export const reqTaskClassAdd = ({taskClass}) => ajax(BASE_URL+'/tasks/class/add',{taskClass},'POST')

@@ -16,7 +16,9 @@ export default {
       changeIcon: true,
     };
   },
-  methods: {},
+  methods: {
+    
+  },
 };
 </script>
 <style scoped lang="scss">
