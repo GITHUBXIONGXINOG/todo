@@ -3,7 +3,7 @@
     <!-- <router-link to="/login" @click="signOut" class="sign-out-button">Sign out</router-link> -->
     <div to="/login" @click="signOut" class="sign-out-button">Sign out</div>
 
-    <h2>{{userInfo}}</h2>
+    <h2>{{userInfo.account}}</h2>
   </div>
 </template>
 <script>
@@ -29,6 +29,7 @@ export default {
       async signOut(){
         let result = await reqLogout()
         // console.log(result);
+        this.$router.replace('/login')
       }
     },
    

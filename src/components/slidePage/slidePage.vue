@@ -24,69 +24,27 @@
       <span>Tasks</span>
     </router-link>
     <nav class="nav-wrap">
-      <ul class="nav-ul">
+      <ul class="nav-ul" v-for="(list,index) in titleList" :key="index">
         <li>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-caidan1"></use>
           </svg>
-          <span>test</span>
+          <span>{{list.taskClass}}</span>
         </li>
-        <li>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-caidan1"></use>
-          </svg>
-          <span>test</span>
-        </li>
-        <li>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-caidan1"></use>
-          </svg>
-          <span>test</span>
-        </li>
-        <li>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-caidan1"></use>
-          </svg>
-          <span>test</span>
-        </li>
-                <li>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-caidan1"></use>
-          </svg>
-          <span>test</span>
-        </li>
-        <li>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-caidan1"></use>
-          </svg>
-          <span>test</span>
-        </li>
-        <li>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-caidan1"></use>
-          </svg>
-          <span>test</span>
-        </li>
-        <li>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-caidan1"></use>
-          </svg>
-          <span>test</span>
-        </li>
-        
       </ul>
       <create-list />
     </nav>
   </div>
-  <!--  -->
 </template>
 <script>
 import createList from "../task/createList.vue";
+import {reqTaskClass} from "../../utils/api";
 export default {
   components: { createList },
   data() {
     return {
-      title: "",
+      title: "",//输入分类标题
+      titleList: [],//分类列表
     };
   },
   methods: {
@@ -96,6 +54,21 @@ export default {
       }
     },
   },
+  //自动调用获取分类函数
+  mounted: async function(){
+    this.titleList = await reqTaskClass({data:{author:this.$store.state.userInfo._id}})
+  },  
+  watch:{
+    titleList:{
+      handler(newValue,oldValue){
+        this.$nextTick(()=>{
+          console.log(newValue);
+        })
+      },
+      immediate: true
+    }
+  }
+ 
 };
 </script>
 <style scoped lang="scss">

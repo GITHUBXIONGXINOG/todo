@@ -69,7 +69,8 @@ const router = new VueRouter({
 
 // router.beforeEach((to, from, next) => {
 //   //如果cookie存在
-//   if (store.state.userInfo.length&&document.cookie) {
+//   if (document.cookie) {
+//   // if (document.cookie) {
 //     if (to.path === '/login' || to.path === '/regist') {
 //       next('/home')
 //     }
