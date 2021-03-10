@@ -6,7 +6,7 @@ import {
   RECEIVE_TASK_CLASS,//接收分组信息
 } from './mutation-types'
 
-// import {reqTaskClass} from "../../utils/api";
+import {reqTaskClass} from "../utils/api/";
 
 
 export default {
@@ -15,8 +15,8 @@ export default {
     commit(RECEIVE_USER_INFO, { userInfo })
   },
   //记录分类
-  recordTaskClass({commit},taskClass) {
- 
+  async recordTaskClass({state,commit}) {
+    let taskClass = await reqTaskClass({data:{author:state.userInfo._id}})
     commit(RECEIVE_TASK_CLASS, { taskClass })
   }
 }

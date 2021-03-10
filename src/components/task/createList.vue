@@ -21,7 +21,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["userInfo"]),
+    ...mapGetters(["userInfo",""]),
   },
   methods: {
     //提交方法
@@ -34,9 +34,11 @@ export default {
       }).then(async (req,res)=>{
         if (req.status=='1000') {
           console.log(`分类<${this.addTaskTitle}>创建成功`);
+          //向服务器获得分类
+          // let result = await reqTaskClass({data:{author:this.$store.state.userInfo._id}})
+          //调用action方法,存储分类
+          this.$store.dispatch('recordTaskClass')
           this.addTaskTitle = '';
-          let result = await reqTaskClass({data:{author:this.$store.state.userInfo._id}})
-          console.log(result);
        }
       }).catch((err)=>{
         console.log('出现异常,创建失败');

@@ -24,7 +24,7 @@
       <span>Tasks</span>
     </router-link>
     <nav class="nav-wrap">
-      <ul class="nav-ul" v-for="(list,index) in titleList" :key="index">
+      <ul class="nav-ul" v-for="(list,index) in taskClass" :key="index">
         <li>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-caidan1"></use>
@@ -39,6 +39,7 @@
 <script>
 import createList from "../task/createList.vue";
 import {reqTaskClass} from "../../utils/api";
+import {mapGetters} from 'vuex'
 export default {
   components: { createList },
   data() {
@@ -55,19 +56,18 @@ export default {
     },
   },
   //自动调用获取分类函数
-  mounted: async function(){
-    this.titleList = await reqTaskClass({data:{author:this.$store.state.userInfo._id}})
-  },  
-  watch:{
-    titleList:{
-      handler(newValue,oldValue){
-        this.$nextTick(()=>{
-          console.log(newValue);
-        })
-      },
-      immediate: true
-    }
-  }
+  // mounted: async function(){
+  //   this.titleList = await reqTaskClass({data:{author:this.$store.state.userInfo._id}})
+  // },  
+  mounted (){
+      this.$store.dispatch('recordTaskClass')
+  },
+  computed:{
+    ...mapGetters([
+      'taskClass'
+    ])
+  },
+ 
  
 };
 </script>
