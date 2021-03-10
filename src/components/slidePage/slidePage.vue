@@ -107,15 +107,15 @@ export default {
   }
   //自定义清单
   .nav-wrap {
-    border: 1px solid red;
+    // border: 1px solid red;
     margin: 20px 0 0 0;
     height: 100%;
     display: flex;
     flex-direction: column;
-
+    overflow: auto;
     ul {
       li {
-        border: 1px solid red;
+        // border: 1px solid red;
         height: 36px;
         display: flex;
         align-items: center;

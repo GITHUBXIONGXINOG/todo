@@ -54,6 +54,7 @@ export default {
   display: flex;
   // justify-content: center;
   align-items: center;
+  position: relative;
   .icon {
     width: 20px;
     height: 36px;
