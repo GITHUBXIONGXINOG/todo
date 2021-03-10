@@ -3,11 +3,14 @@
     <svg class="icon" aria-hidden="true">
       <use xlink:href="#icon-danxuanxiangweixuanzhong"></use>
     </svg>
-    <div class="content">task</div>
+    <div class="content">{{taskinfo.task}}</div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props:['taskinfo']
+
+};
 </script>
 <style scoped lang="scss">
 .task {

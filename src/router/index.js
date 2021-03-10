@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '../views/LoginView/LoginView'
 import HomeView from '../views/HomeView/HomeView'
 import store from '../store/index'
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,6 +36,11 @@ const routes = [
         path: 'important',
         name: 'Important',
         component: () => import('../views/Important/Important.vue')
+      },
+      {
+        path: 'mytasks',
+        name: 'MyTasks',
+        component: () => import('../views/Tasks/MyTasks.vue')
       },
     ]
   },
@@ -85,5 +92,8 @@ const router = new VueRouter({
 
 // })
 
-
+const originalPush = VueRouter.prototype.push
+   VueRouter.prototype.push = function push(location) {
+   return originalPush.call(this, location).catch(err => err)
+}
 export default router

@@ -1,18 +1,20 @@
 <template>
   <div class="pageInfo">
     <nav>
-      {{ PathTitle }}
+      <!-- {{ PathTitle }} -->
+      {{currentClass.title}}
     </nav>
     <create-task />
     <div class=" scroll-wrapper" ref="scroll">
       <div class="list scroll-content">
         <div
           class="scroll-item"
-          v-for="(item, index) in emojis"
+          v-for="(item, index) in classPage"
           :key="index"
            @click="clickHandler(item)"
         >
-          <task />
+          <task :taskinfo="item"/>
+         <!-- <task :/> -->
         </div>
       </div>
     </div>
@@ -30,27 +32,25 @@
 import Task from "../task/task.vue";
 import CreateTask from "../task/createTask.vue";
 import BScroll from "better-scroll";
+import {mapGetters} from 'vuex'
 export default {
   data() {
     return {
       tabelLength: 20,
-      emojis: [
-      //   "😀 😁 😂 🤣 😃",
-      //   "😄 😅 😆 😉 😊",
-      //   "😫 😴 😌 😛 😜",
-      //  "😀 😁 😂 🤣 😃",
-      //         "😫 😴 😌 😛 😜",
-      //  "😀 😁 😂 🤣 😃",
-      //         "😫 😴 😌 😛 😜",
- 
-      ],
     };
   },
   computed: {
     PathTitle() {
       let path = this.$route.path.replace(/\/home\//, "");
+      if(path=='mytasks'){
+        return 
+      }
       return path.slice(0, 1).toUpperCase().concat(path.slice(1).toLowerCase());
     },
+    ...mapGetters([
+      'currentClass',//当前分类
+      'classPage',//分类页内容
+    ])
   },
   components: {
     Task,

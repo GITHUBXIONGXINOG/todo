@@ -128,7 +128,6 @@ export default {
              type: 'success'
             });
             this.$router.push({path:'/home'})
-
          } else if (result.status===1001) {
             this.$message({//ele注册弹窗
              message: '密码错误,请重新输入!',

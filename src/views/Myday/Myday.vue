@@ -9,6 +9,12 @@ import pageInfo from '../../components/page/pageInfo.vue'
   components: { 
     pageInfo 
     },
+    methods: {
+ 
+ 
+    },
+    mounted(){
+    }
  
   
  }
