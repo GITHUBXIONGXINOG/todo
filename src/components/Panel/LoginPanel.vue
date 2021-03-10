@@ -16,6 +16,7 @@
         v-model="password"
         v-if="!showPwd"
         maxlength="20"
+        @keydown.enter="clickToLogin"
       />
       <input
         type="text"
@@ -23,6 +24,7 @@
         v-model="password"
         v-else-if="showPwd"
         maxlength="20"
+        @keydown.enter="clickToLogin"
       />
       <p>
         <input type="checkbox" id="showPw" @click="showPwd = !showPwd" />
@@ -33,7 +35,7 @@
         <router-link to="/regist">立即创建新账户!</router-link>
       </div>
 
-      <button @click.prevent="clickToLogin">登录</button>
+      <button @click.prevent="clickToLogin" >登录</button>
     </div>
     <div class="regist_show" v-else>
       <h2>建立账户</h2>

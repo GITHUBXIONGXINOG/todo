@@ -34,7 +34,7 @@ export default {
           author: this.$store.state.userInfo._id,//作者id
           classtitle: this.$store.state.currentClass.id,//分类集合id
           pulishDate: Date.now,//创建时间
-          content: {},//备注  
+          content: '',//备注  
           complete: false,//完成状态
           important:false, //重要
         },
@@ -72,6 +72,7 @@ export default {
   top: 50px;
   display: flex;
   align-items: center;
+  
   .icon {
     width: 20px;
     height: 20px;

@@ -1,42 +1,41 @@
 <template>
 <!-- 固定分类 -->
-  <div class="slidePage" @click="clickToPage">
+  <div class="slidePage" @click="clickToPage" v-if="taskClass[0]">
     <div class="show-change">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-caidan"></use>
       </svg>
     </div>
-    <div  class="myday" >
+    <nav class="myday" :id="taskClass[0]._id">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-taiyang"></use>
       </svg>
       <span>Myday</span>
-    </div>
-    <div   class="important">
+    </nav>
+    <nav  class="important" :id="taskClass[1]._id">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-xingxing1"></use>
       </svg>
       <span>Important</span>
-    </div>
-    <div class="tasks">
+    </nav>
+    <nav class="tasks" :id="taskClass[2]._id">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-fangzi"></use>
       </svg>
       <span>Tasks</span>
-    </div>
+    </nav>
     <!-- 自定义分类 -->
-    <nav class="nav-wrap">
+    <div class="nav-wrap">
       <ul class="nav-ul" @click="clickToPage">
         <li v-for="(list,index) in taskClass" :key="index" :id="list._id" v-show="!list.static">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-caidan1"></use>
           </svg>
           <span>{{list.taskClass}}</span>
-          {{taskClass}}
         </li>
       </ul>
       <create-list />
-    </nav>
+    </div>
   </div>
 </template>
 <script>
@@ -52,17 +51,18 @@ export default {
     };
   },
   methods: {
-    setTitle(event) {
-      if (event.target.text) {
-        this.title = event.target.text;
-      }
-    },
+    // setTitle(event) {
+    //   if (event.target.text) {
+    //     this.title = event.target.text;
+    //   }
+    // },
     clickToPage(event){
       // console.log(event.target.id);
-      console.log(event.target);
-      console.log(event.target.innerText);
-
-      if (event.target.innerText) {
+      // console.log(event.target.text);
+      // console.log(event.target.nodeName);
+      // if (event.target.nodeName == "SPAN" || event.target.nodeName == "LI" || event.target.nodeName == "SVG" ) {
+      if (event.target.nodeName == "LI" || event.target.nodeName == "NAV") {
+        
         // console.log(event.target.innerText)
         //保存当前分类
         this.$store.dispatch('recordCurrentClass',{
@@ -76,10 +76,6 @@ export default {
       }
     }
   },
-  //自动调用获取分类函数
-  // mounted: async function(){
-  //   this.titleList = await reqTaskClass({data:{author:this.$store.state.userInfo._id}})
-  // },  
   mounted (){
       this.$store.dispatch('recordTaskClass')
       this.$store.dispatch('recordClassPage')
@@ -102,7 +98,7 @@ export default {
   background: #f4f4f4;
   box-shadow: -1px 10px 10px #eaeaea;
   margin: 0 30px 0 0;
-  >div {
+  >nav {
     height: 36px;
     display: flex;
     align-items: center;

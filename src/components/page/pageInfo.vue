@@ -12,9 +12,9 @@
           v-for="(item, index) in classPage"
           :key="index"
            @click="clickHandler(item)"
+           v-show="index!=0 || item.task"
         >
           <task :taskinfo="item"/>
-         <!-- <task :/> -->
         </div>
       </div>
     </div>

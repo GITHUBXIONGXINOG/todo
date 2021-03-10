@@ -20,7 +20,7 @@ const routes = [
     children: [
       {
         path: '/',
-        redirect: 'myday'
+        redirect: 'mytasks'
       },
       {
         path: 'tasks',
