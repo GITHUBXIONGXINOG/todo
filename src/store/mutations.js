@@ -7,6 +7,7 @@ import {
     RECEIVE_TASK_CLASS,//接收分组信息
     SETTING_TASK_CLASS,//当前点击分类
     RECEIVE_CLSSS_PAGE,//当前的分类页
+    RECEIVE_LOGIN_STATUS,//登录状态
 } from './mutation-types'
 
 export default {
@@ -28,4 +29,8 @@ export default {
     [RECEIVE_CLSSS_PAGE](state,{classPage}){
         state.classPage = classPage
     },
+    //获取登录状态
+    [RECEIVE_LOGIN_STATUS](state,{loginStatus}){
+        state.loginStatus = loginStatus
+    }
 }

@@ -6,9 +6,10 @@ import {
   RECEIVE_TASK_CLASS,//接收分组信息
   SETTING_TASK_CLASS,//当前点击分类
   RECEIVE_CLSSS_PAGE,//当前的分类页
+  RECEIVE_LOGIN_STATUS,//登录状态
 } from './mutation-types'
 
-import {reqTaskClass,reqTaskPage} from "../utils/api/";
+import {reqLoginStatus, reqTaskClass,reqTaskPage} from "../utils/api/";
 
 
 export default {
@@ -30,4 +31,13 @@ export default {
     let result = await reqTaskPage({data:{classtitle:state.currentClass.id}})
     commit(RECEIVE_CLSSS_PAGE,{classPage:result.classpage})
   },  
+  //获取登录状态
+  async getLoginStatus({state,commit}){
+    let result = await reqLoginStatus()
+    debugger
+    console.log(result.loginStatus);
+    localStorage.setItem('userInfo',JSON.stringify(result))
+    // console.log('获取登录状态');
+    commit(RECEIVE_LOGIN_STATUS,{loginStatus: result.loginStatus})
+  }
 }

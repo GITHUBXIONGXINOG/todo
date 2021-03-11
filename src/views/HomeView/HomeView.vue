@@ -11,7 +11,10 @@ export default {
     components:{
     navTop,
     page,
-    }
+    },
+    // mounted(){
+    //     this.$store.dispatch('getLoginStatus')
+    // }
 }
 </script>
 <style scoped lang="scss">

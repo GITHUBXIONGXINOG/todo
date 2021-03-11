@@ -8,7 +8,7 @@ export default {
         title: '',//分类标题
         id:'',//唯一id
     },
-    classPage: []//当前分类页
-
+    classPage: [],//当前分类页
+    loginStatus: false,//登录状态
     
 }

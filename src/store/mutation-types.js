@@ -9,3 +9,4 @@ export const SETTING_TASK_CLASS = 'setting_task_class'// 保存当前点击分�
 
 export const RECEIVE_CLSSS_PAGE = 'receive_clsss_page'//当前的分类页
 
+export const RECEIVE_LOGIN_STATUS = 'receive_login_status'//登录状态

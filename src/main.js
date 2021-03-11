@@ -9,6 +9,7 @@ import './assets/iconfont/iconfont'//导入iconfont
 Vue.use(ElementUI)//使用element
 Vue.config.productionTip = false
 
+
  
 
 new Vue({

@@ -25,3 +25,5 @@ export const reqTaskClass = ({data}) => ajax(BASE_URL+'/tasks/class/get',{data},
 export const reqTaskAdd = ({data}) => ajax(BASE_URL+'/task_add',{data},'POST')
 //获取当前分类页
 export const reqTaskPage = ({data}) => ajax(BASE_URL+'/task_get',{data},'POST')
+//登录状态
+export const reqLoginStatus = () => ajax(BASE_URL+'/loginstatus','POST')
