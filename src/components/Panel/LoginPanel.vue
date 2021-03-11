@@ -125,8 +125,8 @@ export default {
              const user = result.data
              //dispath 调用action的异步方法,存储用户信息
              this.$store.dispatch('recordUser',user)
-             debugger
-             console.log(user);
+             localStorage.setItem('userInfo',JSON.stringify(user))
+            //  console.log(user);
              this.$message({//ele注册弹窗
              message: '登录成功!',
              type: 'success'

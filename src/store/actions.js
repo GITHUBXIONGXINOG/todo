@@ -7,6 +7,7 @@ import {
   SETTING_TASK_CLASS,//当前点击分类
   RECEIVE_CLSSS_PAGE,//当前的分类页
   RECEIVE_LOGIN_STATUS,//登录状态
+  RECEIVE_CLEAR_STATE,//清空state
 } from './mutation-types'
 
 import {reqLoginStatus, reqTaskClass,reqTaskPage} from "../utils/api/";
@@ -20,6 +21,12 @@ export default {
   //记录分类
   async recordTaskClass({state,commit}) {
     let taskClass = await reqTaskClass({data:{author:state.userInfo._id}})
+    // localStorage.setItem('currentCLass',JSON.stringify(result))
+    console.log(taskClass);
+    state.currentClass = {
+      title: taskClass[0].taskClass,
+      _id: taskClass[0]._id,
+    } 
     commit(RECEIVE_TASK_CLASS, { taskClass })
   },
   //保存当前点击分类
@@ -28,16 +35,22 @@ export default {
   },
   //保存当前分类页
   async recordClassPage({state,commit}) {
-    let result = await reqTaskPage({data:{classtitle:state.currentClass.id}})
-    commit(RECEIVE_CLSSS_PAGE,{classPage:result.classpage})
+      // console.log(state);
+      let result = await reqTaskPage({data:{classtitle:state.currentClass._id  }})
+      debugger
+      console.log(result);
+      commit(RECEIVE_CLSSS_PAGE,{classPage:result.classpage})
+ 
   },  
   //获取登录状态
   async getLoginStatus({state,commit}){
     let result = await reqLoginStatus()
-    debugger
-    console.log(result.loginStatus);
     localStorage.setItem('userInfo',JSON.stringify(result))
     // console.log('获取登录状态');
     commit(RECEIVE_LOGIN_STATUS,{loginStatus: result.loginStatus})
+  },
+  //退出清空state
+  clearState({commit}){
+    commit(RECEIVE_CLEAR_STATE)
   }
 }

@@ -69,19 +69,17 @@ router.beforeEach((to, from, next) => {
   // console.log(store.state.loginStatus);
   // console.log();
   let userInfo = JSON.parse(localStorage.getItem('userInfo'))
-  debugger
   console.log(userInfo);
   //如果查询到登录状态
-  if (userInfo.loginStatus) {
+  if (userInfo && userInfo.loginStatus) {
      //dispath 调用action的异步方法,存储用户信息
-    //  this.$store.dispatch('recordUser',{userInfo:userInfo})
+    store.dispatch('recordUser',userInfo)
     if (to.path === '/login' || to.path === '/regist') {
       next('/home')
     }  else{
       next()
     }
   } else {
-    debugger
       if (to.path === '/login' || to.path === '/regist') {
         next()
       } else if((to.path === '/home/mytasks')){

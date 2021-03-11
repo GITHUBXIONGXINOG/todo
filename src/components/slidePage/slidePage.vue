@@ -67,7 +67,7 @@ export default {
         //保存当前分类
         this.$store.dispatch('recordCurrentClass',{
           title: event.target.innerText,
-          id: event.target.id
+          _id: event.target.id
           })
           //查询当前分类页
         this.$store.dispatch('recordClassPage')
