@@ -21,26 +21,16 @@ const routes = [
         path: '/',
         redirect: 'mytasks'
       },
-      // {
-      //   path: 'tasks',
-      //   name: 'Tasks',
-      //   component: () => import('../views/Tasks/Tasks.vue')
-      // },
-      // {
-      //   path: 'myday',
-      //   name: 'Myday',
-      //   component: () => import('../views/Myday/Myday.vue')
-      // },
-      // {
-      //   path: 'important',
-      //   name: 'Important',
-      //   component: () => import('../views/Important/Important.vue')
-      // },
       {
         path: 'mytasks',
         name: 'MyTasks',
         component: () => import('../views/Tasks/MyTasks.vue')
       },
+      {
+        path: 'search',
+        name: 'Search',
+        component: () => import('../views/Tasks/Search.vue')
+      }
     ]
   },
   {

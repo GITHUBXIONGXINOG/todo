@@ -110,6 +110,7 @@ export default {
       pointer-events: none;
     }
     label{
+      //禁止点击事件
       pointer-events: none;
       
     }

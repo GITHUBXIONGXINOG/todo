@@ -5,8 +5,12 @@
       <span>To Do</span>
     </router-link>
     <!-- 搜索框 -->
-    <div class="search-wrap">
-      <button class="searchButton">
+    <div
+      class="search-wrap"
+      @click.prevent="intoSearch"
+      :class="{ floatStyle: searchFlag }"
+    >
+      <button class="searchButton" @click="searchTask">
         <svg class="icon icon-search" aria-hidden="true">
           <use xlink:href="#icon-sousuo_huaban1"></use>
         </svg>
@@ -18,6 +22,8 @@
         placeholder="Search"
         v-model="searchInput"
         @keydown.enter="searchTask"
+        @blur="changeSearch"
+        ref="searchInfo"
       />
       <button class="clearInput" @click="clearInput()">
         <svg class="icon icon-close" aria-hidden="true">
@@ -28,50 +34,71 @@
     <!-- 右侧设置区域 -->
     <div class="right_part">
       <!-- 设置按钮 -->
- <!--      <div class="settingWrap">
+      <!--      <div class="settingWrap">
         <svg class="icon setting" aria-hidden="true">
           <use xlink:href="#icon-shezhi"></use>
         </svg>
       </div> -->
       <!-- 个人信息 -->
-      <div class="userInfoWrap" @click="showUserPanel=!showUserPanel" :class="{clickStyle:showUserPanel}">
+      <div
+        class="userInfoWrap"
+        @click="showUserPanel = !showUserPanel"
+        :class="{ clickStyle: showUserPanel }"
+      >
         <svg class="icon userInfo" aria-hidden="true">
           <use xlink:href="#icon-yonghu1"></use>
         </svg>
       </div>
-        <!-- 个人信息面板 -->
-         <div class="user-info-panel" v-show="showUserPanel">
-          <user-panel />
-        </div>
+      <!-- 个人信息面板 -->
+      <div class="user-info-panel" v-show="showUserPanel">
+        <user-panel />
+      </div>
     </div>
   </div>
 </template>
 <script>
-import UserPanel from '../Panel/UserPanel.vue';
-import {reqSearchTask} from '../../utils/api'
+import UserPanel from "../Panel/UserPanel.vue";
+import { reqSearchTask } from "../../utils/api";
 export default {
   data() {
     return {
       searchInput: "", //输入
-      showUserPanel:false,//显示个人信息面板
+      searchFlag: true, //输入flag
+      showUserPanel: false, //显示个人信息面板
     };
   },
   methods: {
     //清除输入
     clearInput() {
+      //清空输入框
       this.searchInput = "";
+      if (this.$route.path ==='/home/search') {
+              //回退
+      this.$router.back();
+      }
+
     },
     //搜索task
-    async searchTask(){
-       await reqSearchTask({keyword:this.searchInput}).then((req,res)=>{
-         console.log(req);
-         
-       })
-    }
+    async searchTask() {
+      await reqSearchTask({ keyword: this.searchInput }).then((req, res) => {
+        console.log(req);
+        this.$router.push("/home/search");
+      });
+    },
+
+    intoSearch() {
+      if (this.searchFlag) {
+        this.searchFlag = false;
+        this.$refs.searchInfo.focus();
+      }
+    },
+    changeSearch() {
+      this.searchFlag = !this.searchFlag;
+    },
   },
-  components:{
-    UserPanel
-  }
+  components: {
+    UserPanel,
+  },
 };
 </script>
 <style scoped lang="scss">
@@ -106,6 +133,19 @@ export default {
 .search-wrap {
   position: relative;
   display: flex;
+}
+//搜索外框悬浮样式
+.floatStyle {
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  &:hover::before {
+    cursor: pointer !important;
+  }
 }
 //搜索框
 .searchInfo {
@@ -195,7 +235,6 @@ export default {
     border-radius: 50%;
     z-index: 1;
   }
-  
 }
 //图标背景
 .userInfoWrap::after {
@@ -215,25 +254,24 @@ export default {
   height: 50%;
 }
 //点击后显示样式
-.clickStyle{
+.clickStyle {
   background: #005a9e;
   position: relative;
-  &::after{
-    content: '';
+  &::after {
+    content: "";
     display: block;
     width: 100%;
     height: 1px;
-    position:absolute;
+    position: absolute;
     bottom: 0;
   }
 }
 //用户信息面板
-.user-info-panel{
+.user-info-panel {
   width: 320px;
   height: 180px;
   position: absolute;
   top: 50px;
   right: 0px;
 }
-
 </style>
