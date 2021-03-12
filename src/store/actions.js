@@ -22,7 +22,6 @@ export default {
   async recordTaskClass({state,commit}) {
     let taskClass = await reqTaskClass({data:{author:state.userInfo._id}})
     // localStorage.setItem('currentCLass',JSON.stringify(result))
-    console.log(taskClass);
     state.currentClass = {
       title: taskClass[0].taskClass,
       _id: taskClass[0]._id,
@@ -37,7 +36,6 @@ export default {
   async recordClassPage({state,commit}) {
       // console.log(state);
       let result = await reqTaskPage({data:{classtitle:state.currentClass._id  }})
-      console.log(result);
       commit(RECEIVE_CLSSS_PAGE,{classPage:result.classpage})
  
   },  

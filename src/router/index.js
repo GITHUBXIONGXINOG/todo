@@ -68,7 +68,6 @@ router.beforeEach((to, from, next) => {
   store.dispatch('getLoginStatus')
   // console.log(store.state.loginStatus);
   let userInfo = JSON.parse(localStorage.getItem('userInfo'))
-  console.log(userInfo);
   //如果查询到登录状态
   if (userInfo && userInfo.loginStatus) {
      //dispath 调用action的异步方法,存储用户信息

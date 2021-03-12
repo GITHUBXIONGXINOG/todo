@@ -27,11 +27,11 @@
     <!-- 右侧设置区域 -->
     <div class="right_part">
       <!-- 设置按钮 -->
-      <div class="settingWrap">
+ <!--      <div class="settingWrap">
         <svg class="icon setting" aria-hidden="true">
           <use xlink:href="#icon-shezhi"></use>
         </svg>
-      </div>
+      </div> -->
       <!-- 个人信息 -->
       <div class="userInfoWrap" @click="showUserPanel=!showUserPanel" :class="{clickStyle:showUserPanel}">
         <svg class="icon userInfo" aria-hidden="true">
@@ -144,7 +144,8 @@ export default {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  // justify-content: space-around;
+  justify-content: flex-end;
   position: relative;
 }
 

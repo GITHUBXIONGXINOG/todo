@@ -38,6 +38,10 @@ export default {
   }
   .content {
     padding-left: 30px;
+      display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
   }
 }
 </style>

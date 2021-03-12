@@ -1,37 +1,46 @@
 <template>
-<!-- 固定分类 -->
-  <div class="slidePage" @click="clickToPage" v-if="taskClass[0]">
+  <!-- 固定分类 -->
+  <div
+    class="slidePage"
+    @click="clickToPage"
+    v-if="taskClass[0]"
+    :class="{ changeSlide: showChange }"
+  >
     <div class="show-change">
-      <svg class="icon" aria-hidden="true">
+      <svg
+        class="icon"
+        aria-hidden="true"
+        @click.prevent="showChange = !showChange"
+      >
         <use xlink:href="#icon-caidan"></use>
       </svg>
     </div>
     <nav class="myday" :id="taskClass[0]._id">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-taiyang"></use>
-      </svg>
-      <span>Myday</span>
+      <list listClass="Myday" />
     </nav>
-    <nav  class="important" :id="taskClass[1]._id">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-xingxing1"></use>
-      </svg>
-      <span>Important</span>
+    <nav class="important" :id="taskClass[1]._id">
+      <list listClass="Important" />
+
     </nav>
     <nav class="tasks" :id="taskClass[2]._id">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-fangzi"></use>
-      </svg>
-      <span>Tasks</span>
+ 
+      <list listClass="Tasks" />
+
     </nav>
     <!-- 自定义分类 -->
     <div class="nav-wrap">
-      <ul class="nav-ul" @click="clickToPage">
-        <li v-for="(list,index) in taskClass" :key="index" :id="list._id" v-show="!list.static">
-          <svg class="icon" aria-hidden="true">
+      <ul class="nav-ul">
+        <li
+          v-for="(list, index) in taskClass"
+          :key="index"
+          :id="list._id"
+          v-show="!list.static"
+        >
+          <!--           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-caidan1"></use>
           </svg>
-          <span>{{list.taskClass}}</span>
+          <span>{{ list.taskClass }}</span> -->
+          <list :listClass="list.taskClass" />
         </li>
       </ul>
       <create-list />
@@ -39,15 +48,16 @@
   </div>
 </template>
 <script>
-import createList from "../task/createList.vue";
-import {reqTaskClass} from "../../utils/api";
-import {mapGetters} from 'vuex'
+import createList from "./createList.vue";
+import list from "./listClass.vue";
+import { mapGetters } from "vuex";
 export default {
-  components: { createList },
+  components: { createList, list },
   data() {
     return {
-      title: "",//输入分类标题
-      titleList: [],//分类列表
+      title: "", //输入分类标题
+      titleList: [], //分类列表
+      showChange: false, //边栏切换
     };
   },
   methods: {
@@ -56,49 +66,42 @@ export default {
     //     this.title = event.target.text;
     //   }
     // },
-    clickToPage(event){
-      // console.log(event.target.id);
-      // console.log(event.target.text);
-      // console.log(event.target.nodeName);
-      // if (event.target.nodeName == "SPAN" || event.target.nodeName == "LI" || event.target.nodeName == "SVG" ) {
+    clickToPage(event) {
+      // console.log(event.target);
       if (event.target.nodeName == "LI" || event.target.nodeName == "NAV") {
-        
-        // console.log(event.target.innerText)
         //保存当前分类
-        this.$store.dispatch('recordCurrentClass',{
+        this.$store.dispatch("recordCurrentClass", {
           title: event.target.innerText,
-          _id: event.target.id
-          })
-          //查询当前分类页
-        this.$store.dispatch('recordClassPage')
+          _id: event.target.id,
+        });
+        //查询当前分类页
+        this.$store.dispatch("recordClassPage");
 
-        this.$router.push('/home/mytasks')
+        // this.$router.push('/home/mytasks')
       }
-    }
+    },
   },
-  mounted (){
-      this.$store.dispatch('recordTaskClass')
-      this.$store.dispatch('recordClassPage')
+  mounted() {
+    this.$store.dispatch("recordTaskClass");
+    this.$store.dispatch("recordClassPage");
   },
-  computed:{
-    ...mapGetters([
-      'taskClass'
-    ])
+  computed: {
+    ...mapGetters(["taskClass"]),
   },
- 
- 
 };
 </script>
 <style scoped lang="scss">
 .slidePage {
-  width: 18rem;
+  width: 15rem;
   border-right: 1px solid #eaeaea;
   display: flex;
   flex-direction: column;
   background: #f4f4f4;
   box-shadow: -1px 10px 10px #eaeaea;
   margin: 0 30px 0 0;
-  >nav {
+  transition: width 0.3s;
+
+  > nav {
     height: 36px;
     display: flex;
     align-items: center;
@@ -106,8 +109,16 @@ export default {
       background: #fafafa;
       cursor: pointer;
     }
+    svg {
+      pointer-events: none;
+    }
     span {
       color: black;
+      pointer-events: none;
+    }
+    label{
+      pointer-events: none;
+      
     }
   }
   .icon {
@@ -120,6 +131,7 @@ export default {
     width: 20px;
     height: 100%;
   }
+  //边栏切换按钮
   .show-change {
     margin: 20px 0;
     height: 20px;
@@ -142,7 +154,39 @@ export default {
           background: #fafafa;
           cursor: pointer;
         }
+        svg {
+          pointer-events: none;
+        }
+        label{
+          pointer-events: none;
+
+        }
+        span {
+          width: 100%;
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          pointer-events: none;
+        }
       }
+    }
+  }
+}
+.changeSlide {
+  transition: width 0.3s;
+  width: 2.5rem;
+  span {
+    display: none;
+    transition: width 0.3s;
+
+    // width: 0 !important;
+  }
+  .nav-ul{
+    label span{
+    border: 1px solid red;
+
+      width: 0;
     }
   }
 }
