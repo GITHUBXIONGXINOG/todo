@@ -67,7 +67,6 @@ router.beforeEach((to, from, next) => {
   // console.log('路由守卫');
   store.dispatch('getLoginStatus')
   // console.log(store.state.loginStatus);
-  // console.log();
   let userInfo = JSON.parse(localStorage.getItem('userInfo'))
   console.log(userInfo);
   //如果查询到登录状态

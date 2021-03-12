@@ -37,7 +37,6 @@ export default {
   async recordClassPage({state,commit}) {
       // console.log(state);
       let result = await reqTaskPage({data:{classtitle:state.currentClass._id  }})
-      debugger
       console.log(result);
       commit(RECEIVE_CLSSS_PAGE,{classPage:result.classpage})
  

@@ -36,7 +36,6 @@ export default {
     },
     //清空state
     [RECEIVE_CLEAR_STATE](state){
-        debugger
         state.userInfo ={}, // 用户信息
         state.taskClass =[],// 分类信息
         state.currentClass ={//当前分类
