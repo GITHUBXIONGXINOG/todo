@@ -14,3 +14,9 @@ export const classPage = state => state.classPage
 
 //获取登录状态
 export const loginStatus = state => state.loginStatus
+
+//获取当前的搜索词
+export const searchKey = state => state.searchKey
+
+//获取当前的搜索页
+export const searchPage = state => state.searchPage

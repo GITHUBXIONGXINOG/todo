@@ -10,5 +10,7 @@ export default {
     },
     classPage: [],//当前分类页
     loginStatus: false,//登录状态
+    searchKey: '',//搜索词
+    searchPage:[],//搜索页
     
 }

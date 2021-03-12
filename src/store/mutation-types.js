@@ -13,3 +13,6 @@ export const RECEIVE_LOGIN_STATUS = 'receive_login_status'//登录状态
 
 export const RECEIVE_CLEAR_STATE = 'receive_clear_state'//退出清空state
 
+export const SET_SEARCH_KEY = 'set_search_key'//搜索词
+
+export const RECEIVE_SEARCH_PAGE = 'receive_search_page'//搜索页

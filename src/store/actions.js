@@ -8,6 +8,8 @@ import {
   RECEIVE_CLSSS_PAGE,//当前的分类页
   RECEIVE_LOGIN_STATUS,//登录状态
   RECEIVE_CLEAR_STATE,//清空state
+  SET_SEARCH_KEY,//搜索词
+  RECEIVE_SEARCH_PAGE,//搜索页
 } from './mutation-types'
 
 import {reqLoginStatus, reqTaskClass,reqTaskPage} from "../utils/api/";
@@ -49,5 +51,13 @@ export default {
   //退出清空state
   clearState({commit}){
     commit(RECEIVE_CLEAR_STATE)
+  },
+  //存储搜索词
+  setSearchKey({commit},searchKey){
+    commit(SET_SEARCH_KEY,{searchKey})
+  },
+  //存储搜索页
+  setSearchPage({commit},searchPage){
+    commit(RECEIVE_SEARCH_PAGE,{searchPage})
   }
 }

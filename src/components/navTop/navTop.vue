@@ -72,26 +72,33 @@ export default {
     clearInput() {
       //清空输入框
       this.searchInput = "";
+      //如果在搜索页面,回退到之前的页面
       if (this.$route.path ==='/home/search') {
-              //回退
+      //回退
       this.$router.back();
       }
 
     },
     //搜索task
     async searchTask() {
+      //存储搜索词
+      this.$store.dispatch('setSearchKey',this.searchInput.trim())
+      
       await reqSearchTask({ keyword: this.searchInput }).then((req, res) => {
         console.log(req);
+        //存储搜索页
+        this.$store.dispatch('setSearchPage',req.data)
         this.$router.push("/home/search");
       });
     },
-
+    //进入搜索框,input获取焦点
     intoSearch() {
       if (this.searchFlag) {
         this.searchFlag = false;
         this.$refs.searchInfo.focus();
       }
     },
+    //改变搜索框上的鼠标flag
     changeSearch() {
       this.searchFlag = !this.searchFlag;
     },

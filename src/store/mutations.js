@@ -9,6 +9,8 @@ import {
     RECEIVE_CLSSS_PAGE,//当前的分类页
     RECEIVE_LOGIN_STATUS,//登录状态,
     RECEIVE_CLEAR_STATE,//清空state
+    SET_SEARCH_KEY,//搜索词
+    RECEIVE_SEARCH_PAGE,//搜索页
 } from './mutation-types'
 
 export default {
@@ -46,5 +48,13 @@ export default {
         state.classPage = [],//当前分类页
         state.loginStatus = false,//登录状态
         state = {}
+    },
+    //保存当前搜索词
+    [SET_SEARCH_KEY](state,{searchKey}){
+        state.searchKey = searchKey
+    },
+    //搜索页
+    [RECEIVE_SEARCH_PAGE](state,{searchPage}){
+        state.searchPage = searchPage
     }
 }
