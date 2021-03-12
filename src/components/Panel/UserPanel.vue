@@ -30,7 +30,6 @@ export default {
       // console.log(result);
       //清空state
       this.$store.dispatch('clearState')
-      console.log(this.$store.state);
       this.$router.replace("/login");
     },
   },

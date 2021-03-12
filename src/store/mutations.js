@@ -46,6 +46,5 @@ export default {
         state.classPage = [],//当前分类页
         state.loginStatus = false,//登录状态
         state = {}
-        console.log(state);
     }
 }

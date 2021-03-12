@@ -17,6 +17,7 @@
         class="searchInfo"
         placeholder="Search"
         v-model="searchInput"
+        @keydown.enter="searchTask"
       />
       <button class="clearInput" @click="clearInput()">
         <svg class="icon icon-close" aria-hidden="true">
@@ -47,6 +48,7 @@
 </template>
 <script>
 import UserPanel from '../Panel/UserPanel.vue';
+import {reqSearchTask} from '../../utils/api'
 export default {
   data() {
     return {
@@ -59,6 +61,13 @@ export default {
     clearInput() {
       this.searchInput = "";
     },
+    //搜索task
+    async searchTask(){
+       await reqSearchTask({keyword:this.searchInput}).then((req,res)=>{
+         console.log(req);
+         
+       })
+    }
   },
   components:{
     UserPanel

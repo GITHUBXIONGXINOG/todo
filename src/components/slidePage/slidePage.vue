@@ -61,11 +61,6 @@ export default {
     };
   },
   methods: {
-    // setTitle(event) {
-    //   if (event.target.text) {
-    //     this.title = event.target.text;
-    //   }
-    // },
     clickToPage(event) {
       // console.log(event.target);
       if (event.target.nodeName == "LI" || event.target.nodeName == "NAV") {
@@ -76,8 +71,6 @@ export default {
         });
         //查询当前分类页
         this.$store.dispatch("recordClassPage");
-
-        // this.$router.push('/home/mytasks')
       }
     },
   },
