@@ -10,9 +10,10 @@
           class="scroll-item"
           v-for="(item, index) in classPage"
           :key="index"
-           @click="clickHandler(item)"
            v-show="index!=0 || item.task"
         >
+           <!-- @click="clickHandler(item)" -->
+           
           <task :taskinfo="item"/>
         </div>
       </div>
@@ -65,6 +66,7 @@ export default {
           this.BScroll = new BScroll(".list", {
             scrollX: true,
             click: true,
+            tap:true,
             pullUpLoad: true,
             wheel: true,
             scrollbar: true,
