@@ -1,24 +1,39 @@
 <template>
   <div class="pageInfo">
     <nav>
-      {{currentClass.title}}
+      {{ currentClass.title }}
     </nav>
     <create-task />
-    <div class=" scroll-wrapper" ref="scroll">
+    <div class="scroll-wrapper" ref="scroll">
       <div class="list scroll-content">
         <div
           class="scroll-item"
           v-for="(item, index) in classPage"
+
           :key="index"
-           v-show="index!=0 || item.task"
+          v-show="index != 0 || item.task"
         >
-           <!-- @click="clickHandler(item)" -->
-           
-          <task :taskinfo="item"/>
+          <!-- @click="clickHandler(item)" -->
+        
+
+          <task :taskinfo="item" />
         </div>
       </div>
     </div>
-<!--     <ul class="list scroll-content">
+
+    <!-- <div>
+      <div class="list">
+        <div
+          v-for="(item, index) in classPage"
+          :key="index"
+          v-show="index != 0 || item.task"
+        >
+
+          <task :taskinfo="item" />
+        </div>
+      </div>
+    </div> -->
+    <!--     <ul class="list scroll-content">
       <li v-for="(n, index) in tabelLength" :key="index" class="scroll-item">
         <task />
       </li>
@@ -32,7 +47,7 @@
 import Task from "../task/task.vue";
 import CreateTask from "../task/createTask.vue";
 import BScroll from "better-scroll";
-import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -42,15 +57,15 @@ export default {
   computed: {
     PathTitle() {
       let path = this.$route.path.replace(/\/home\//, "");
-      if(path=='mytasks'){
-        return 
+      if (path == "mytasks") {
+        return;
       }
       return path.slice(0, 1).toUpperCase().concat(path.slice(1).toLowerCase());
     },
     ...mapGetters([
-      'currentClass',//当前分类
-      'classPage',//分类页内容
-    ])
+      "currentClass", //当前分类
+      "classPage", //分类页内容
+    ]),
   },
   components: {
     Task,
@@ -61,27 +76,28 @@ export default {
   },
   mounted() {
     this.init(),
-      this.$nextTick(() => {
-        if (!this.BScroll) {
-          this.BScroll = new BScroll(".list", {
-            scrollX: true,
-            click: true,
-            tap:true,
-            pullUpLoad: true,
-            wheel: true,
-            scrollbar: true,
-          });
-        }
-      });
+    this.$nextTick(() => {
+      if (!this.BScroll) {
+        this.BScroll = new BScroll(".list", {
+          scrollX: true,
+          click: true,
+          pullUpLoad: true,
+          wheel: true,
+          scrollbar: true,
+        });
+      }
+    });
   },
   methods: {
     init() {
       this.bs = new BScroll(this.$refs.scroll, {
         probeType: 3,
         click: true,
+        tap: true,
+
         scrollbar: {
-          fade: true
-        }
+          fade: true,
+        },
       });
     },
     clickHandler(item) {

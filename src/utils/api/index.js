@@ -29,3 +29,5 @@ export const reqTaskPage = ({data}) => ajax(BASE_URL+'/task_get',{data},'POST')
 export const reqLoginStatus = () => ajax(BASE_URL+'/loginstatus','POST')
 //搜索task
 export const reqSearchTask = ({keyword}) => ajax(BASE_URL+'/search',{keyword})
+//更新task状态
+export const reqTaskUpdate = ({data}) => ajax(BASE_URL+'/task_update',{data})
