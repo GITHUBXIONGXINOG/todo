@@ -71,6 +71,11 @@ export default {
         });
         //查询当前分类页
         this.$store.dispatch("recordClassPage");
+        //从搜索页面返回到普通页面
+        if (this.$route.path==='/home/search') {
+          this.$store.dispatch('setSlideFlag',{slideFlag:true})
+          this.$router.back()
+        }
       }
     },
   },

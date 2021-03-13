@@ -15,13 +15,13 @@
           <use xlink:href="#icon-sousuo_huaban1"></use>
         </svg>
       </button>
-
       <input
         type="text"
         class="searchInfo"
         placeholder="Search"
         v-model="searchInput"
         @keydown.enter="searchTask"
+        @keyup="searchTask"
         @blur="changeSearch"
         ref="searchInfo"
       />
@@ -59,6 +59,7 @@
 <script>
 import UserPanel from "../Panel/UserPanel.vue";
 import { reqSearchTask } from "../../utils/api";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -67,29 +68,45 @@ export default {
       showUserPanel: false, //显示个人信息面板
     };
   },
+  computed: {
+    ...mapGetters(["slideFlag"]),
+  },
   methods: {
     //清除输入
     clearInput() {
       //清空输入框
       this.searchInput = "";
       //如果在搜索页面,回退到之前的页面
-      if (this.$route.path ==='/home/search') {
-      //回退
-      this.$router.back();
+      if (this.$route.path === "/home/search") {
+        //回退
+        this.$router.back();
       }
-
     },
-    //搜索task
-    async searchTask() {
-      //存储搜索词
-      this.$store.dispatch('setSearchKey',this.searchInput.trim())
-      
-      await reqSearchTask({ keyword: this.searchInput }).then((req, res) => {
-        console.log(req);
-        //存储搜索页
-        this.$store.dispatch('setSearchPage',req.data)
+
+    //搜索函数
+    searchTask() {
+      //防抖
+      let timer = null;
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(async () => {
+        //设置搜索
+        this.$store.dispatch("setSlideFlag", { slideFlag: false });
+        let keyword = this.searchInput.trim();
+        //存储搜索词
+        this.$store.dispatch("setSearchKey", keyword);
+        if (keyword) {
+          await reqSearchTask({ keyword }).then((req, res) => {
+            //存储搜索页
+            this.$store.dispatch("setSearchPage", req.data);
+          });
+        } else {
+          //搜索词为空直接返回空数组
+          this.$store.dispatch("setSearchPage", []);
+        }
         this.$router.push("/home/search");
-      });
+      }, 1000);
     },
     //进入搜索框,input获取焦点
     intoSearch() {
@@ -105,6 +122,20 @@ export default {
   },
   components: {
     UserPanel,
+  },
+  mounted() {
+    //进入搜索 设置slideflag为false
+    this.$store.dispatch("setSlideFlag", { slideFlag: false });
+  },
+  watch: {
+    slideFlag: {
+      handler(val) {
+        if (val.slideFlag) {
+          this.searchInput = "";
+        }
+      },
+      immedate: true,
+    },
   },
 };
 </script>

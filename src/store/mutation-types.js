@@ -16,3 +16,6 @@ export const RECEIVE_CLEAR_STATE = 'receive_clear_state'//退出清空state
 export const SET_SEARCH_KEY = 'set_search_key'//搜索词
 
 export const RECEIVE_SEARCH_PAGE = 'receive_search_page'//搜索页
+
+export const SET_SLIDE_FLAG = 'set_slide_flag'//slidepage的标识
+

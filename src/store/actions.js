@@ -10,6 +10,7 @@ import {
   RECEIVE_CLEAR_STATE,//清空state
   SET_SEARCH_KEY,//搜索词
   RECEIVE_SEARCH_PAGE,//搜索页
+  SET_SLIDE_FLAG,//slide页面标识
 } from './mutation-types'
 
 import {reqLoginStatus, reqTaskClass,reqTaskPage} from "../utils/api/";
@@ -59,5 +60,9 @@ export default {
   //存储搜索页
   setSearchPage({commit},searchPage){
     commit(RECEIVE_SEARCH_PAGE,{searchPage})
+  },
+  //slide页面标识
+  setSlideFlag({commit},slideFlag){
+    commit(SET_SLIDE_FLAG,{slideFlag})
   }
 }

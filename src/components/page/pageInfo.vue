@@ -1,7 +1,6 @@
 <template>
   <div class="pageInfo">
     <nav>
-      <!-- {{ PathTitle }} -->
       {{currentClass.title}}
     </nav>
     <create-task />

@@ -20,3 +20,6 @@ export const searchKey = state => state.searchKey
 
 //获取当前的搜索页
 export const searchPage = state => state.searchPage
+
+//获取搜索flag
+export const slideFlag = state => state.slideFlag

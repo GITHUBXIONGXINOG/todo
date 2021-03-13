@@ -20,8 +20,11 @@ export default {
         height: 100%;
         display: flex;
         overflow: hidden;
+        //task页面
         >:nth-child(2) {
-            width: 80%;
+            // width: 80%;
+            flex: 1;
+            overflow: hidden;
         }
     }
 </style>

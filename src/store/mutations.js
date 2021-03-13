@@ -11,6 +11,7 @@ import {
     RECEIVE_CLEAR_STATE,//清空state
     SET_SEARCH_KEY,//搜索词
     RECEIVE_SEARCH_PAGE,//搜索页
+    SET_SLIDE_FLAG,//slide页面标识
 } from './mutation-types'
 
 export default {
@@ -56,5 +57,9 @@ export default {
     //搜索页
     [RECEIVE_SEARCH_PAGE](state,{searchPage}){
         state.searchPage = searchPage
+    },
+    //slide页面标识
+    [SET_SLIDE_FLAG](state,{slideFlag}){
+        state.slideFlag = slideFlag
     }
 }
