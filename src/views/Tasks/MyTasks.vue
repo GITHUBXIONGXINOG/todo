@@ -13,8 +13,9 @@ import pageInfo from '../../components/page/pageInfo.vue'
 </script>
 
 <style scoped lang="scss">
-  .tasks{
-   
+  .my_tasks{
+  //  border: 1px solid red;
+   height: 100%;
  
   }
 </style>

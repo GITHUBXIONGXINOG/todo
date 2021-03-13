@@ -12,7 +12,7 @@
     </div>
     <div class="content">
       <div class="text">{{ taskinfo.task }}</div>
-      <div class="title">{{ taskinfo.title }}</div>
+      <div class="title"><span>{{ taskinfo.title }}</span></div>
     </div>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
   methods: {
 
     clickSelect() {
-      debugger;
+      // debugger;
       console.log("click");
 
     },
@@ -83,11 +83,7 @@ export default {
 <style scoped lang="scss">
 .task {
   height: 52px;
-  width: 97%;
-  //   border: 1px solid transparent;
-  border: 2px solid #e5e5e5;
-  border-left: none;
-  border-right: none;
+  // width: 97%;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -95,6 +91,7 @@ export default {
   position: relative;
   &:hover {
     cursor: pointer;
+    background: #f5f5f5;
   }
   //icon外框
   .icon_click {
@@ -107,7 +104,6 @@ export default {
     .icon {
       width: 20px;
       height: 20px;
-
       fill: #0078d7;
     }
   }
@@ -115,15 +111,13 @@ export default {
   //内容
   .content {
     font-size: 18px;
-    padding-left: 30px;
-
+    padding-left: 10px;
     display: flex;
     flex-direction: column;
     position: relative;
     width: 100%;
     height: 80%;
     box-sizing: border-box;
-    // justify-content: center;
     justify-content: space-evenly;
     //文字
     .text {
@@ -138,13 +132,9 @@ export default {
     .title {
       color: #767678;
       font-size: 10px;
-      // line-height: 80%;
-      // position: absolute;
-      // height: 10px;
-      // bottom: -100%;
-      width: 0;
       z-index: 1;
       line-height: 100%;
+      display: flex;
     }
   }
 }

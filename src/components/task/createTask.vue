@@ -87,7 +87,7 @@ input {
   width: 100%;
   // height: 20px;
   padding: 17px 0 17px 30px;
-  border-bottom: 1px solid #bfc6d1;
+  // border-bottom: 1px solid #bfc6d1;
   // padding-bottom: 16px;
   &::-webkit-input-placeholder {
     /* WebKit browsers */

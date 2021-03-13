@@ -5,11 +5,11 @@
       >"
     </nav>
     <div class="search_part" v-if="searchPage.length">
-      <div class="scroll-wrapper" ref="scroll">
-        <div class="list scroll-content">
+      <div class="list-wrapper" ref="scroll">
+        <div class="list list-content">
           <nav>Tasks</nav>
           <div
-            class="scroll-item"
+            class="list-item"
             v-for="(item, index) in searchPage"
             :key="index"
             @click="clickHandler(item)"
@@ -30,7 +30,6 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import BScroll from "better-scroll";
 import Task from "../../components/task/task";
 
 import nullTask from "./nullTask";
@@ -56,44 +55,80 @@ export default {
 <style scoped lang="scss">
 .search {
   font-size: 20px;
-  margin: 20px 10px;
+  margin: 20px 0 0 10px;
   span {
     font-weight: bold;
   }
   nav {
-  color: #3e69e4;
+    color: #3e69e4;
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     line-height: 30px;
   }
-  .scroll-wrapper {
-    // height: 400px;
-    height: 600px;
-    width: 100%;
+  .search_part {
+    height: 95%;
+  }
+  .list-wrapper {
+    height: 100%;
+    width: 97%;
     position: relative;
-    overflow: hidden;
-    .scroll-item:nth-child(2){
-        .task{
-             border-top: none;
-        }
-    }
-    .scroll-item {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    .list-item {
       height: 52px;
       line-height: 52px;
       font-size: 24px;
-      // font-weight: bold;
-      // border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #e5e5e5;
       text-align: center;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    &::after {
+      display: inline-block;
+      width: 100%;
+      flex: 1;
+      overflow: hidden;
+      content: "";
+      // margin: 0 24px;
+      flex: 1;
+      //颜色渐变
+      background: linear-gradient(
+        180deg,
+        white,
+        white 52px,
+        #e5e5e5 52px,
+        #e5e5e5 52px
+      );
+      background-size: 100% 53px;
+      box-shadow: inset 0 1px 0 0 #e5e5e5;
     }
     .list {
       nav {
         color: black;
         font-size: 16px;
-        margin: 20px 0 10px ;
+        margin: 20px 0 10px;
       }
     }
+  }
+  //导航条样式
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    display: none;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: 0 0;
   }
 }
 .search_null {

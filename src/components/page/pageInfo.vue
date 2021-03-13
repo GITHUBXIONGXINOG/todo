@@ -4,49 +4,22 @@
       {{ currentClass.title }}
     </nav>
     <create-task />
-    <div class="scroll-wrapper" ref="scroll">
-      <div class="list scroll-content">
-        <div
-          class="scroll-item"
-          v-for="(item, index) in classPage"
-
-          :key="index"
-          v-show="index != 0 || item.task"
-        >
-          <!-- @click="clickHandler(item)" -->
-        
-
-          <task :taskinfo="item" />
-        </div>
+    <div class="list-wrapper" ref="scroll">
+      <div
+        class="list-item"
+        v-for="(item, index) in classPage"
+        :key="index"
+        v-show="index != 0 || item.task"
+      >
+        <!-- @click="clickHandler(item)" -->
+        <task :taskinfo="item" />
       </div>
     </div>
-
-    <!-- <div>
-      <div class="list">
-        <div
-          v-for="(item, index) in classPage"
-          :key="index"
-          v-show="index != 0 || item.task"
-        >
-
-          <task :taskinfo="item" />
-        </div>
-      </div>
-    </div> -->
-    <!--     <ul class="list scroll-content">
-      <li v-for="(n, index) in tabelLength" :key="index" class="scroll-item">
-        <task />
-      </li>
-    </ul> -->
-    <!-- <ul class="page-background">
-      <li v-for="(n, index) in tabelLength" :key="index"></li>
-    </ul> -->
   </div>
 </template>
 <script>
 import Task from "../task/task.vue";
 import CreateTask from "../task/createTask.vue";
-import BScroll from "better-scroll";
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -55,13 +28,6 @@ export default {
     };
   },
   computed: {
-    PathTitle() {
-      let path = this.$route.path.replace(/\/home\//, "");
-      if (path == "mytasks") {
-        return;
-      }
-      return path.slice(0, 1).toUpperCase().concat(path.slice(1).toLowerCase());
-    },
     ...mapGetters([
       "currentClass", //当前分类
       "classPage", //分类页内容
@@ -71,35 +37,9 @@ export default {
     Task,
     CreateTask,
   },
-  beforeDestroy() {
-    this.bs.destroy();
-  },
-  mounted() {
-    this.init(),
-    this.$nextTick(() => {
-      if (!this.BScroll) {
-        this.BScroll = new BScroll(".list", {
-          scrollX: true,
-          click: true,
-          pullUpLoad: true,
-          wheel: true,
-          scrollbar: true,
-        });
-      }
-    });
-  },
-  methods: {
-    init() {
-      this.bs = new BScroll(this.$refs.scroll, {
-        probeType: 3,
-        click: true,
-        tap: true,
 
-        scrollbar: {
-          fade: true,
-        },
-      });
-    },
+  mounted() {},
+  methods: {
     clickHandler(item) {
       // window.alert(item);
       console.log(item);
@@ -111,6 +51,8 @@ export default {
 .pageInfo {
   flex: 1;
   width: 100%;
+  height: 84%;
+
   position: relative;
   //标题
   nav {
@@ -118,39 +60,67 @@ export default {
     font-size: 25px;
     margin: 12px 0;
   }
-  //背景
-  // .page-background {
-  //   position: fixed;
-  //   top: 100px;
-  //   // width: 100%;
-  //   z-index: -100;
-  //   li {
-  //     height: 52px;
-  //     border-bottom: 2px solid #e5e5e5;
-  //     width: 90%;
-  //     // margin: 0 30px 0 0;
 
-  //   }
-  // }
-
-  // .list {
-  //   overflow: auto;
-  // }
-
-  .scroll-wrapper {
-    // height: 400px;
-    height: 600px;
-    width: 100%;
+  .list-wrapper {
+    height: 100%;
+    width: 97%;
     position: relative;
-    overflow: hidden;
-    .scroll-item {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    .list-item {
       height: 52px;
       line-height: 52px;
       font-size: 24px;
-      // font-weight: bold;
-      // border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #e5e5e5;
       text-align: center;
+      &:last-child {
+        border-bottom: none;
+      }
+      &:hover{
+        background-color: #f5f5f5;
+        width: 100%;
+        cursor: pointer;
+      }
+ 
     }
+
+    &::after {
+      display: inline-block;
+      width: 100%;
+      flex: 1;
+      overflow: hidden;
+      content: "";
+      // margin: 0 24px;
+      flex: 1;
+      //颜色渐变
+      background: linear-gradient(
+        180deg,
+        white,
+        white 52px,
+        #e5e5e5 52px,
+        #e5e5e5 52px
+      );
+      background-size: 100% 53px;
+      box-shadow: inset 0 1px 0 0 #e5e5e5;
+    }
+  }
+
+  //导航条样式
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    display: none;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: 0 0;
   }
 }
 </style>
