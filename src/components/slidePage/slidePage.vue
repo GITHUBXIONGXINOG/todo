@@ -35,12 +35,16 @@
           :key="index"
           :id="list._id"
           v-show="!list.static"
+          @contextmenu.prevent="menuPanel(list._id)" 
+          @mouseleave="menuFlag=false"
         >
           <!--           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-caidan1"></use>
           </svg>
           <span>{{ list.taskClass }}</span> -->
           <list :listClass="list.taskClass" />
+          <menu-task :currentTask="list" v-show="menuFlag&&currentClass==list._id" />
+
         </li>
       </ul>
       <create-list />
@@ -51,16 +55,24 @@
 import createList from "./createList.vue";
 import list from "./listClass.vue";
 import { mapGetters } from "vuex";
+import menuTask from '../task/menuTask'
 export default {
-  components: { createList, list },
+  components: { createList, list ,menuTask},
   data() {
     return {
       title: "", //输入分类标题
       titleList: [], //分类列表
       showChange: false, //边栏切换
+      menuFlag:false,//删除显示
+      currentClass: '',//当前的class
     };
   },
   methods: {
+        //右键面板
+    menuPanel(id) {
+      this.menuFlag = true;
+      this.currentClass = id
+    },
     clickToPage(event) {
       // console.log(event.target);
       if (event.target.nodeName == "LI" || event.target.nodeName == "NAV") {
@@ -149,6 +161,7 @@ export default {
         height: 36px;
         display: flex;
         align-items: center;
+        position: relative;
         &:hover {
           background: #fafafa;
           cursor: pointer;

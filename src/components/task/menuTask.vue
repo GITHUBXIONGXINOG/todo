@@ -13,14 +13,16 @@ export default {
     async deleteTask() {
       console.log("删除task");
       console.log(this.currentTask);
+      let type = this.currentTask.taskClass ? 'class' : 'task'
       let params = {
-          type: 'task',//种类task
+          type,//种类,class是分类,task是小task
           _id: this.currentTask._id//删除id
       }
       await reqTaskDelete({keyword:JSON.stringify(params)}).then((req,res)=>{
-          if (req.status==='1000') {
-          this.$store.dispatch("recordClassPage");
-              
+          if (req.status==='1000' && type ==='class') {
+            this.$store.dispatch("recordTaskClass")//更新分类
+          } else if (req.status==='1000' && type ==='task') {
+            this.$store.dispatch("recordClassPage");//更新页面
           }
       })
     },
