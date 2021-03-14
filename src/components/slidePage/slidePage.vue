@@ -110,7 +110,6 @@ export default {
   box-shadow: -1px 10px 10px #eaeaea;
   margin: 0 30px 0 0;
   transition: width 0.3s;
-
   > nav {
     height: 36px;
     display: flex;
@@ -155,6 +154,8 @@ export default {
     display: flex;
     flex-direction: column;
     overflow: auto;
+    overflow-x: hidden;
+
     ul {
       li {
         // border: 1px solid red;

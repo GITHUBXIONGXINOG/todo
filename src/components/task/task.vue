@@ -6,7 +6,7 @@
   >
     <div
       class="icon_click"
-      @click="mouseSelect"
+      @click="mouseSelect(0)"
       @mouseenter="mouseEnter"
       @mouseleave="mouseLeave"
     >
@@ -20,6 +20,13 @@
         <span>{{ taskinfo.title }}</span>
       </div>
     </div>
+    <!-- 重要icon -->
+    <div class="im_click" @click="mouseSelect(1)">
+      <svg class="icon" aria-hidden="true">
+        <use :xlink:href="icon_im"></use>
+      </svg>
+    </div>
+
     <menu-task :currentTask="taskinfo" v-show="menuFlag" />
   </div>
 </template>
@@ -34,9 +41,15 @@ export default {
     return {
       selectFlag: false, //icon选中flag
       menuFlag: false, //右键菜单flag
+      imSelectFlag: false,//重要选中
     };
   },
   methods: {
+    //重要选中
+    importantSelect(){
+      debugger
+
+    },
     //右键面板
     menuPanel() {
       // console.log(this.taskinfo);
@@ -49,13 +62,16 @@ export default {
       console.log("click");
     },
     //鼠标点击icon
-    async mouseSelect() {
-      // console.log("clickicon");
-      // console.log('taskinfo',this.taskinfo);
+    async mouseSelect(index) {
+      /* 
+        index:0 修改完成状态 | 1 修改重要状态
+      */
+ 
       let params = {
         ...this.taskinfo,
         // _id: this.taskinfo._id,
-        complete: !this.taskinfo.complete,
+        complete: index ==0 ? !this.taskinfo.complete : this.taskinfo.complete,
+        important: index ==1 ?!this.taskinfo.important : this.taskinfo.important
       };
 
       await reqTaskUpdate({ data: JSON.stringify(params) }).then(
@@ -99,6 +115,13 @@ export default {
       }
       //默认未选中
       return "#icon-danxuanxiangweixuanzhong";
+    },
+    //重要的icon
+    icon_im() {
+        if (this.taskinfo.important) {
+             return "#icon-xingxing";
+        }
+      return "#icon-xingxing1";
     },
   },
   mounted() {
@@ -170,6 +193,24 @@ export default {
       z-index: 1;
       line-height: 100%;
       display: flex;
+    }
+  }
+
+  //重要
+  .im_click {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    margin: 0 15px 0 0;
+    .icon {
+      width: 20px;
+      height: 20px;
+      // fill: #0078d7;
+    }
+    &:hover {
+      .icon {
+        fill: #0078d7;
+      }
     }
   }
 }
