@@ -61,5 +61,5 @@ export default {
     //slide页面标识
     [SET_SLIDE_FLAG](state,{slideFlag}){
         state.slideFlag = slideFlag
-    }
+    },
 }

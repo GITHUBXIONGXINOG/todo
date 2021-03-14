@@ -27,13 +27,14 @@ export default {
   methods: {
     //提交方法
     async sendToTask() {
+      let currentClass = this.$store.state.currentClass
+      let title = currentClass.title == 'Myday' || currentClass.title == 'Important' ? 'Tasks' : currentClass.title
       await reqTaskAdd({
         data: {
-          author: this.$store.state.userInfo._id,
           task:  this.article,//文字内容
           author: this.$store.state.userInfo._id,//作者id
-          classtitle: this.$store.state.currentClass._id,//分类集合id
-          title:this.$store.state.currentClass.title,//分类集合标题
+          classtitle: currentClass._id,//分类集合id
+          title,//分类集合标题
           pulishDate: Date.now,//创建时间
           content: '',//备注  
           complete: false,//完成状态

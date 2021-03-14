@@ -19,3 +19,5 @@ export const RECEIVE_SEARCH_PAGE = 'receive_search_page'//搜索页
 
 export const SET_SLIDE_FLAG = 'set_slide_flag'//slidepage的标识
 
+
+

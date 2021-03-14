@@ -18,11 +18,11 @@
     <nav class="myday" :id="taskClass[0]._id">
       <list listClass="Myday" />
     </nav>
-    <nav class="important" :id="taskClass[1]._id">
+    <nav class="important" :id="taskClass[0]._id">
       <list listClass="Important" />
 
     </nav>
-    <nav class="tasks" :id="taskClass[2]._id">
+    <nav class="tasks" :id="taskClass[0]._id">
  
       <list listClass="Tasks" />
 
@@ -76,6 +76,7 @@ export default {
     clickToPage(event) {
       // console.log(event.target);
       if (event.target.nodeName == "LI" || event.target.nodeName == "NAV") {
+
         //保存当前分类
         this.$store.dispatch("recordCurrentClass", {
           title: event.target.innerText,

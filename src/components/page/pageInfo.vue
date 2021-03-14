@@ -107,6 +107,7 @@ export default {
     // }
   },
   watch: {
+    //监视分类页
     classPage: {
       handler(value) {
         this.comClass = [];

@@ -31,14 +31,17 @@ export default {
     } 
     commit(RECEIVE_TASK_CLASS, { taskClass })
   },
-  //保存当前点击分类
+  //获取并保存当前点击分类
   recordCurrentClass({commit},currentClass) {
     commit(SETTING_TASK_CLASS,{currentClass})
   },
-  //保存当前分类页
+  //获取并保存当前分类页
   async recordClassPage({state,commit}) {
       // console.log(state);
-      let result = await reqTaskPage({data:{classtitle:state.currentClass._id  }})
+      let result = await reqTaskPage({data:{
+        classtitle:state.currentClass._id ,
+        title: state.currentClass.title
+      }})
       commit(RECEIVE_CLSSS_PAGE,{classPage:result.classpage})
  
   },  
@@ -64,5 +67,6 @@ export default {
   //slide页面标识
   setSlideFlag({commit},slideFlag){
     commit(SET_SLIDE_FLAG,{slideFlag})
-  }
+  },
+
 }
