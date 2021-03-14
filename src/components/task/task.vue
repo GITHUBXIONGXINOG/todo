@@ -1,5 +1,9 @@
 <template>
-  <div class="task" @contextmenu.prevent="menuPanel" @mouseleave="menuFlag=false">
+  <div
+    class="task"
+    @contextmenu.prevent="menuPanel"
+    @mouseleave="menuFlag = false"
+  >
     <div
       class="icon_click"
       @click="mouseSelect"
@@ -20,7 +24,8 @@
   </div>
 </template>
 <script>
-import { reqTaskUpdate } from "../../utils/api";
+import { mapGetters } from "vuex";
+import { reqTaskUpdate, reqSearchTask } from "../../utils/api";
 import menuTask from "./menuTask.vue";
 export default {
   components: { menuTask },
@@ -53,12 +58,23 @@ export default {
         complete: !this.taskinfo.complete,
       };
 
-      await reqTaskUpdate({ data: JSON.stringify(params) }).then((req, res) => {
-        // console.log(req);
-        if (req.status == "1000") {
-          this.$store.dispatch("recordClassPage");
+      await reqTaskUpdate({ data: JSON.stringify(params) }).then(
+        async (req, res) => {
+          if (req.status == "1000") {
+            this.$store.dispatch("recordClassPage");
+            if (this.$route.path === "/home/search") {
+              //搜索页面还要更新搜索
+              await reqSearchTask({ keyword: this.searchKey }).then(
+                (req, res) => {
+                  //存储搜索页
+                  this.$store.dispatch("setSearchPage", req.data);
+                  this.$store.dispatch("recordClassPage");
+                }
+              );
+            }
+          }
         }
-      });
+      );
     },
     //鼠标移入
     mouseEnter() {
@@ -70,6 +86,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(["searchKey"]),
     //返回icon对应的iconfont
     icon_info() {
       // console.log(this.taskinfo);
@@ -105,7 +122,7 @@ export default {
   align-items: center;
   line-height: 100%;
   position: relative;
-  transition: all .1s;
+  transition: all 0.1s;
 
   &:hover {
     cursor: pointer;

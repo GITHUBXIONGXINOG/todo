@@ -6,27 +6,45 @@
   </div>
 </template>
 <script>
-import {reqTaskDelete} from '../../utils/api'
+import { mapGetters } from 'vuex';
+import { reqTaskDelete, reqSearchTask } from "../../utils/api";
 export default {
   props: ["currentTask"],
   methods: {
     async deleteTask() {
       console.log("删除task");
       console.log(this.currentTask);
-      let type = this.currentTask.taskClass ? 'class' : 'task'
+      let type = this.currentTask.taskClass ? "class" : "task";
       let params = {
-          type,//种类,class是分类,task是小task
-          _id: this.currentTask._id//删除id
-      }
-      await reqTaskDelete({keyword:JSON.stringify(params)}).then((req,res)=>{
-          if (req.status==='1000' && type ==='class') {
-            this.$store.dispatch("recordTaskClass")//更新分类
-          } else if (req.status==='1000' && type ==='task') {
-            this.$store.dispatch("recordClassPage");//更新页面
+        type, //种类,class是分类,task是小task
+        _id: this.currentTask._id, //删除id
+      };
+      await reqTaskDelete({ keyword: JSON.stringify(params) }).then(
+        async (req, res) => {
+          if (req.status === "1000" && type === "class") {
+            this.$store.dispatch("recordTaskClass"); //更新分类
+          } else if (req.status === "1000" && type === "task") {
+            this.$store.dispatch("recordClassPage"); //更新页面
+            if (this.$route.path === "/home/search") {
+              //搜索页面还要更新搜索
+              await reqSearchTask({ keyword: this.searchKey }).then(
+                (req, res) => {
+                  //存储搜索页
+                  this.$store.dispatch("setSearchPage", req.data);
+                  this.$store.dispatch("recordClassPage");
+                }
+              );
+            }
           }
-      })
+        }
+      );
     },
   },
+  computed:{
+      ...mapGetters([
+          'searchKey'
+      ])
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -43,7 +61,7 @@ export default {
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  transition: all .1s;
+  transition: all 0.1s;
 
   .icon {
     width: 20px;

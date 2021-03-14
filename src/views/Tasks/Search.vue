@@ -50,6 +50,7 @@ export default {
       console.log(item);
     },
   },
+  
 };
 </script>
 <style scoped lang="scss">

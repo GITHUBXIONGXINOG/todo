@@ -14,7 +14,6 @@
         @click="clickHandler(item)"
         
       >
-        <!-- @click="clickHandler(item)" -->
         <task :taskinfo="item" />
         
       </div>
