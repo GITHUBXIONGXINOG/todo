@@ -7,9 +7,33 @@
     <div class="list-wrapper" ref="scroll">
       <div
         class="list-item"
-        v-for="(item, index) in classPage"
+        v-for="(item, index) in unComClass"
         :key="index"
         v-show="index != 0 || item.task"
+      >
+        <!-- @click="clickHandler(item)" -->
+        <task :taskinfo="item" />
+      </div>
+      <!-- 完成分类 -->
+      <div
+        class="list-item completed"
+        v-show="comClass.length"
+        @click="changeComClass"
+      >
+        <svg class="icon" aria-hidden="true" :class="{rotate:comClassFlag}">
+          <use
+            xlink:href="#icon-jiantou-you"
+            ref="right_jiantou"
+            class="jiu"
+          ></use>
+        </svg>
+        <div class="text">completed</div>
+      </div>
+      <div
+        class="list-item"
+        v-for="item in comClass"
+        :key="item._id"
+        v-show="comClassFlag"
       >
         <!-- @click="clickHandler(item)" -->
         <task :taskinfo="item" />
@@ -24,7 +48,9 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      tabelLength: 20,
+      unComClass: [], //未完成的分类
+      comClass: [], //完成的分类
+      comClassFlag: false, //显示隐藏完成分类
     };
   },
   computed: {
@@ -43,6 +69,28 @@ export default {
     clickHandler(item) {
       // window.alert(item);
       console.log(item);
+    },
+    changeComClass() {
+      this.comClassFlag = !this.comClassFlag;
+      // this.$refs.right_jiantou.style.transform = "rotate(90deg)";
+      // console.log(this.$refs.right_jiantou);
+    },
+  },
+  watch: {
+    classPage: {
+      handler(value) {
+        this.comClass = [];
+        this.unComClass = [];
+        value.forEach((item) => {
+          if (item.complete) {
+            //完成
+            this.comClass.push(item);
+          } else {
+            //未完成
+            this.unComClass.push(item);
+          }
+        });
+      },
     },
   },
 };
@@ -78,12 +126,29 @@ export default {
       &:last-child {
         border-bottom: none;
       }
-      &:hover{
+      &:hover {
         background-color: #f5f5f5;
         width: 100%;
         cursor: pointer;
       }
- 
+    }
+    //完成样式
+    .completed {
+      display: flex;
+      .icon {
+        width: 20px;
+        transition: transform .1s;
+      }
+      .rotate{
+        transform: rotate(90deg);
+
+      }
+
+      .text {
+        padding: 0 0 0 10px;
+        font-size: 18px;
+      }
+      // border-bottom: none;
     }
 
     &::after {
