@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11987043",
+      "name": "垃圾箱",
+      "font_class": "lajixiang",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
       "icon_id": "5184460",
       "name": "箭头-下",
       "font_class": "jiantou-xia",

@@ -1,5 +1,5 @@
 <template>
-  <div class="task">
+  <div class="task" @contextmenu.prevent="menuPanel">
     <div
       class="icon_click"
       @click="mouseSelect"
@@ -14,20 +14,31 @@
       <div class="text">{{ taskinfo.task }}</div>
       <div class="title"><span>{{ taskinfo.title }}</span></div>
     </div>
+    <menu-task :item="taskinfo" :menuSite="$attrs" v-show="menuFlag"/>
   </div>
 </template>
 <script>
 import {reqTaskUpdate} from '../../utils/api'
+import menuTask from './menuTask.vue'
 export default {
+  components: { menuTask },
   props: ["taskinfo"],
   data() {
     return {
-      selectFlag: false,
+      selectFlag: false,//icon选中flag
+      menuFlag: false,//右键菜单flag
     };
   },
   methods: {
-
+    //右键面板
+    menuPanel(){
+      console.log(this.taskinfo);
+      // this.menuFlag = false
+      this.menuFlag = true
+      //  this.menuFlag = ! this.menuFlag
+    },
     clickSelect() {
+      
       // debugger;
       console.log("click");
 
@@ -77,6 +88,16 @@ export default {
       //默认未选中
       return "#icon-danxuanxiangweixuanzhong";
     },
+  },
+  mounted(){
+      document.addEventListener('click',e=>{
+          const contextMenuBox = document.getElementById('contextMenuBox')
+          if (contextMenuBox) {
+              if(!contextMenuBox.contains(e.target)){
+                  this.menuFlag = false
+              }
+          }
+      })
   },
 };
 </script>

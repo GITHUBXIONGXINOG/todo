@@ -5,14 +5,18 @@
     </nav>
     <create-task />
     <div class="list-wrapper" ref="scroll">
+      <!-- 未完成分类 -->
       <div
         class="list-item"
         v-for="(item, index) in unComClass"
         :key="index"
         v-show="index != 0 || item.task"
+        @click="clickHandler(item)"
+        @contextmenu.prevent="menuPanel"
       >
         <!-- @click="clickHandler(item)" -->
-        <task :taskinfo="item" />
+        <task :taskinfo="item" :menuSite="menuSite"/>
+        
       </div>
       <!-- 完成分类 -->
       <div
@@ -36,21 +40,28 @@
         v-show="comClassFlag"
       >
         <!-- @click="clickHandler(item)" -->
-        <task :taskinfo="item" />
+        <task :taskinfo="item" :menuSite="menuSite"/>
       </div>
     </div>
+    <!-- <menu-task :currentTask="currentTask" v-show="menuFlag"/> -->
+
   </div>
 </template>
 <script>
 import Task from "../task/task.vue";
 import CreateTask from "../task/createTask.vue";
 import { mapGetters } from "vuex";
+import MenuTask from '../task/menuTask.vue';
+ 
+
 export default {
   data() {
     return {
       unComClass: [], //未完成的分类
       comClass: [], //完成的分类
       comClassFlag: false, //显示隐藏完成分类
+      menuFlag:false,//右键菜单
+      menuSite:{},//位置
     };
   },
   computed: {
@@ -62,10 +73,38 @@ export default {
   components: {
     Task,
     CreateTask,
+    MenuTask,
   },
 
-  mounted() {},
+   mounted(){
+     //点击其它部分隐藏
+      document.addEventListener('click',e=>{
+          const contextMenuBox = document.getElementById('contextMenuBox')
+          if (contextMenuBox) {
+              if(!contextMenuBox.contains(e.target)){
+                  this.menuFlag = false
+              }
+          }
+      })
+  },
   methods: {
+        //右键面板
+    menuPanel(event){
+      // console.log(this.taskinfo);
+      // this.menuFlag = false
+      // console.log(item);
+      // this.menuFlag = true
+      console.log(event);
+      console.log(event.offsetX );
+      console.log(event.offsetY);
+      this.menuSite = {
+        top: event.offsetX + 30,
+        left: event.offsetY 
+      }
+      console.log(this.menuSite);
+  
+      
+    },
     clickHandler(item) {
       // window.alert(item);
       console.log(item);
@@ -75,6 +114,9 @@ export default {
       // this.$refs.right_jiantou.style.transform = "rotate(90deg)";
       // console.log(this.$refs.right_jiantou);
     },
+    // menushow(item){
+    //   console.log(item);
+    // }
   },
   watch: {
     classPage: {
@@ -172,20 +214,10 @@ export default {
     }
   }
 
-  //导航条样式
+  // //导航条样式
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
     display: none;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 5px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: 0 0;
-  }
 }
 </style>

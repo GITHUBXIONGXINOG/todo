@@ -69,11 +69,11 @@ export default {
 .create_task {
   height: 52px;
   width: 97%;
-  border: 1px solid transparent;
+  // border: 1px solid transparent;
   top: 50px;
   display: flex;
   align-items: center;
-  
+  border-bottom: 1px solid #e5e5e5;
   .icon {
     width: 20px;
     height: 20px;
