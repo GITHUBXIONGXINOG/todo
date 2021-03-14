@@ -1,5 +1,5 @@
 <template>
-  <div class="task" @contextmenu.prevent="menuPanel">
+  <div class="task" @contextmenu.prevent="menuPanel" @mouseleave="menuFlag=false">
     <div
       class="icon_click"
       @click="mouseSelect"
@@ -12,58 +12,53 @@
     </div>
     <div class="content">
       <div class="text">{{ taskinfo.task }}</div>
-      <div class="title"><span>{{ taskinfo.title }}</span></div>
+      <div class="title">
+        <span>{{ taskinfo.title }}</span>
+      </div>
     </div>
-    <menu-task :item="taskinfo" :menuSite="$attrs" v-show="menuFlag"/>
+    <menu-task :currentTask="taskinfo" v-show="menuFlag" />
   </div>
 </template>
 <script>
-import {reqTaskUpdate} from '../../utils/api'
-import menuTask from './menuTask.vue'
+import { reqTaskUpdate } from "../../utils/api";
+import menuTask from "./menuTask.vue";
 export default {
   components: { menuTask },
   props: ["taskinfo"],
   data() {
     return {
-      selectFlag: false,//icon选中flag
-      menuFlag: false,//右键菜单flag
+      selectFlag: false, //icon选中flag
+      menuFlag: false, //右键菜单flag
     };
   },
   methods: {
     //右键面板
-    menuPanel(){
-      console.log(this.taskinfo);
+    menuPanel() {
+      // console.log(this.taskinfo);
       // this.menuFlag = false
-      this.menuFlag = true
+      this.menuFlag = true;
       //  this.menuFlag = ! this.menuFlag
     },
     clickSelect() {
-      
       // debugger;
       console.log("click");
-
     },
     //鼠标点击icon
-    async mouseSelect(){
+    async mouseSelect() {
       // console.log("clickicon");
       // console.log('taskinfo',this.taskinfo);
       let params = {
         ...this.taskinfo,
         // _id: this.taskinfo._id,
-        complete: !this.taskinfo.complete
-      }
+        complete: !this.taskinfo.complete,
+      };
 
-      await reqTaskUpdate({data:JSON.stringify(params)}).then((req,res)=>{
-          // console.log(req);
-          if (req.status=='1000') {
-          this.$store.dispatch('recordClassPage')
-            
-          }
-
-
-      })
-       
-
+      await reqTaskUpdate({ data: JSON.stringify(params) }).then((req, res) => {
+        // console.log(req);
+        if (req.status == "1000") {
+          this.$store.dispatch("recordClassPage");
+        }
+      });
     },
     //鼠标移入
     mouseEnter() {
@@ -89,15 +84,15 @@ export default {
       return "#icon-danxuanxiangweixuanzhong";
     },
   },
-  mounted(){
-      document.addEventListener('click',e=>{
-          const contextMenuBox = document.getElementById('contextMenuBox')
-          if (contextMenuBox) {
-              if(!contextMenuBox.contains(e.target)){
-                  this.menuFlag = false
-              }
-          }
-      })
+  mounted() {
+    document.addEventListener("click", (e) => {
+      const contextMenuBox = document.getElementById("contextMenuBox");
+      if (contextMenuBox) {
+        if (!contextMenuBox.contains(e.target)) {
+          this.menuFlag = false;
+        }
+      }
+    });
   },
 };
 </script>
@@ -110,6 +105,8 @@ export default {
   align-items: center;
   line-height: 100%;
   position: relative;
+  transition: all .1s;
+
   &:hover {
     cursor: pointer;
     background: #f5f5f5;

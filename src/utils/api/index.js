@@ -31,3 +31,5 @@ export const reqLoginStatus = () => ajax(BASE_URL+'/loginstatus','POST')
 export const reqSearchTask = ({keyword}) => ajax(BASE_URL+'/search',{keyword})
 //更新task状态
 export const reqTaskUpdate = ({data}) => ajax(BASE_URL+'/task_update',{data})
+//删除task
+export const reqTaskDelete = ({keyword}) => ajax(BASE_URL+'/task_del',{keyword})

@@ -12,10 +12,10 @@
         :key="index"
         v-show="index != 0 || item.task"
         @click="clickHandler(item)"
-        @contextmenu.prevent="menuPanel"
+        
       >
         <!-- @click="clickHandler(item)" -->
-        <task :taskinfo="item" :menuSite="menuSite"/>
+        <task :taskinfo="item" />
         
       </div>
       <!-- 完成分类 -->
@@ -76,17 +76,6 @@ export default {
     MenuTask,
   },
 
-   mounted(){
-     //点击其它部分隐藏
-      document.addEventListener('click',e=>{
-          const contextMenuBox = document.getElementById('contextMenuBox')
-          if (contextMenuBox) {
-              if(!contextMenuBox.contains(e.target)){
-                  this.menuFlag = false
-              }
-          }
-      })
-  },
   methods: {
         //右键面板
     menuPanel(event){

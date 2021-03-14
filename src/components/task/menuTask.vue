@@ -1,102 +1,55 @@
 <template>
-  <div class="menu_task" id="contextMenuBox"  ref="contextMenuBox">
-    <ul class="mark_part">
-      <li>
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-taiyang"></use>
-        </svg>
-        <span>Add to My Day</span>
-      </li>
-      <li>
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-xingxing1"></use>
-        </svg>
-        <span>Mark as important</span>
-      </li>
-      <li>
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-sel"></use>
-        </svg>
-        <span>Mark as completed</span>
-      </li>
-    </ul>
-    <ul class="delete_part">
-      <li>
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-lajixiang"></use>
-        </svg>
-        <span>Delete task</span>
-      </li>
-    </ul>
+  <div class="menu_task" id="contextMenuBox" @click="deleteTask">
+    <svg class="icon" aria-hidden="true">
+      <use xlink:href="#icon-lajixiang"></use>
+    </svg>
   </div>
 </template>
 <script>
+import {reqTaskDelete} from '../../utils/api'
 export default {
-  props: ["currentTask","menuSite"],
-  watch:{
-      menuSite:{
-          handler(val){
-            //   console.log(val);
-            //   let box = document.getElementById("contextMenuBox")
-            //   if (box&&val.menuSite) {
-            //       box.style.top = val.menuSite.top + 'px'
-            //       box.style.left = val.menuSite.left + 'px'
-
-            //   }
-            let box = this.$refs.contextMenuBox
-            // console.log(box);
-            box.style.left= val.menuSite.top + 'px'
-            box.style.top= val.menuSite.left + 'px'
-
-          }
+  props: ["currentTask"],
+  methods: {
+    async deleteTask() {
+      console.log("删除task");
+      console.log(this.currentTask);
+      let params = {
+          type: 'task',//种类task
+          _id: this.currentTask._id//删除id
       }
+      await reqTaskDelete({keyword:JSON.stringify(params)}).then((req,res)=>{
+          if (req.status==='1000') {
+          this.$store.dispatch("recordClassPage");
+              
+          }
+      })
+    },
   },
 };
 </script>
 <style scoped lang="scss">
 .menu_task {
   position: absolute;
-  width: 236px;
-  height: 173px;
-  border: 1px solid #e5e5e5;
   z-index: 10;
   background: #fff;
   display: flex;
-  flex-direction: column;
-  // justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   font-size: 14px;
   color: #38383a;
-  ul {
-    border-bottom: 1px solid #e5e5e5;
-    display: flex;
-    flex-direction: column;
-    //   border: 1px solid red;
+  right: 10px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  transition: all .1s;
 
-    // justify-content: center;
-    // justify-items: center;
-    // border: 1px solid red;
-    align-content: space-between;
-    padding: 5px 0;
-    li {
-      //   border: 1px solid #e5e5e5;
-      border: 1px solid transparent;
-
-      display: flex;
-      height: 36px;
-      align-items: center;
-      // justify-content: center;
-      &:hover {
-        background: #f4f4f4;
-      }
-      &:last-child {
-      }
-    }
-    &:last-child {
-      border-bottom: none;
-    }
-  }
   .icon {
     width: 20px;
+    height: 20px;
+  }
+  &:hover {
+    box-shadow: 1px 1px 10px #1110102a;
+    border-bottom: 1px solid #f5f5f5;
   }
 }
 </style>
