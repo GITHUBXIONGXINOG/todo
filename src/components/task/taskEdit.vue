@@ -16,7 +16,7 @@
     </div>
     <div class="content">
       <!-- <div class="text">{{ taskinfo.task }}</div> -->
-      <input type="text" v-model="taskContext" >
+      <input type="text" v-model="taskContext" @keydown.enter="changeText" />
     </div>
     <!-- 重要icon -->
     <div class="im_click" @click="mouseSelect(1)">
@@ -39,15 +39,24 @@ export default {
     return {
       selectFlag: false, //icon选中flag
       menuFlag: false, //右键菜单flag
-      imSelectFlag: false,//重要选中
-      taskContext:'',//task文字内容
+      imSelectFlag: false, //重要选中
+      taskContext: "", //task文字内容
     };
   },
   methods: {
+    //修改文字
+    changeText() {
+      let params = {
+        ...this.taskinfo,
+        // _id: this.taskinfo._id,
+        task: this.taskContext,
+ 
+      };
+      this.updateFn(params);
+    },
     //重要选中
-    importantSelect(){
-      debugger
-
+    importantSelect() {
+      debugger;
     },
     //右键面板
     menuPanel() {
@@ -60,19 +69,8 @@ export default {
       // debugger;
       console.log("click");
     },
-    //鼠标点击icon
-    async mouseSelect(index) {
-      /* 
-        index:0 修改完成状态 | 1 修改重要状态
-      */
- 
-      let params = {
-        ...this.taskinfo,
-        // _id: this.taskinfo._id,
-        complete: index ==0 ? !this.taskinfo.complete : this.taskinfo.complete,
-        important: index ==1 ?!this.taskinfo.important : this.taskinfo.important
-      };
-
+    //更新函数
+    async updateFn(params) {
       await reqTaskUpdate({ data: JSON.stringify(params) }).then(
         async (req, res) => {
           if (req.status == "1000") {
@@ -90,6 +88,21 @@ export default {
           }
         }
       );
+    },
+    //鼠标点击icon
+    mouseSelect(index) {
+      /* 
+        index:0 修改完成状态 | 1 修改重要状态
+      */
+
+      let params = {
+        ...this.taskinfo,
+        // _id: this.taskinfo._id,
+        complete: index == 0 ? !this.taskinfo.complete : this.taskinfo.complete,
+        important:
+          index == 1 ? !this.taskinfo.important : this.taskinfo.important,
+      };
+      this.updateFn(params);
     },
     //鼠标移入
     mouseEnter() {
@@ -117,9 +130,9 @@ export default {
     },
     //重要的icon
     icon_im() {
-        if (this.taskinfo.important) {
-             return "#icon-xingxing";
-        }
+      if (this.taskinfo.important) {
+        return "#icon-xingxing";
+      }
       return "#icon-xingxing1";
     },
   },
@@ -133,20 +146,20 @@ export default {
       }
     });
   },
-  watch:{
-      taskinfo:{
-          handler(val){
-              this.taskContext =val.task
-          }
-      }
-  }
+  watch: {
+    taskinfo: {
+      handler(val) {
+        this.taskContext = val.task;
+      },
+    },
+  },
 };
 </script>
 <style scoped lang="scss">
 .task_edit {
   height: 52px;
-//   width: 100%;
-//   box-sizing: border-box;
+  //   width: 100%;
+  //   box-sizing: border-box;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -154,10 +167,10 @@ export default {
   position: relative;
   transition: all 0.1s;
   padding: 0 10px 2px;
-//   &:hover {
-//     cursor: pointer;
-//     background: #f5f5f5;
-//   }
+  //   &:hover {
+  //     cursor: pointer;
+  //     background: #f5f5f5;
+  //   }
   //icon外框
   .icon_click {
     width: 20px;
@@ -197,24 +210,21 @@ export default {
     //   height: 100%;
     // }
     padding: 0 8px;
-    input{
-        width: 237px;
-        padding: 5px 8px 6px;
-        font-size: 18px;
-        margin: 0 5px 0 0;
-        //悬浮样式
-        &:hover{
-            background-color: #f5f5f5;
-            cursor: default;
-        }
-    //输入样式
-        &:focus{
-         background-color: #fafafa;
-
-        }
-      
+    input {
+      width: 237px;
+      padding: 5px 8px 6px;
+      font-size: 18px;
+      margin: 0 5px 0 0;
+      //悬浮样式
+      &:hover {
+        background-color: #f5f5f5;
+        cursor: default;
+      }
+      //输入样式
+      &:focus {
+        background-color: #fafafa;
+      }
     }
-    
   }
 
   //重要
