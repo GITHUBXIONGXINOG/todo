@@ -4,54 +4,60 @@
       {{ currentClass.title }}
     </nav>
     <create-task />
-    <div class="list-wrapper" ref="scroll">
-      <!-- 未完成分类 -->
-      <div
-        class="list-item"
-        v-for="(item, index) in unComClass"
-        :key="index"
-        v-show="index != 0 || item.task"
-        @click="clickHandler(item)"
-        
-      >
-        <task :taskinfo="item" />
-        
+    <!-- task显示-->
+    <div class="list-wrapper " ref="scroll">
+      <!-- task列表 -->
+      <div class="list_part ">
+        <!-- 未完成分类 -->
+        <div
+          class="list-item"
+          v-for="(item, index) in unComClass"
+          :key="index"
+          v-show="index != 0 || item.task"
+          @click="clickHandler(item)"
+        >
+          <task :taskinfo="item" />
+        </div>
+        <!-- 完成分类标识 -->
+        <div
+          class="list-item completed"
+          v-show="comClass.length"
+          @click="changeComClass"
+        >
+          <svg
+            class="icon"
+            aria-hidden="true"
+            :class="{ rotate: comClassFlag }"
+          >
+            <use
+              xlink:href="#icon-jiantou-you"
+              ref="right_jiantou"
+              class="jiu"
+            ></use>
+          </svg>
+          <div class="text">completed</div>
+        </div>
+        <!-- 完成分类 -->
+        <div
+          class="list-item"
+          v-for="item in comClass"
+          :key="item._id"
+          v-show="comClassFlag"
+        >
+          <!-- @click="clickHandler(item)" -->
+          <task :taskinfo="item" :menuSite="menuSite" />
+        </div>
       </div>
-      <!-- 完成分类 -->
-      <div
-        class="list-item completed"
-        v-show="comClass.length"
-        @click="changeComClass"
-      >
-        <svg class="icon" aria-hidden="true" :class="{rotate:comClassFlag}">
-          <use
-            xlink:href="#icon-jiantou-you"
-            ref="right_jiantou"
-            class="jiu"
-          ></use>
-        </svg>
-        <div class="text">completed</div>
-      </div>
-      <div
-        class="list-item"
-        v-for="item in comClass"
-        :key="item._id"
-        v-show="comClassFlag"
-      >
-        <!-- @click="clickHandler(item)" -->
-        <task :taskinfo="item" :menuSite="menuSite"/>
-      </div>
+
     </div>
     <!-- <menu-task :currentTask="currentTask" v-show="menuFlag"/> -->
-
   </div>
 </template>
 <script>
 import Task from "../task/task.vue";
 import CreateTask from "../task/createTask.vue";
 import { mapGetters } from "vuex";
-import MenuTask from '../task/menuTask.vue';
- 
+import MenuTask from "../task/menuTask.vue";
 
 export default {
   data() {
@@ -59,8 +65,8 @@ export default {
       unComClass: [], //未完成的分类
       comClass: [], //完成的分类
       comClassFlag: false, //显示隐藏完成分类
-      menuFlag:false,//右键菜单
-      menuSite:{},//位置
+      menuFlag: false, //右键菜单
+      menuSite: {}, //位置
     };
   },
   computed: {
@@ -76,26 +82,25 @@ export default {
   },
 
   methods: {
-        //右键面板
-    menuPanel(event){
+    //右键面板
+    menuPanel(event) {
       // console.log(this.taskinfo);
       // this.menuFlag = false
       // console.log(item);
       // this.menuFlag = true
       console.log(event);
-      console.log(event.offsetX );
+      console.log(event.offsetX);
       console.log(event.offsetY);
       this.menuSite = {
         top: event.offsetX + 30,
-        left: event.offsetY 
-      }
+        left: event.offsetY,
+      };
       console.log(this.menuSite);
-  
-      
     },
     clickHandler(item) {
       // window.alert(item);
       console.log(item);
+      this.$store.dispatch('setCurrentTask',item)
     },
     changeComClass() {
       this.comClassFlag = !this.comClassFlag;
@@ -139,15 +144,15 @@ export default {
     font-size: 25px;
     margin: 12px 0;
   }
-
+  //task列表
   .list-wrapper {
     height: 100%;
     width: 97%;
     position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
+    // overflow-y: auto;
+    // overflow-x: hidden;
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     .list-item {
       height: 52px;
       line-height: 52px;
@@ -168,11 +173,10 @@ export default {
       display: flex;
       .icon {
         width: 20px;
-        transition: transform .1s;
+        transition: transform 0.1s;
       }
-      .rotate{
+      .rotate {
         transform: rotate(90deg);
-
       }
 
       .text {
@@ -181,10 +185,20 @@ export default {
       }
       // border-bottom: none;
     }
+  }
+  .list_part {
+    // height: 100%;
+    width: 100%;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 
     &::after {
       display: inline-block;
       width: 100%;
+      height: 100%;
       flex: 1;
       overflow: hidden;
       content: "";
@@ -202,11 +216,20 @@ export default {
       box-shadow: inset 0 1px 0 0 #e5e5e5;
     }
   }
+  //显示内容时的样式
+  .task_show {
+    // width: 50%;
+  }
+  //task内容面板
+  .taskInfo {
+    // background: #000;
+    // width: 50%;
+    width: 360px;
+  }
 
   // //导航条样式
   ::-webkit-scrollbar {
     display: none;
   }
-
 }
 </style>

@@ -19,5 +19,5 @@ export const RECEIVE_SEARCH_PAGE = 'receive_search_page'//搜索页
 
 export const SET_SLIDE_FLAG = 'set_slide_flag'//slidepage的标识
 
-
+export const SET_CURRENT_TASK = 'set_current_task'//当前点击task
 

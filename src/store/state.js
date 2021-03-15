@@ -13,4 +13,5 @@ export default {
     searchKey: '',//搜索词
     searchPage:[],//搜索页
     slideFlag: true,//标识是否在slidepage还是搜索页的flag
+    currentTask:{},//当前点击的task
 }

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="task"
+    class="task_edit"
     @contextmenu.prevent="menuPanel"
     @mouseleave="menuFlag = false"
   >
@@ -15,10 +15,8 @@
       </svg>
     </div>
     <div class="content">
-      <div class="text">{{ taskinfo.task }}</div>
-      <div class="title">
-        <span>{{ taskinfo.title }}</span>
-      </div>
+      <!-- <div class="text">{{ taskinfo.task }}</div> -->
+      <input type="text" v-model="taskContext" >
     </div>
     <!-- 重要icon -->
     <div class="im_click" @click="mouseSelect(1)">
@@ -42,6 +40,7 @@ export default {
       selectFlag: false, //icon选中flag
       menuFlag: false, //右键菜单flag
       imSelectFlag: false,//重要选中
+      taskContext:'',//task文字内容
     };
   },
   methods: {
@@ -134,23 +133,31 @@ export default {
       }
     });
   },
+  watch:{
+      taskinfo:{
+          handler(val){
+              this.taskContext =val.task
+          }
+      }
+  }
 };
 </script>
 <style scoped lang="scss">
-.task {
+.task_edit {
   height: 52px;
-  // width: 97%;
+//   width: 100%;
+//   box-sizing: border-box;
   background-color: #fff;
   display: flex;
   align-items: center;
   line-height: 100%;
   position: relative;
   transition: all 0.1s;
-
-  &:hover {
-    cursor: pointer;
-    background: #f5f5f5;
-  }
+  padding: 0 10px 2px;
+//   &:hover {
+//     cursor: pointer;
+//     background: #f5f5f5;
+//   }
   //icon外框
   .icon_click {
     width: 20px;
@@ -168,33 +175,46 @@ export default {
 
   //内容
   .content {
-    font-size: 18px;
-    padding-left: 10px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    width: 100%;
-    height: 80%;
-    box-sizing: border-box;
-    justify-content: space-evenly;
-    //文字
-    .text {
-      text-align: start;
-      //多余文字显示省略号
-      display: inline-block;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      height: 100%;
+    // font-size: 18px;
+    // padding-left: 10px;
+    // display: flex;
+    // flex-direction: column;
+    // position: relative;
+    // width: 257px;
+    // height: 80%;
+    // box-sizing: border-box;
+    // justify-content: space-evenly;
+    // padding: 4px 0;
+    // margin: 10px 0;
+    // //文字
+    // .text {
+    //   text-align: start;
+    //   //多余文字显示省略号
+    //   display: inline-block;
+    //   overflow: hidden;
+    //   white-space: nowrap;
+    //   text-overflow: ellipsis;
+    //   height: 100%;
+    // }
+    padding: 0 8px;
+    input{
+        width: 237px;
+        padding: 5px 8px 6px;
+        font-size: 18px;
+        margin: 0 5px 0 0;
+        //悬浮样式
+        &:hover{
+            background-color: #f5f5f5;
+            cursor: default;
+        }
+    //输入样式
+        &:focus{
+         background-color: #fafafa;
+
+        }
+      
     }
-    //标题
-    .title {
-      color: #767678;
-      font-size: 10px;
-      z-index: 1;
-      line-height: 100%;
-      display: flex;
-    }
+    
   }
 
   //重要
@@ -202,7 +222,8 @@ export default {
     width: 20px;
     height: 20px;
     display: flex;
-    margin: 0 15px 0 0;
+    // margin: 0 10px 0 0;
+    margin: 0;
     .icon {
       width: 20px;
       height: 20px;

@@ -35,7 +35,8 @@ export default {
           author: this.$store.state.userInfo._id,//作者id
           classtitle: currentClass._id,//分类集合id
           title,//分类集合标题
-          pulishDate: Date.now,//创建时间
+          publishDate: Date.now(),//创建时间
+          time: Date.now(),//提醒时间
           content: '',//备注  
           complete: false,//完成状态
           important:false, //重要

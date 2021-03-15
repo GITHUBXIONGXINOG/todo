@@ -11,6 +11,8 @@ import {
   SET_SEARCH_KEY,//搜索词
   RECEIVE_SEARCH_PAGE,//搜索页
   SET_SLIDE_FLAG,//slide页面标识
+  SET_CURRENT_TASK,//当前点击task
+
 } from './mutation-types'
 
 import {reqLoginStatus, reqTaskClass,reqTaskPage} from "../utils/api/";
@@ -68,5 +70,9 @@ export default {
   setSlideFlag({commit},slideFlag){
     commit(SET_SLIDE_FLAG,{slideFlag})
   },
+  //当前点击task
+  setCurrentTask({commit},task){
+    commit(SET_CURRENT_TASK,{task})
+  }
 
 }

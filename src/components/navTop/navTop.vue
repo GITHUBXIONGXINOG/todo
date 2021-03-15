@@ -42,6 +42,7 @@
       <!-- 个人信息 -->
       <div
         class="userInfoWrap"
+        id="userInfoWrap"
         @click="showUserPanel = !showUserPanel"
         :class="{ clickStyle: showUserPanel }"
       >
@@ -126,6 +127,15 @@ export default {
   mounted() {
     //进入搜索 设置slideflag为false
     this.$store.dispatch("setSlideFlag", { slideFlag: false });
+    //点击其它部分隐藏信息面板
+    document.addEventListener('click',e=>{
+     let userInfo =  document.getElementById('userInfoWrap')      
+     if (userInfo) {
+       if (!userInfo.contains(e.target)) {
+         this.showUserPanel = false
+       }
+     }
+    })
   },
   watch: {
     slideFlag: {

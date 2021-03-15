@@ -23,3 +23,6 @@ export const searchPage = state => state.searchPage
 
 //获取搜索flag
 export const slideFlag = state => state.slideFlag
+
+//获取当前task
+export const currentTask = state => state.currentTask
