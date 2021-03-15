@@ -14,4 +14,8 @@ export default {
     searchPage:[],//搜索页
     slideFlag: true,//标识是否在slidepage还是搜索页的flag
     currentTask:{},//当前点击的task
+    taskInfoFlag:{
+        flag:false,
+        _id:''
+    },//taskinfo面板标识
 }

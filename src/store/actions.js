@@ -12,6 +12,7 @@ import {
   RECEIVE_SEARCH_PAGE,//搜索页
   SET_SLIDE_FLAG,//slide页面标识
   SET_CURRENT_TASK,//当前点击task
+  SET_TASKINFO_FLAG,//taskinfo面板标识
 
 } from './mutation-types'
 
@@ -73,6 +74,10 @@ export default {
   //当前点击task
   setCurrentTask({commit},task){
     commit(SET_CURRENT_TASK,{task})
+  },
+  //taskinfo面板标识
+  setTaskInfoFlag({commit},data){
+    commit(SET_TASKINFO_FLAG,{data})
   }
 
 }

@@ -181,7 +181,7 @@ export default {
   border-width: 1px;
   border-radius: 2px;
   // border: 1px solid red;
-  padding: 1px;
+//   padding: 1px;
  
   .textarea {
     background: #fff;

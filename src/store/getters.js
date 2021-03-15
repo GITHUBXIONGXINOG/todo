@@ -26,3 +26,6 @@ export const slideFlag = state => state.slideFlag
 
 //获取当前task
 export const currentTask = state => state.currentTask
+
+//获取当前taskinfo标识
+export const taskInfoFlag = state => state.taskInfoFlag

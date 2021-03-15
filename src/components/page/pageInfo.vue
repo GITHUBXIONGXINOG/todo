@@ -75,6 +75,7 @@ export default {
       "currentClass", //当前分类
       "classPage", //分类页内容
       "currentTask",//当前的task
+      "taskInfoFlag",
     ]),
   },
   components: {
@@ -102,17 +103,18 @@ export default {
     clickHandler(item) {
       // window.alert(item);
       // console.log(item);
-      
+      // debugger
+      this.$store.dispatch('setTaskInfoFlag',{
+        // flag:this.taskInfoFlag,
+        _id: item._id
+        })
       this.$store.dispatch('setCurrentTask',item)
     },
     changeComClass() {
       this.comClassFlag = !this.comClassFlag;
-      // this.$refs.right_jiantou.style.transform = "rotate(90deg)";
-      // console.log(this.$refs.right_jiantou);
+ 
     },
-    // menushow(item){
-    //   console.log(item);
-    // }
+ 
   },
   watch: {
     //监视分类页

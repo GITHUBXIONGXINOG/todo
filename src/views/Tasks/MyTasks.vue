@@ -2,10 +2,11 @@
   <div class="my_tasks">
     <page-info />
     <!-- task信息 -->
-    <task-info />
+    <task-info v-show="taskInfoFlag.flag"/>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import pageInfo from "../../components/page/pageInfo.vue";
 import taskInfo from "../../components/task/taskInfo.vue";
 
@@ -14,6 +15,11 @@ export default {
     pageInfo,
     taskInfo
   },
+  computed:{
+    ...mapGetters([
+      'taskInfoFlag'
+    ])
+  }
 };
 </script>
 

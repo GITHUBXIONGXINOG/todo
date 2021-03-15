@@ -21,3 +21,6 @@ export const SET_SLIDE_FLAG = 'set_slide_flag'//slidepage的标识
 
 export const SET_CURRENT_TASK = 'set_current_task'//当前点击task
 
+export const SET_TASKINFO_FLAG = 'set_taskinfo_flag'//taskinfo面板标识
+
+
