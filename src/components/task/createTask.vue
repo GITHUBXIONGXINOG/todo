@@ -28,7 +28,11 @@ export default {
     //提交方法
     async sendToTask() {
       let currentClass = this.$store.state.currentClass
+      //判断title
       let title = currentClass.title == 'Myday' || currentClass.title == 'Important' ? 'Tasks' : currentClass.title
+      //判断重要性
+      let imFlag = currentClass.title == 'Important' ? true : false
+
       await reqTaskAdd({
         data: {
           task:  this.article,//文字内容
@@ -39,7 +43,7 @@ export default {
           time: Date.now(),//提醒时间
           content: '',//备注  
           complete: false,//完成状态
-          important:false, //重要
+          important:imFlag, //重要
         },
       })
         .then(async (req, res) => {
