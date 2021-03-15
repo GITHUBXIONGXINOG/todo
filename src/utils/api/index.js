@@ -33,3 +33,5 @@ export const reqSearchTask = ({keyword}) => ajax(BASE_URL+'/search',{keyword})
 export const reqTaskUpdate = ({data}) => ajax(BASE_URL+'/task_update',{data})
 //删除task
 export const reqTaskDelete = ({keyword}) => ajax(BASE_URL+'/task_del',{keyword})
+//获取当前taskinfo
+export const reqTaskInfo = ({data}) =>   ajax(BASE_URL+'/taskinfo_get',{data})

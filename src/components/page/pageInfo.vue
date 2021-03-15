@@ -58,7 +58,7 @@ import Task from "../task/task.vue";
 import CreateTask from "../task/createTask.vue";
 import { mapGetters } from "vuex";
 import MenuTask from "../task/menuTask.vue";
-
+import {reqTaskInfo} from '../../utils/api'
 export default {
   data() {
     return {
@@ -67,12 +67,14 @@ export default {
       comClassFlag: false, //显示隐藏完成分类
       menuFlag: false, //右键菜单
       menuSite: {}, //位置
+      
     };
   },
   computed: {
     ...mapGetters([
       "currentClass", //当前分类
       "classPage", //分类页内容
+      "currentTask",//当前的task
     ]),
   },
   components: {
@@ -99,7 +101,8 @@ export default {
     },
     clickHandler(item) {
       // window.alert(item);
-      console.log(item);
+      // console.log(item);
+      
       this.$store.dispatch('setCurrentTask',item)
     },
     changeComClass() {
@@ -118,6 +121,11 @@ export default {
         this.comClass = [];
         this.unComClass = [];
         value.forEach((item) => {
+          //数据更新后重新调用点击函数
+          if (this.currentTask._id==item._id) {
+            this.clickHandler(item)
+          }
+          //进行分类
           if (item.complete) {
             //完成
             this.comClass.push(item);
