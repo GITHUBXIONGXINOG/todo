@@ -325,8 +325,8 @@ export default {
 }
 //用户信息面板
 .user-info-panel {
-  width: 320px;
-  height: 180px;
+  width: 130px;
+  // height: 180px;
   position: absolute;
   top: 50px;
   right: 0px;

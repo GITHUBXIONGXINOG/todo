@@ -1,7 +1,18 @@
 <template>
   <div class="user_panel">
     <!-- <router-link to="/login" @click="signOut" class="sign-out-button">Sign out</router-link> -->
-    <div to="/login" @click="signOut" class="sign-out-button">Sign out</div>
+    <div class="account">
+      <svg class="icon userInfo" aria-hidden="true">
+        <use xlink:href="#icon-yonghu1"></use>
+      </svg>
+      <span>{{ userInfo.account }}</span>
+    </div>
+    <div to="/login" @click="signOut" class="sign-out-button">
+      <svg class="icon userInfo" aria-hidden="true">
+        <use xlink:href="#icon-icon_tuichu"></use>
+      </svg>
+      <span>登出</span>
+    </div>
 
     <!--
                 enctype 指定表单数据的编码类型
@@ -42,8 +53,8 @@
                     multipart/form-data 将表单数据编码成二进制类型
             -->
     <!-- /分类标题 -->
-    <iframe id="myIframe" name="hideIframe" style="display: none"></iframe>
-    <form
+    <!-- <iframe id="myIframe" name="hideIframe" style="display: none"></iframe> -->
+    <!-- <form
       class="form-container"
       action="/api/img_upload"
       method="post"
@@ -53,7 +64,7 @@
       <div class="form-group">
         <label for="exampleInputFile">头像</label>
         <input type="file" name="userImage" ref="file" />
-        <div class="thumbnail-waper">
+        <div class="thumbnail-waper" >
           <img class="img-thumbnail" src="" ref="preview" />
         </div>
       </div>
@@ -61,9 +72,7 @@
       <div class="buttons">
         <input type="submit" class="btn btn-primary" />
       </div>
-    </form>
-
-    <h2>{{ userInfo.account }}</h2>
+    </form> -->
   </div>
 </template>
 <script>
@@ -152,27 +161,54 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 20px;
   box-sizing: border-box;
+  div{
+    cursor: pointer;
+    &:hover{
+      background-color: #f5f5f5;
+    }
+  }
 }
+
 //退出登录
 .sign-out-button {
   align-self: flex-end;
   font-size: 16px;
   color: #5a5753;
+  // border: 1px solid red;
+  width: 100%;
+  display: flex;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 //用户姓名
-h2 {
+.account {
   font-size: 18px;
   color: black;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
 }
 //表格
-.form-container{
-  img{
+.form-container {
+  img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
   }
+}
+.account {
+  // border: 1px solid red;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 10px;
+  margin: 10px;
 }
 </style>

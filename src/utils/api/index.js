@@ -36,6 +36,6 @@ export const reqTaskDelete = ({keyword}) => ajax(BASE_URL+'/task_del',{keyword})
 //获取当前taskinfo
 export const reqTaskInfo = ({data}) =>   ajax(BASE_URL+'/taskinfo_get',{data})
 //头像
-export const reqImgInfo = ({data}) =>   { debugger 
-    ajax(BASE_URL+'/api/img_upload',{data})}
+// export const reqImgInfo = ({data}) =>   { debugger 
+//     ajax(BASE_URL+'/api/img_upload',{data})}
 
