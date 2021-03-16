@@ -13,6 +13,44 @@
       </svg>
       <span>{{ MydayText[mydayFlag] }} to My Day</span>
     </div>
+    <!-- 添加图片 -->
+    <div class="thumbnail-waper">
+      <img class="img-thumbnail" src="" ref="preview" />
+    </div>
+  <!-- style="display: none" -->
+    <iframe id="myIframe" name="hideIframe" style="display: none"></iframe>
+    <form
+      class="form-container"
+      action="/api/img_upload"
+      method="post"
+      enctype="multipart/form-data"
+      target="hideIframe"
+      
+    >
+      <div class="form-group">
+        <input name="currentTaskId" type="text" ref="currentTaskId" v-model="currentTask._id"/>
+        {{currentId}}
+      </div>
+      <div class="form-group">
+        <input type="file" name="userImage" id="userImage" ref="file" />
+        <!-- <div class="thumbnail-waper">
+          <img class="img-thumbnail" src="" ref="preview" />
+        </div> -->
+      </div>
+      <input
+        type="submit"
+        class="btn btn-primary"
+        ref="submitBt"
+        style="display: none"
+      />
+    </form>
+    <div class="picWrapper" @click="clickAddPic">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-image"></use>
+      </svg>
+      <span>Add Picture</span>
+    </div>
+
     <!-- 备注 -->
     <div class="contentArea">
       <div
@@ -21,8 +59,7 @@
         @blur="saveContent"
         ref="textarea"
         v-text="contentText"
-      >
-      </div>
+      ></div>
     </div>
     {{ currentTask }}
     <!-- 底部操作 -->
@@ -59,11 +96,12 @@ export default {
       mydayFlag: 0,
       // current: {},
       contentText: "", //文本备注内容
-      tipFlag:false,//备注提示
+      tipFlag: false, //备注提示
+      currentId:"",//当前taskid
     };
   },
   computed: {
-    ...mapGetters(["currentTask"]),
+    ...mapGetters(["currentTask", "taskInfoFlag"]),
     //创建时间
     createTime() {
       return moment(this.currentTask.publishDate).startOf().fromNow();
@@ -73,10 +111,12 @@ export default {
     taskEdit,
   },
   methods: {
-    //备注更改
-    tipChange(){
-
+    //点击添加图片
+    clickAddPic() {
+      this.$refs.file.click();
     },
+    //备注更改
+    tipChange() {},
     //隐藏面板
     hiddenInfo() {
       this.$store.dispatch("setTaskInfoFlag", {
@@ -194,6 +234,32 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    //存储图片
+    let preview = this.$refs.preview;
+    //提交按钮
+    let submitBt = this.$refs.submitBt;
+    //taskid
+    // this.currentId = 
+    if (this.$refs.file) {
+      //当用户选择完文件后读取文件
+      this.$refs.file.onchange = function () {
+        //1.创建文件读取对象,reader变量就是文件读取对象
+        let reader = new FileReader();
+        //用户选择的文件列表,this表示该标签
+        //2.读取文件,参数就是读取的文件
+        reader.readAsDataURL(this.files[0]);
+        //3.监听onload事件
+        reader.onload = function () {
+          // console.log(reader.result)
+          //修改img的src
+          preview.src = reader.result;
+        };
+    
+        submitBt.click();
+      };
+    }
+  },
 };
 </script>
 <style scoped lang="scss">
@@ -207,9 +273,11 @@ export default {
   color: #767678;
   position: relative;
   box-shadow: -1px 10px 10px #eaeaea;
-
+  overflow-y: scroll;
+  overflow-x: hidden;
   > div {
     margin: 0 0 10px 0;
+    // cursor: pointer;
   }
   .icon {
     width: 20px;
@@ -251,6 +319,32 @@ export default {
     fill: #465efc;
   }
 }
+//图片
+.picWrapper {
+  align-items: flex-start;
+  //   padding: 16px;
+  width: 100%;
+  height: 52px;
+
+  // height: 100px;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  border-width: 1px;
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  .icon {
+    margin: 0 10px;
+  }
+  span {
+    padding: 0 6px;
+  }
+  &:hover {
+    background-color: #fafbfc;
+  }
+}
 //备注
 .contentArea {
   align-items: flex-start;
@@ -277,17 +371,17 @@ export default {
     &:focus {
       border: 1px solid #346fef;
     }
-    &:empty::before{
-      content: '添加备注';
+    &:empty::before {
+      content: "添加备注";
     }
-    &:focus::before{
+    &:focus::before {
       content: none;
     }
   }
 
   //文字提醒
-  .textTip{
-    position:absolute;
+  .textTip {
+    position: absolute;
     top: 0;
     margin: 10px;
   }
@@ -317,5 +411,10 @@ export default {
       background: #fafbfc;
     }
   }
+}
+//图片
+img {
+  width: 100%;
+  border-radius: 2px;
 }
 </style>

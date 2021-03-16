@@ -84,7 +84,7 @@ import myUpload from "vue-image-crop-upload";
 export default {
   data() {
     return {
-      imageUrl: "",
+      // imageUrl: "",
     };
   },
   components: {
@@ -94,22 +94,22 @@ export default {
     ...mapGetters(["userInfo"]),
   },
   mounted() {
-    //存储图片
-    let preview = this.$refs.preview;
-    //当用户选择完文件后读取文件
-    this.$refs.file.onchange = function () {
-      //1.创建文件读取对象,reader变量就是文件读取对象
-      let reader = new FileReader();
-      //用户选择的文件列表,this表示该标签
-      //2.读取文件,参数就是读取的文件
-      reader.readAsDataURL(this.files[0]);
-      //3.监听onload事件
-      reader.onload = function () {
-        // console.log(reader.result)
-        //修改img的src
-        preview.src = reader.result;
-      };
-    };
+    // //存储图片
+    // let preview = this.$refs.preview;
+    // //当用户选择完文件后读取文件
+    // this.$refs.file.onchange = function () {
+    //   //1.创建文件读取对象,reader变量就是文件读取对象
+    //   let reader = new FileReader();
+    //   //用户选择的文件列表,this表示该标签
+    //   //2.读取文件,参数就是读取的文件
+    //   reader.readAsDataURL(this.files[0]);
+    //   //3.监听onload事件
+    //   reader.onload = function () {
+    //     // console.log(reader.result)
+    //     //修改img的src
+    //     preview.src = reader.result;
+    //   };
+    // };
   },
   methods: {
     async imgSubmit() {
