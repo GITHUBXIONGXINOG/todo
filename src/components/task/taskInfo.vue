@@ -13,25 +13,28 @@
       </svg>
       <span>{{ MydayText[mydayFlag] }} to My Day</span>
     </div>
-    <div class="contentFooter">
+    <!-- 备注 -->
+    <div class="contentArea">
       <div
         class="textarea"
         contenteditable="true"
         @blur="saveContent"
         ref="textarea"
         v-text="contentText"
-      ></div>
+      >
+      </div>
     </div>
-    {{ currentTask }}
+    <!-- {{ currentTask }} -->
+    <!-- 底部操作 -->
     <div class="detailFooter">
-      <svg class="icon" aria-hidden="true">
+      <svg class="icon" aria-hidden="true" @click="hiddenInfo">
         <use xlink:href="#icon-jiantou-you"></use>
       </svg>
       <div class="timeinfo">
         <span>创建于</span>
         <span>{{ createTime }}</span>
       </div>
-      <svg class="icon" aria-hidden="true">
+      <svg class="icon" aria-hidden="true" @click="deleteTask">
         <use xlink:href="#icon-lajixiang"></use>
       </svg>
     </div>
@@ -39,10 +42,15 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { reqTaskUpdate, reqSearchTask, reqTaskInfo } from "../../utils/api";
+import {
+  reqTaskUpdate,
+  reqSearchTask,
+  reqTaskDelete,
+  reqTaskInfo,
+} from "../../utils/api";
 import taskEdit from "../task/taskEdit.vue";
 import moment from "moment";
-import 'moment/locale/zh-cn'
+import "moment/locale/zh-cn";
 
 export default {
   data() {
@@ -51,6 +59,7 @@ export default {
       mydayFlag: 0,
       // current: {},
       contentText: "", //文本备注内容
+      tipFlag:false,//备注提示
     };
   },
   computed: {
@@ -64,6 +73,47 @@ export default {
     taskEdit,
   },
   methods: {
+    //备注更改
+    tipChange(){
+
+    },
+    //隐藏面板
+    hiddenInfo() {
+      this.$store.dispatch("setTaskInfoFlag", {
+        // flag:this.taskInfoFlag,
+        _id: this.currentTask._id,
+      });
+    },
+    //删除task
+    async deleteTask() {
+      console.log("删除task");
+      console.log(this.currentTask);
+      let type = this.currentTask.taskClass ? "class" : "task";
+      let params = {
+        type, //种类,class是分类,task是小task
+        _id: this.currentTask._id, //删除id
+      };
+      await reqTaskDelete({ keyword: JSON.stringify(params) }).then(
+        async (req, res) => {
+          if (req.status === "1000" && type === "class") {
+            this.$store.dispatch("recordTaskClass"); //更新分类
+          } else if (req.status === "1000" && type === "task") {
+            this.$store.dispatch("recordClassPage"); //更新页面
+            if (this.$route.path === "/home/search") {
+              //搜索页面还要更新搜索
+              await reqSearchTask({ keyword: this.searchKey }).then(
+                (req, res) => {
+                  //存储搜索页
+                  this.$store.dispatch("setSearchPage", req.data);
+                  this.$store.dispatch("recordClassPage");
+                }
+              );
+            }
+          }
+        }
+      );
+      this.hiddenInfo();
+    },
     //存储content
     saveContent() {
       let text = this.$refs.textarea.textContent;
@@ -201,26 +251,24 @@ export default {
     fill: #465efc;
   }
 }
-//底部文本
-.contentFooter {
+//备注
+.contentArea {
   align-items: flex-start;
   //   padding: 16px;
   height: auto;
   border: 1px solid #eaeaea;
   border-width: 1px;
   border-radius: 2px;
-  // border: 1px solid red;
-  //   padding: 1px;
-
+  position: relative;
+  //文本框
   .textarea {
     background: #fff;
     min-height: 100px;
     max-height: 300px;
-    padding: 5px;
+    padding: 5px 10px;
     outline: 0;
     font-size: 14px;
     line-height: 24px;
-    padding: 2px;
     word-wrap: break-word;
     overflow-x: hidden;
     overflow-y: auto;
@@ -229,6 +277,19 @@ export default {
     &:focus {
       border: 1px solid #346fef;
     }
+    &:empty::before{
+      content: '添加备注';
+    }
+    &:focus::before{
+      content: none;
+    }
+  }
+
+  //文字提醒
+  .textTip{
+    position:absolute;
+    top: 0;
+    margin: 10px;
   }
 }
 //底部操作

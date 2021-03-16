@@ -106,6 +106,7 @@ export default {
       // window.alert(item);
       // console.log(item);
       // debugger
+      //切换/隐藏info面板
       this.$store.dispatch('setTaskInfoFlag',{
         // flag:this.taskInfoFlag,
         _id: item._id
