@@ -138,14 +138,14 @@ export default {
     },
   },
   mounted() {
-    document.addEventListener("click", (e) => {
+/*     document.addEventListener("click", (e) => {
       const contextMenuBox = document.getElementById("contextMenuBox");
       if (contextMenuBox) {
         if (!contextMenuBox.contains(e.target)) {
           this.menuFlag = false;
         }
       }
-    });
+    }); */
   },
   watch: {
     taskinfo: {

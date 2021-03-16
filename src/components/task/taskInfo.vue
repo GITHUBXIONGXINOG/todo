@@ -24,7 +24,7 @@
       >
       </div>
     </div>
-    <!-- {{ currentTask }} -->
+    {{ currentTask }}
     <!-- 底部操作 -->
     <div class="detailFooter">
       <svg class="icon" aria-hidden="true" @click="hiddenInfo">

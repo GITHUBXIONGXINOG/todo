@@ -43,7 +43,7 @@
       <div
         class="userInfoWrap"
         id="userInfoWrap"
-        @click="showUserPanel = !showUserPanel"
+        @click.prevent="showUserPanel = !showUserPanel"
         :class="{ clickStyle: showUserPanel }"
       >
         <svg class="icon userInfo" aria-hidden="true">
@@ -51,7 +51,7 @@
         </svg>
       </div>
       <!-- 个人信息面板 -->
-      <div class="user-info-panel" v-show="showUserPanel">
+      <div class="user-info-panel" v-show="showUserPanel" id="userInfoPanel">
         <user-panel />
       </div>
     </div>
@@ -129,12 +129,21 @@ export default {
     this.$store.dispatch("setSlideFlag", { slideFlag: false });
     //点击其它部分隐藏信息面板
     document.addEventListener('click',e=>{
+      let bDom = document.querySelector("#userInfoWrap");
+      var cDom = document.querySelector("#userInfoPanel");
+      var tDom = e.target;
+      if (cDom == tDom || cDom.contains(tDom) || bDom.contains(tDom)) {
+          this.showUserPanel = true
+      } else {
+         this.showUserPanel = false
+      }
+  /*     console.log(e.target);
      let userInfo =  document.getElementById('userInfoWrap')      
      if (userInfo) {
        if (!userInfo.contains(e.target)) {
          this.showUserPanel = false
        }
-     }
+     } */
     })
   },
   watch: {

@@ -2,6 +2,54 @@
   <div class="user_panel">
     <!-- <router-link to="/login" @click="signOut" class="sign-out-button">Sign out</router-link> -->
     <div to="/login" @click="signOut" class="sign-out-button">Sign out</div>
+    <!--
+                enctype 指定表单数据的编码类型
+                    application/x-www-form-urlencoded
+                        name=zhangsan&age=20
+                    multipart/form-data 将表单数据编码成二进制类型
+            -->
+    <!-- /分类标题 -->
+    <form
+      class="form-container"
+      action="/admin/article-add"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <div class="form-group">
+        <label>标题</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="请输入文章标题"
+          name="title"
+        />
+      </div>
+      <div class="form-group">
+        <label>作者</label>
+      </div>
+      <div class="form-group">
+        <label>发布时间</label>
+        <input name="publishDate" type="date" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputFile">文章封面</label>
+        <!--
+                        multiple 允许用户一次性选择多个文件
+                   -->
+        <input type="file" name="cover" id="file" />
+        <div class="thumbnail-waper">
+          <img class="img-thumbnail" src="" id="preview" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>内容</label>
+        <textarea name="content" class="form-control" id="editor"></textarea>
+      </div>
+      <div class="buttons">
+        <input type="submit" class="btn btn-primary" />
+      </div>
+    </form>
 
     <h2>{{ userInfo.account }}</h2>
   </div>
@@ -23,13 +71,16 @@ export default {
     // this.loginname = this.cookie.getCookie("user")
   },
   methods: {
+    imgSet() {
+      debugger;
+    },
     //退出登录
     async signOut() {
       let result = await reqLogout();
       localStorage.setItem("userInfo", null);
       // console.log(result);
       //清空state
-      this.$store.dispatch('clearState')
+      this.$store.dispatch("clearState");
       this.$router.replace("/login");
     },
   },
