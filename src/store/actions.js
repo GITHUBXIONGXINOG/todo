@@ -16,7 +16,7 @@ import {
 
 } from './mutation-types'
 
-import {reqLoginStatus, reqTaskClass,reqTaskPage} from "../utils/api/";
+import {reqLoginStatus, reqTaskClass,reqTaskPage,reqTaskInfo} from "../utils/api/";
 
 
 export default {
@@ -78,6 +78,14 @@ export default {
   //taskinfo面板标识
   setTaskInfoFlag({commit},data){
     commit(SET_TASKINFO_FLAG,{data})
+  },
+  //更新当前的task
+ async updateCurrentTask({state,commit}){
+    await reqTaskInfo({data:state.currentTask._id}).then((req,res)=>{
+      // console.log(req.classpage[0]);
+      commit(SET_CURRENT_TASK,{task:req.classpage[0]})
+
+    })
   }
 
 }

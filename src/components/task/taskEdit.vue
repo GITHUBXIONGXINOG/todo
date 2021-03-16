@@ -103,6 +103,8 @@ export default {
           index == 1 ? !this.taskinfo.important : this.taskinfo.important,
       };
       this.updateFn(params);
+            this.$store.dispatch("updateCurrentTask")
+
     },
     //鼠标移入
     mouseEnter() {

@@ -43,6 +43,8 @@
           v-for="item in comClass"
           :key="item._id"
           v-show="comClassFlag"
+          @click="clickHandler(item)"
+
         >
           <!-- @click="clickHandler(item)" -->
           <task :taskinfo="item" :menuSite="menuSite" />
@@ -100,7 +102,7 @@ export default {
       };
       console.log(this.menuSite);
     },
-    clickHandler(item) {
+    async clickHandler(item) {
       // window.alert(item);
       // console.log(item);
       // debugger
@@ -109,6 +111,7 @@ export default {
         _id: item._id
         })
       this.$store.dispatch('setCurrentTask',item)
+      await reqTaskInfo({data: item._id})
     },
     changeComClass() {
       this.comClassFlag = !this.comClassFlag;
@@ -123,10 +126,10 @@ export default {
         this.comClass = [];
         this.unComClass = [];
         value.forEach((item) => {
-          //数据更新后重新调用点击函数
-          if (this.currentTask._id==item._id) {
-            this.clickHandler(item)
-          }
+          // //数据更新后重新调用点击函数
+          // if (this.currentTask._id==item._id) {
+          //   this.clickHandler(item)
+          // }
           //进行分类
           if (item.complete) {
             //完成

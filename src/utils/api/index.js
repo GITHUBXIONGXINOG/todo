@@ -22,7 +22,7 @@ export const reqTaskClassAdd = ({data}) => ajax(BASE_URL+'/tasks/class/add',{dat
 //6.获取文章分类
 export const reqTaskClass = ({data}) => ajax(BASE_URL+'/tasks/class/get',{data},'POST')
 //7.创建文章内容
-export const reqTaskAdd = ({data}) => ajax(BASE_URL+'/task_add',{data},'POST')
+export const reqTaskAdd = ({data}) =>  ajax(BASE_URL+'/task_add',{data},'POST')
 //获取当前分类页
 export const reqTaskPage = ({data}) => ajax(BASE_URL+'/task_get',{data},'POST')
 //登录状态

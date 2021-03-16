@@ -60,6 +60,8 @@ export default {
         async (req, res) => {
           if (req.status == "1000") {
             this.$store.dispatch("recordClassPage");
+            this.$store.dispatch("updateCurrentTask")
+
             if (this.$route.path === "/home/search") {
               //搜索页面还要更新搜索
               await reqSearchTask({ keyword: this.searchKey }).then(
@@ -67,6 +69,8 @@ export default {
                   //存储搜索页
                   this.$store.dispatch("setSearchPage", req.data);
                   this.$store.dispatch("recordClassPage");
+            this.$store.dispatch("updateCurrentTask")
+
                 }
               );
             }
@@ -100,6 +104,7 @@ export default {
         async (req, res) => {
           if (req.status == "1000") {
             this.$store.dispatch("recordClassPage");
+            this.$store.dispatch("updateCurrentTask")
           }
         }
       );
