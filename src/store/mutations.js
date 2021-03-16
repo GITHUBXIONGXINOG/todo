@@ -51,6 +51,10 @@ export default {
             state.classPage = [],//当前分类页
             state.loginStatus = false,//登录状态
             state = {}
+            state.taskInfoFlag = {
+                flag:false,
+                _id:''
+            }//taskinfo面板标识
     },
     //保存当前搜索词
     [SET_SEARCH_KEY](state, { searchKey }) {

@@ -23,23 +23,42 @@
       ></div>
     </div>
     {{ currentTask }}
+    <div class="detailFooter">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-jiantou-you"></use>
+      </svg>
+      <div class="timeinfo">
+        <span>创建于</span>
+        <span>{{ createTime }}</span>
+      </div>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-lajixiang"></use>
+      </svg>
+    </div>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { reqTaskUpdate,reqSearchTask, reqTaskInfo } from "../../utils/api";
+import { reqTaskUpdate, reqSearchTask, reqTaskInfo } from "../../utils/api";
 import taskEdit from "../task/taskEdit.vue";
+import moment from "moment";
+import 'moment/locale/zh-cn'
+
 export default {
   data() {
     return {
       MydayText: ["Add", "Added"],
       mydayFlag: 0,
-      current: {},
-      contentText:''
+      // current: {},
+      contentText: "", //文本备注内容
     };
   },
   computed: {
     ...mapGetters(["currentTask"]),
+    //创建时间
+    createTime() {
+      return moment(this.currentTask.publishDate).startOf().fromNow();
+    },
   },
   components: {
     taskEdit,
@@ -47,10 +66,10 @@ export default {
   methods: {
     //存储content
     saveContent() {
-      let text = this.$refs.textarea.textContent
+      let text = this.$refs.textarea.textContent;
       let params = {
         ...this.currentTask,
-        content: text
+        content: text,
       };
       this.updateFn(params);
     },
@@ -60,7 +79,7 @@ export default {
         async (req, res) => {
           if (req.status == "1000") {
             this.$store.dispatch("recordClassPage");
-            this.$store.dispatch("updateCurrentTask")
+            this.$store.dispatch("updateCurrentTask");
 
             if (this.$route.path === "/home/search") {
               //搜索页面还要更新搜索
@@ -69,8 +88,7 @@ export default {
                   //存储搜索页
                   this.$store.dispatch("setSearchPage", req.data);
                   this.$store.dispatch("recordClassPage");
-            this.$store.dispatch("updateCurrentTask")
-
+                  this.$store.dispatch("updateCurrentTask");
                 }
               );
             }
@@ -104,7 +122,7 @@ export default {
         async (req, res) => {
           if (req.status == "1000") {
             this.$store.dispatch("recordClassPage");
-            this.$store.dispatch("updateCurrentTask")
+            this.$store.dispatch("updateCurrentTask");
           }
         }
       );
@@ -119,7 +137,8 @@ export default {
           } else {
             this.mydayFlag = 1;
           }
-          this.contentText = val.content
+          //文本备注内容
+          this.contentText = val.content;
         }
       },
       immediate: true,
@@ -136,6 +155,9 @@ export default {
   padding: 0 10px 16px;
   background-color: #f5f5f5;
   color: #767678;
+  position: relative;
+  box-shadow: -1px 10px 10px #eaeaea;
+
   > div {
     margin: 0 0 10px 0;
   }
@@ -158,6 +180,7 @@ export default {
     line-height: 100%;
     position: relative;
     transition: all 0.1s;
+
     .icon {
       margin: 0 10px;
     }
@@ -165,8 +188,9 @@ export default {
       padding: 0 6px;
     }
     &:hover {
-      background-color: #f5f5f5;
-      cursor: default;
+      background-color: #fafbfc;
+      cursor: pointer;
+      // box-shadow: 1px 1px 4px rgb(90, 90, 90);
     }
   }
 }
@@ -186,8 +210,8 @@ export default {
   border-width: 1px;
   border-radius: 2px;
   // border: 1px solid red;
-//   padding: 1px;
- 
+  //   padding: 1px;
+
   .textarea {
     background: #fff;
     min-height: 100px;
@@ -204,6 +228,32 @@ export default {
     border-color: rgba(82, 168, 236, 0.8);
     &:focus {
       border: 1px solid #346fef;
+    }
+  }
+}
+//底部操作
+.detailFooter {
+  display: flex;
+  position: absolute;
+  // width: 340px;
+  // width: 370px;
+  width: 100%;
+  height: 50px;
+  // padding: 10px;
+  background: #fff;
+  bottom: 0;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px !important;
+  box-shadow: -1px 10px 1px #eaeaea46;
+
+  left: 0;
+  .icon {
+    // margin: 10px;
+    padding: 13px;
+    // fill: red;
+    &:hover {
+      background: #fafbfc;
     }
   }
 }

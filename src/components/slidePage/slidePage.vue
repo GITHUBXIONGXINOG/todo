@@ -44,7 +44,6 @@
           <span>{{ list.taskClass }}</span> -->
           <list :listClass="list.taskClass" />
           <menu-task :currentTask="list" v-show="menuFlag&&currentClass==list._id" />
-
         </li>
       </ul>
       <create-list />

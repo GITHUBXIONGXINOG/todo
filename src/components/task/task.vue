@@ -6,7 +6,7 @@
   >
     <div
       class="icon_click"
-      @click="mouseSelect(0)"
+      @click.stop="mouseSelect(0)"
       @mouseenter="mouseEnter"
       @mouseleave="mouseLeave"
     >
@@ -21,7 +21,7 @@
       </div>
     </div>
     <!-- 重要icon -->
-    <div class="im_click" @click="mouseSelect(1)">
+    <div class="im_click" @click.stop="mouseSelect(1)">
       <svg class="icon" aria-hidden="true">
         <use :xlink:href="icon_im"></use>
       </svg>
@@ -41,14 +41,13 @@ export default {
     return {
       selectFlag: false, //icon选中flag
       menuFlag: false, //右键菜单flag
-      imSelectFlag: false,//重要选中
+      imSelectFlag: false, //重要选中
     };
   },
   methods: {
     //重要选中
-    importantSelect(){
-      debugger
-
+    importantSelect() {
+      debugger;
     },
     //右键面板
     menuPanel() {
@@ -66,12 +65,13 @@ export default {
       /* 
         index:0 修改完成状态 | 1 修改重要状态
       */
- 
+
       let params = {
         ...this.taskinfo,
         // _id: this.taskinfo._id,
-        complete: index ==0 ? !this.taskinfo.complete : this.taskinfo.complete,
-        important: index ==1 ?!this.taskinfo.important : this.taskinfo.important
+        complete: index == 0 ? !this.taskinfo.complete : this.taskinfo.complete,
+        important:
+          index == 1 ? !this.taskinfo.important : this.taskinfo.important,
       };
 
       await reqTaskUpdate({ data: JSON.stringify(params) }).then(
@@ -91,6 +91,8 @@ export default {
           }
         }
       );
+      //更新task
+      this.$store.dispatch("updateCurrentTask");
     },
     //鼠标移入
     mouseEnter() {
@@ -118,9 +120,9 @@ export default {
     },
     //重要的icon
     icon_im() {
-        if (this.taskinfo.important) {
-             return "#icon-xingxing";
-        }
+      if (this.taskinfo.important) {
+        return "#icon-xingxing";
+      }
       return "#icon-xingxing1";
     },
   },

@@ -50,9 +50,9 @@ export default {
         ...this.taskinfo,
         // _id: this.taskinfo._id,
         task: this.taskContext,
- 
       };
       this.updateFn(params);
+      this.$store.dispatch("updateCurrentTask");
     },
     //重要选中
     importantSelect() {
@@ -103,8 +103,7 @@ export default {
           index == 1 ? !this.taskinfo.important : this.taskinfo.important,
       };
       this.updateFn(params);
-            this.$store.dispatch("updateCurrentTask")
-
+      this.$store.dispatch("updateCurrentTask");
     },
     //鼠标移入
     mouseEnter() {
