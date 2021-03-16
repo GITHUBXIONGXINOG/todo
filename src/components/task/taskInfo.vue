@@ -132,7 +132,7 @@ export default {
   // width: 360px;
   // height: 100px;
   height: 100%;
-  border: 1px solid red;
+  // border: 1px solid red;
   padding: 0 10px 16px;
   background-color: #f5f5f5;
   color: #767678;
