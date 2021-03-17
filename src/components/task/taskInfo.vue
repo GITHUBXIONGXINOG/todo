@@ -405,8 +405,7 @@ export default {
     let updateCurrent = this.$store.dispatch("updateCurrentTask");
     let updateFile = this.$refs.file;
 
-    //taskid
-    // this.currentId =
+  
     if (updateFile) {
       //当用户选择完文件后读取文件
       updateFile.onchange = () => {
@@ -531,7 +530,7 @@ export default {
   .textarea {
     background: #fff;
     min-height: 100px;
-    max-height: 300px;
+    max-height: 26rem;
     padding: 5px 10px;
     outline: 0;
     font-size: 14px;
@@ -576,6 +575,7 @@ export default {
   box-shadow: -1px 10px 1px #eaeaea46;
   margin: 10px 0 0;
   right: 10px;
+  margin-top: 100px;
   .icon {
     // margin: 10px;
     padding: 13px;
