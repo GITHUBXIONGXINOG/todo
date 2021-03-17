@@ -124,6 +124,7 @@
           :auto-upload="false"
           :data="ruleForm"
           list-type="picture-card"
+          :on-success="handleSuccess"
         >
           <img
             v-if="ruleForm.imageUrl"
@@ -148,7 +149,6 @@
       <span>Add Picture</span>
     </div>
 
-    {{ currentTask.imgList }}
     <!-- 备注 -->
     <div class="contentArea">
       <div
@@ -177,7 +177,6 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import axios from 'axios'
 import {
   reqTaskUpdate,
   reqSearchTask,
@@ -220,6 +219,9 @@ export default {
     taskEdit,
   },
   methods: {
+     handleSuccess(response, file, fileList) {
+      debugger
+    },
     //提交表单
     submitForm(formName) {
       let vm = this;
@@ -240,7 +242,7 @@ export default {
       this.ruleForm.imageUrl = "";
       this.formFlag = false;
     },
-
+    //上传文件改变触发
     handleChange(file, fileList) {
       this.ruleForm.imageUrl = URL.createObjectURL(file.raw);
     },
@@ -389,7 +391,7 @@ export default {
         this.$nextTick(() => {
           setTimeout(() => {
             this.$store.dispatch("updateCurrentTask");
-          }, 1000);
+          }, 1500);
         });
       },
       immediate: true,
@@ -444,6 +446,7 @@ export default {
   box-shadow: -1px 10px 10px #eaeaea;
   overflow-y: scroll;
   overflow-x: hidden;
+  position: relative;
   > div {
     margin: 0 0 10px 0;
     // cursor: pointer;
@@ -523,6 +526,7 @@ export default {
   border-width: 1px;
   border-radius: 2px;
   position: relative;
+
   //文本框
   .textarea {
     background: #fff;
@@ -557,22 +561,21 @@ export default {
 }
 //底部操作
 .detailFooter {
-  // display: flex;
   display: flex;
-  position: absolute;
+  // position: fixed;
   // width: 340px;
-  // width: 370px;
+  // width: 350px;
   width: 100%;
   height: 50px;
   // padding: 10px;
   background: #fff;
-  // bottom: 0;
+  bottom: 0;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0px !important;
   box-shadow: -1px 10px 1px #eaeaea46;
-
-  left: 0;
+  margin: 10px 0 0;
+  right: 10px;
   .icon {
     // margin: 10px;
     padding: 13px;
