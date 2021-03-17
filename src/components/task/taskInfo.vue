@@ -154,7 +154,7 @@
       <div
         class="textarea"
         contenteditable="true"
-        @blur="saveContent"
+        @blur.prevent="saveContent"
         ref="textarea"
         v-text="contentText"
       ></div>
@@ -209,7 +209,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["currentTask", "taskInfoFlag"]),
+    ...mapGetters(["currentTask", "taskInfoFlag","searchKey"]),
     //创建时间
     createTime() {
       return moment(this.currentTask.publishDate).startOf().fromNow();
@@ -299,6 +299,8 @@ export default {
     },
     //存储content
     saveContent() {
+      debugger
+
       let text = this.$refs.textarea.textContent;
       let params = {
         ...this.currentTask,
@@ -308,13 +310,16 @@ export default {
     },
     //更新函数
     async updateFn(params) {
+      debugger
       await reqTaskUpdate({ data: JSON.stringify(params) }).then(
         async (req, res) => {
           if (req.status == "1000") {
             this.$store.dispatch("recordClassPage");
             this.$store.dispatch("updateCurrentTask");
-
+              debugger
+              console.log(this.searchKey);
             if (this.$route.path === "/home/search") {
+     
               //搜索页面还要更新搜索
               await reqSearchTask({ keyword: this.searchKey }).then(
                 (req, res) => {
@@ -333,7 +338,7 @@ export default {
       /* 
             index: 0 添加到Myday
           */
-
+debugger
       let setTime = "";
       if (index == "0") {
         //点击按钮后,如果创建时间和提醒时间一样

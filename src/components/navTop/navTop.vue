@@ -86,6 +86,7 @@ export default {
 
     //搜索函数
     searchTask() {
+      debugger
       //防抖
       let timer = null;
       if (timer) {
@@ -106,7 +107,9 @@ export default {
           //搜索词为空直接返回空数组
           this.$store.dispatch("setSearchPage", []);
         }
-        this.$router.push("/home/search");
+        if (this.$route.path != "/home/search") {
+          this.$router.push("/home/search");
+        }
       }, 1000);
     },
     //进入搜索框,input获取焦点
@@ -128,23 +131,23 @@ export default {
     //进入搜索 设置slideflag为false
     this.$store.dispatch("setSlideFlag", { slideFlag: false });
     //点击其它部分隐藏信息面板
-    document.addEventListener('click',e=>{
+    document.addEventListener("click", (e) => {
       let bDom = document.querySelector("#userInfoWrap");
       var cDom = document.querySelector("#userInfoPanel");
       var tDom = e.target;
       if (cDom == tDom || cDom.contains(tDom) || bDom.contains(tDom)) {
-          this.showUserPanel = true
+        this.showUserPanel = true;
       } else {
-         this.showUserPanel = false
+        this.showUserPanel = false;
       }
-  /*     console.log(e.target);
+      /*     console.log(e.target);
      let userInfo =  document.getElementById('userInfoWrap')      
      if (userInfo) {
        if (!userInfo.contains(e.target)) {
          this.showUserPanel = false
        }
      } */
-    })
+    });
   },
   watch: {
     slideFlag: {

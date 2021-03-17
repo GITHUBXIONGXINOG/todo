@@ -4,11 +4,11 @@
       {{ currentClass.title }}
       <!-- {{classPage}} -->
     </nav>
-    <create-task v-show="!searchFlag"/>
+    <create-task v-show="!searchFlag" />
     <!-- task显示-->
-    <div class="list-wrapper " ref="scroll">
+    <div class="list-wrapper" ref="scroll">
       <!-- task列表 -->
-      <div class="list_part ">
+      <div class="list_part">
         <!-- 未完成分类 -->
         <div
           class="list-item"
@@ -24,6 +24,7 @@
           class="list-item completed"
           v-show="comClass.length"
           @click="changeComClass"
+          
         >
           <svg
             class="icon"
@@ -45,13 +46,13 @@
           :key="item._id"
           v-show="comClassFlag"
           @click="clickHandler(item)"
-
         >
           <!-- @click="clickHandler(item)" -->
           <task :taskinfo="item" :menuSite="menuSite" />
         </div>
       </div>
 
+      <!-- {{classPage}} -->
     </div>
     <!-- <menu-task :currentTask="currentTask" v-show="menuFlag"/> -->
   </div>
@@ -61,7 +62,7 @@ import Task from "../task/task.vue";
 import CreateTask from "../task/createTask.vue";
 import { mapGetters } from "vuex";
 import MenuTask from "../task/menuTask.vue";
-import {reqTaskInfo} from '../../utils/api'
+import { reqTaskInfo } from "../../utils/api";
 export default {
   data() {
     return {
@@ -77,16 +78,17 @@ export default {
     ...mapGetters([
       "currentClass", //当前分类
       "classPage", //分类页内容
-      "currentTask",//当前的task
-      "taskInfoFlag",//点击信息
-      "searchPage",//搜索页面
+      "currentTask", //当前的task
+      "taskInfoFlag", //点击信息
+      "searchPage", //搜索页面
     ]),
-    searchFlag(){//搜索标识
-    if (this.$route.path=='/home/search') {
-      return true
-    }
-      return false
-    }
+    searchFlag() {
+      //搜索标识
+      if (this.$route.path == "/home/search") {
+        return true;
+      }
+      return false;
+    },
   },
   components: {
     Task,
@@ -115,43 +117,69 @@ export default {
       // console.log(item);
       // debugger
       //切换/隐藏info面板
-      this.$store.dispatch('setTaskInfoFlag',{
+      this.$store.dispatch("setTaskInfoFlag", {
         // flag:this.taskInfoFlag,
-        _id: item._id
-        })
-      this.$store.dispatch('setCurrentTask',item)
-      await reqTaskInfo({data: item._id})
+        _id: item._id,
+      });
+      this.$store.dispatch("setCurrentTask", item);
+      await reqTaskInfo({ data: item._id });
     },
     changeComClass() {
       this.comClassFlag = !this.comClassFlag;
- 
     },
- 
   },
   watch: {
     //监视分类页
     classPage: {
       handler(value) {
-        // debugger
-        console.log(this.searchPage);
-        this.comClass = [];
-        this.unComClass = [];
-        value.forEach((item) => {
-          // //数据更新后重新调用点击函数
-          // if (this.currentTask._id==item._id) {
-          //   this.clickHandler(item)
-          // }
-          //进行分类
-          if (item.complete) {
-            //完成
-            this.comClass.push(item);
-          } else {
-            //未完成
-            this.unComClass.push(item);
-          }
-        });
+        if (this.$route.path != "/home/search") {
+          debugger;
+          console.log(this.searchPage);
+          this.comClass = [];
+          this.unComClass = [];
+          value.forEach((item) => {
+            // //数据更新后重新调用点击函数
+            // if (this.currentTask._id==item._id) {
+            //   this.clickHandler(item)
+            // }
+            //进行分类
+            if (item.complete) {
+              //完成
+              this.comClass.push(item);
+            } else {
+              //未完成
+              this.unComClass.push(item);
+            }
+          });
+        }
       },
     },
+    //监视搜索也
+    searchPage: {
+      handler(value,oldvalue){
+        if (this.$route.path == "/home/search") {
+          debugger;
+          console.log(this.searchPage);
+          console.log(oldvalue);
+          this.comClass = [];
+          this.unComClass = [];
+          value.forEach((item) => {
+            // //数据更新后重新调用点击函数
+            // if (this.currentTask._id==item._id) {
+            //   this.clickHandler(item)
+            // }
+            //进行分类
+            if (item.complete) {
+              //完成
+              this.comClass.push(item);
+            } else {
+              //未完成
+              this.unComClass.push(item);
+            }
+          });
+        }
+      }
+    }
   },
 };
 </script>
@@ -183,9 +211,9 @@ export default {
       font-size: 24px;
       border-bottom: 1px solid #e5e5e5;
       text-align: center;
-      &:last-child {
-        border-bottom: none;
-      }
+      // &:last-child {
+      //   border-bottom: none;
+      // }
       &:hover {
         background-color: #f5f5f5;
         width: 100%;
@@ -227,6 +255,7 @@ export default {
       overflow: hidden;
       content: "";
       // margin: 0 24px;
+      margin: 52px 0 0;
       flex: 1;
       //颜色渐变
       background: linear-gradient(

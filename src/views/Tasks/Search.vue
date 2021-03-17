@@ -1,11 +1,12 @@
 <template>
   <div class="search">
-    <nav>
+    <nav class="searKey">
       Searching for "<span>{{ searchKey }}</span
       >"
     </nav>
-    <div class="search_part" v-if="searchPage.length">
-      <nav>Tasks</nav>
+    <!-- v-if="searchPage.length" -->
+    <div class="search_part">
+      <nav class="searTitle">Tasks</nav>
 
       <my-tasks />
 
@@ -23,7 +24,7 @@
         </div>
       </div> -->
     </div>
-    <div class="search_null" v-else>
+    <div class="search_null">
       <null-task />
       <span
         >We searched high and low but couldn’t find what you’re looking for.
@@ -44,6 +45,7 @@ export default {
     ...mapGetters([
       "searchKey", //搜索词
       "searchPage", //搜索页
+      "classPage",
     ]),
   },
   components: {
@@ -72,6 +74,7 @@ export default {
   // font-size: 20px;
   // margin: 20px 0 0 10px;
   position: relative;
+
   span {
     font-weight: bold;
   }
@@ -83,7 +86,8 @@ export default {
     text-overflow: ellipsis;
     line-height: 30px;
     font-size: 20px;
-    margin: 20px 0 0 ;
+    margin: 20px 0 0;
+    position: absolute;
   }
   // .search_part {
   //   height: 95%;
@@ -99,11 +103,18 @@ export default {
   // }
   .search_part {
     height: 100%;
+    width: 100%;
+    .searTitle {
+      margin: 70px 0 0;
+    }
     .my_tasks {
+      .pageInfo {
+        margin: 100px 0 0 0;
+      }
       .taskInfo {
         height: 100%;
         // margin: -10% 0;
-        position: absolute;
+        // position: absolute;
         right: 0;
         bottom: 0px;
       }
