@@ -14,22 +14,36 @@
       <span>{{ MydayText[mydayFlag] }} to My Day</span>
     </div>
     <!-- 添加图片 -->
-    <div class="thumbnail-waper">
-      <img class="img-thumbnail" src="" ref="preview" />
+    <div
+      class="thumbnail-waper"
+      v-for="(item, index) in currentTask.imgList"
+      :key="index"
+    >
+      <img class="img-thumbnail" :src="item" ref="preview" />
     </div>
-  <!-- style="display: none" -->
-    <iframe id="myIframe" name="hideIframe" style="display: none"></iframe>
+    <!-- style="display: none" -->
+    <!-- 内联框架 -->
+    <iframe
+      id="myIframe"
+      name="hideIframe"
+      style="display: none"
+      ref="myIframe"
+    ></iframe>
     <form
       class="form-container"
       action="/api/img_upload"
       method="post"
       enctype="multipart/form-data"
       target="hideIframe"
-      
     >
       <div class="form-group">
-        <input name="currentTaskId" type="text" ref="currentTaskId" v-model="currentTask._id"/>
-        {{currentId}}
+        <input
+          name="currentTaskId"
+          type="text"
+          ref="currentTaskId"
+          v-model="currentTask._id"
+        />
+        {{ currentId }}
       </div>
       <div class="form-group">
         <input type="file" name="userImage" id="userImage" ref="file" />
@@ -97,7 +111,8 @@ export default {
       // current: {},
       contentText: "", //文本备注内容
       tipFlag: false, //备注提示
-      currentId:"",//当前taskid
+      currentId: "", //当前taskid
+      imgFlag: 0, //图片标识
     };
   },
   computed: {
@@ -236,29 +251,38 @@ export default {
   },
   mounted() {
     //存储图片
-    let preview = this.$refs.preview;
+    // let preview = this.$refs.preview;
     //提交按钮
     let submitBt = this.$refs.submitBt;
+    let updateCurrent = this.$store.dispatch("updateCurrentTask");
+    let updateFile = this.$refs.file;
     //taskid
-    // this.currentId = 
-    if (this.$refs.file) {
+    // this.currentId =
+    if (updateFile) {
       //当用户选择完文件后读取文件
-      this.$refs.file.onchange = function () {
+      updateFile.onchange = () => {
         //1.创建文件读取对象,reader变量就是文件读取对象
         let reader = new FileReader();
         //用户选择的文件列表,this表示该标签
         //2.读取文件,参数就是读取的文件
-        reader.readAsDataURL(this.files[0]);
+        reader.readAsDataURL(updateFile.files[0]);
         //3.监听onload事件
-        reader.onload = function () {
+        reader.onload = () => {
           // console.log(reader.result)
           //修改img的src
-          preview.src = reader.result;
+          // preview.src = reader.result;
+          submitBt.click();
         };
-    
-        submitBt.click();
+        //调用表单提交
+        // submitBt.click();
+        // debugger
+        // this.imgFlag++
+        // console.log(this.imgFlag);
+        updateCurrent;
       };
     }
+
+ 
   },
 };
 </script>
@@ -388,6 +412,7 @@ export default {
 }
 //底部操作
 .detailFooter {
+  // display: flex;
   display: flex;
   position: absolute;
   // width: 340px;
@@ -396,7 +421,7 @@ export default {
   height: 50px;
   // padding: 10px;
   background: #fff;
-  bottom: 0;
+  // bottom: 0;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0px !important;
