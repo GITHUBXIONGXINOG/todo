@@ -68,6 +68,8 @@ export default {
   //存储搜索页
   setSearchPage({ commit }, searchPage) {
     commit(RECEIVE_SEARCH_PAGE, { searchPage })
+    commit(RECEIVE_CLSSS_PAGE, { classPage: searchPage })
+
   },
   //slide页面标识
   setSlideFlag({ commit }, slideFlag) {

@@ -9,7 +9,6 @@
 export default {
     computed:{
         showFlag(){
-            console.log(this.$route.path);
             if (this.$route.path=='/login' || this.$route.path=='/regist') {
                 return true
             }

@@ -5,9 +5,12 @@
       >"
     </nav>
     <div class="search_part" v-if="searchPage.length">
-      <div class="list-wrapper" ref="scroll">
+      <nav>Tasks</nav>
+
+      <my-tasks />
+
+      <!-- <div class="list-wrapper" ref="scroll">
         <div class="list list-content">
-          <nav>Tasks</nav>
           <div
             class="list-item"
             v-for="(item, index) in searchPage"
@@ -18,7 +21,7 @@
             <task :taskinfo="item" />
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="search_null" v-else>
       <null-task />
@@ -30,9 +33,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { reqTaskInfo } from "../../utils/api";
+
 import Task from "../../components/task/task";
 
 import nullTask from "./nullTask";
+import MyTasks from "./MyTasks.vue";
 export default {
   computed: {
     ...mapGetters([
@@ -43,20 +49,29 @@ export default {
   components: {
     nullTask,
     Task,
+    MyTasks,
   },
   methods: {
-    clickHandler(item) {
-      // window.alert(item);
-      console.log(item);
-    },
+    //     async clickHandler(item) {
+    //   // window.alert(item);
+    //   // console.log(item);
+    //   // debugger
+    //   //切换/隐藏info面板
+    //   this.$store.dispatch('setTaskInfoFlag',{
+    //     // flag:this.taskInfoFlag,
+    //     _id: item._id
+    //     })
+    //   this.$store.dispatch('setCurrentTask',item)
+    //   await reqTaskInfo({data: item._id})
+    // },
   },
-  
 };
 </script>
-<style scoped lang="scss">
+<style  lang="scss">
 .search {
-  font-size: 20px;
-  margin: 20px 0 0 10px;
+  // font-size: 20px;
+  // margin: 20px 0 0 10px;
+  position: relative;
   span {
     font-weight: bold;
   }
@@ -67,71 +82,97 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     line-height: 30px;
+    font-size: 20px;
+    margin: 20px 0 0 ;
   }
+  // .search_part {
+  //   height: 95%;
+  //   // margin: -70px 0;
+
+  //   .my_tasks {
+
+  //     .taskInfo {
+  //       // border: 1px solid red;
+  //       // height: 100px !important;
+  //     }
+  //   }
+  // }
   .search_part {
-    height: 95%;
-  }
-  .list-wrapper {
     height: 100%;
-    width: 97%;
-    position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    .list-item {
-      height: 52px;
-      line-height: 52px;
-      font-size: 24px;
-      border-bottom: 1px solid #e5e5e5;
-      text-align: center;
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-    &::after {
-      display: inline-block;
-      width: 100%;
-      flex: 1;
-      overflow: hidden;
-      content: "";
-      // margin: 0 24px;
-      flex: 1;
-      //颜色渐变
-      background: linear-gradient(
-        180deg,
-        white,
-        white 52px,
-        #e5e5e5 52px,
-        #e5e5e5 52px
-      );
-      background-size: 100% 53px;
-      box-shadow: inset 0 1px 0 0 #e5e5e5;
-    }
-    .list {
-      nav {
-        color: black;
-        font-size: 16px;
-        margin: 20px 0 10px;
+    .my_tasks {
+      .taskInfo {
+        height: 100%;
+        // margin: -10% 0;
+        position: absolute;
+        right: 0;
+        bottom: 0px;
       }
     }
   }
+
+  // .list-wrapper {
+  //   height: 100%;
+  //   width: 97%;
+  //   position: relative;
+  //   overflow-y: auto;
+  //   overflow-x: hidden;
+  //   display: flex;
+  //   flex-direction: column;
+  //   .list-item {
+  //     // height: 52px;
+  //     // line-height: 52px;
+  //     // font-size: 24px;
+  //     // border-bottom: 1px solid #e5e5e5;
+  //     // text-align: center;
+  //     // &:last-child {
+  //     //   border-bottom: none;
+  //     // }
+  //     height: 100%;
+  //   }
+  //   &::after {
+  //     display: inline-block;
+  //     width: 100%;
+  //     flex: 1;
+  //     overflow: hidden;
+  //     content: "";
+  //     // margin: 0 24px;
+  //     flex: 1;
+  //     //颜色渐变
+  //     background: linear-gradient(
+  //       180deg,
+  //       white,
+  //       white 52px,
+  //       #e5e5e5 52px,
+  //       #e5e5e5 52px
+  //     );
+  //     background-size: 100% 53px;
+  //     box-shadow: inset 0 1px 0 0 #e5e5e5;
+  //   }
+  //   .list {
+  //     nav {
+  //       color: black;
+  //       font-size: 16px;
+  //       margin: 20px 0 10px;
+  //     }
+  //   }
+  // }
   //导航条样式
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-    display: none;
-  }
+  // ::-webkit-scrollbar {
+  //   width: 10px;
+  //   height: 10px;
+  //   display: none;
+  // }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 5px;
-  }
+  // ::-webkit-scrollbar-thumb {
+  //   background-color: #ccc;
+  //   border-radius: 5px;
+  // }
 
-  ::-webkit-scrollbar-track {
-    background: 0 0;
-  }
+  // ::-webkit-scrollbar-track {
+  //   background: 0 0;
+  // }
 }
+//空搜索
 .search_null {
   display: flex;
   flex-direction: column;

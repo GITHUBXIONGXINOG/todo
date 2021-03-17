@@ -1,9 +1,10 @@
 <template>
   <div class="pageInfo">
-    <nav>
+    <nav v-show="!searchFlag">
       {{ currentClass.title }}
+      <!-- {{classPage}} -->
     </nav>
-    <create-task />
+    <create-task v-show="!searchFlag"/>
     <!-- task显示-->
     <div class="list-wrapper " ref="scroll">
       <!-- task列表 -->
@@ -69,7 +70,7 @@ export default {
       comClassFlag: false, //显示隐藏完成分类
       menuFlag: false, //右键菜单
       menuSite: {}, //位置
-      
+      // searchFlag: false,//搜索标识
     };
   },
   computed: {
@@ -77,8 +78,15 @@ export default {
       "currentClass", //当前分类
       "classPage", //分类页内容
       "currentTask",//当前的task
-      "taskInfoFlag",
+      "taskInfoFlag",//点击信息
+      "searchPage",//搜索页面
     ]),
+    searchFlag(){//搜索标识
+    if (this.$route.path=='/home/search') {
+      return true
+    }
+      return false
+    }
   },
   components: {
     Task,
@@ -124,6 +132,8 @@ export default {
     //监视分类页
     classPage: {
       handler(value) {
+        // debugger
+        console.log(this.searchPage);
         this.comClass = [];
         this.unComClass = [];
         value.forEach((item) => {
