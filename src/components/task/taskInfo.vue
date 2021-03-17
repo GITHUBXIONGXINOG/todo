@@ -23,12 +23,7 @@
     </div>
     <!-- style="display: none" -->
     <!-- 内联框架 -->
-    <iframe
-      id="myIframe"
-      name="hideIframe"
-      style="display: none"
-      ref="myIframe"
-    ></iframe>
+    <!-- <iframe id="myIframe" name="hideIframe" style="display: none" ref="myIframe"></iframe>
     <form
       class="form-container"
       action="/api/img_upload"
@@ -39,17 +34,15 @@
       <div class="form-group">
         <input
           name="currentTaskId"
-          type="text"
+         type="text"
           ref="currentTaskId"
           v-model="currentTask._id"
-        />
+        /> 
         {{ currentId }}
       </div>
       <div class="form-group">
         <input type="file" name="userImage" id="userImage" ref="file" />
-        <!-- <div class="thumbnail-waper">
-          <img class="img-thumbnail" src="" ref="preview" />
-        </div> -->
+ 
       </div>
       <input
         type="submit"
@@ -58,13 +51,104 @@
         style="display: none"
       />
     </form>
+    
     <div class="picWrapper" @click="clickAddPic">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-image"></use>
+      </svg>
+      <span>Add Picture</span>
+    </div> -->
+
+    <!-- <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="活动时间">
+        <el-col :span="11">
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.date1"
+            style="width: 100%"
+          ></el-date-picker>
+        </el-col>
+      </el-form-item>
+
+      <el-form-item label="活动形式">
+        <el-input type="textarea" v-model="form.desc"></el-input>
+      </el-form-item>
+       <el-form-item label="上传图片" ref="uploadElement" prop="imageUrl">
+            <el-input v-model="ruleForm.imageUrl" v-if="false"></el-input>
+            <el-upload
+                    class="avatar-uploader"
+                    ref="upload"
+                    :show-file-list="false"
+                    action="/index/upload"
+                    :before-upload="beforeUpload"
+                    :on-change="handleChange"
+                    :auto-upload="false"
+                    :data="ruleForm">
+                <img v-if="ruleForm.imageUrl" :src="ruleForm.imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+        </el-form-item>
+       
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button>取消</el-button>
+      </el-form-item>
+    </el-form> -->
+    <el-form
+      :model="ruleForm"
+      ref="ruleForm"
+      label-width="100px"
+      class="el-form"
+      v-show="formFlag"
+    >
+      <!-- <el-form-item>
+        <el-col :span="11">
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="ruleForm.date"
+            style="width: 100%"
+          ></el-date-picker>
+        </el-col>
+      </el-form-item> -->
+      <el-form-item ref="uploadElement" prop="imageUrl">
+        <el-input v-model="ruleForm.imageUrl" v-if="false"></el-input>
+        <el-upload
+          class="avatar-uploader"
+          ref="upload"
+          :show-file-list="false"
+          action="/api/img_upload"
+          :before-upload="beforeUpload"
+          :on-change="handleChange"
+          :auto-upload="false"
+          :data="ruleForm"
+          list-type="picture-card"
+        >
+          <img
+            v-if="ruleForm.imageUrl"
+            :src="ruleForm.imageUrl"
+            class="avatar"
+          />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')"
+          >上传</el-button
+        >
+        <el-button @click="resetForm('ruleForm')">取消</el-button>
+      </el-form-item>
+    </el-form>
+    <div class="picWrapper" @click="formFlag = true" v-show="!formFlag">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-image"></use>
       </svg>
       <span>Add Picture</span>
     </div>
 
+    {{ currentTask.imgList }}
     <!-- 备注 -->
     <div class="contentArea">
       <div
@@ -75,7 +159,7 @@
         v-text="contentText"
       ></div>
     </div>
-    {{ currentTask }}
+    <!-- {{ currentTask }} -->
     <!-- 底部操作 -->
     <div class="detailFooter">
       <svg class="icon" aria-hidden="true" @click="hiddenInfo">
@@ -93,11 +177,13 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import axios from 'axios'
 import {
   reqTaskUpdate,
   reqSearchTask,
   reqTaskDelete,
   reqTaskInfo,
+  reqImgInfo,
 } from "../../utils/api";
 import taskEdit from "../task/taskEdit.vue";
 import moment from "moment";
@@ -113,6 +199,14 @@ export default {
       tipFlag: false, //备注提示
       currentId: "", //当前taskid
       imgFlag: 0, //图片标识
+      ruleForm: {
+        //表单
+        date: "",
+        imageUrl: "",
+        taskId: "",
+      },
+      formFlag: false, //显示表单
+      imgListLen: 0, //图片列表长度
     };
   },
   computed: {
@@ -126,6 +220,38 @@ export default {
     taskEdit,
   },
   methods: {
+    //提交表单
+    submitForm(formName) {
+      let vm = this;
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          vm.$refs.upload.submit();
+        } else {
+          return false;
+        }
+        this.$refs[formName].resetFields();
+        this.ruleForm.imageUrl = "";
+        this.formFlag = false;
+      });
+    },
+    //取消表单
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+      this.ruleForm.imageUrl = "";
+      this.formFlag = false;
+    },
+
+    handleChange(file, fileList) {
+      this.ruleForm.imageUrl = URL.createObjectURL(file.raw);
+    },
+
+    beforeUpload(file) {
+      return true;
+    },
+    onSubmit() {
+      console.log("submit!");
+      console.log(this.form);
+    },
     //点击添加图片
     clickAddPic() {
       this.$refs.file.click();
@@ -234,6 +360,7 @@ export default {
     },
   },
   watch: {
+    //当前的task
     currentTask: {
       handler(val) {
         if (val) {
@@ -244,7 +371,26 @@ export default {
           }
           //文本备注内容
           this.contentText = val.content;
+          this.ruleForm.taskId = val._id;
         }
+      },
+      immediate: true,
+    },
+    //表单提交
+    formFlag: {
+      handler(val) {
+        // await reqTaskInfo()
+        //  let Flag =  setInterval(()=>{
+        //     console.log('------');
+        //     //  this.$store.dispatch('updateCurrentTask')
+
+        //   },1000)
+        // clearInterval(Flag)
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$store.dispatch("updateCurrentTask");
+          }, 1000);
+        });
       },
       immediate: true,
     },
@@ -256,6 +402,7 @@ export default {
     let submitBt = this.$refs.submitBt;
     let updateCurrent = this.$store.dispatch("updateCurrentTask");
     let updateFile = this.$refs.file;
+
     //taskid
     // this.currentId =
     if (updateFile) {
@@ -281,8 +428,6 @@ export default {
         updateCurrent;
       };
     }
-
- 
   },
 };
 </script>
@@ -441,5 +586,20 @@ export default {
 img {
   width: 100%;
   border-radius: 2px;
+}
+//表单
+.el-form {
+  // display: flex;
+  .avatar-uploader {
+    width: 100%;
+    // left: -20%;
+    // position: relative;
+  }
+  img {
+    width: 100%;
+    // position:absolute;
+    // left: 0;
+    height: 100%;
+  }
 }
 </style>
