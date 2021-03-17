@@ -1,17 +1,95 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+  <style>
+    html,body{
+      height: 100%;
+      overflow: hidden;
+    }
+    #app{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    .skeleton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .skeleton-swiper {
+      background: rgba(238, 238, 238, 0.274);
+      width: 440px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      padding: 30px 40px;
+      justify-content: space-between;
+    }
+
+    li {
+      height: 30px;
+      background: rgba(238, 238, 238, 0.76);
+      list-style:none;
+    }
+
+    .skeleton-one {
+      height: 40px;
+      width: 60px;
+    }
+
+    .skeleton-two,
+    .skeleton-three {
+      height: 35px;
+      width: 100%;
+      left: 0;
+    }
+
+    .skeleton-four {
+      width: 100px;
+      height: 20px !important;
+    }
+
+    .skeleton-five {
+      width: 70%;
+      height: 20px !important;
+    }
+
+    .skeleton-six {
+      width: 80px;
+      align-self: flex-end;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong>
+  </noscript>
+  <div id="app">
+    <div data-server-rendered="true" class="skeleton">
+      <ul class="skeleton-swiper">
+        <li class="skeleton-one"></li>
+        <li class="skeleton-two"></li>
+        <li class="skeleton-three"></li>
+        <li class="skeleton-four"></li>
+        <li class="skeleton-five"></li>
+        <li class="skeleton-six"></li>
+      </ul>
+    </div>
+  </div>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>

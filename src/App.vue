@@ -1,10 +1,22 @@
 <template>
   <div id="app">
-    <img src="@/assets/img/welcome-left.png" alt="" class="welcome_left" />
-    <router-view />
-    <img src="@/assets/img/welcome-right.png" alt="" class="welcome_right" />
+    <!-- <loading /> -->
+    <main-page />
+
+
   </div>
 </template>
+
+<script>
+import MainPage from './components/page/MainPage.vue'
+export default {
+  components:{
+    MainPage
+  }
+};
+</script>
+
+
 
 <style lang="scss">
 #app {
@@ -13,14 +25,25 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50; */
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  justify-content: space-between;
-  .loginView {
-    align-self: center;
-    margin-left: -12%;
-  }
 
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  // display: flex;
+  // justify-content: space-between;
+  // .loginView {
+  //   position: fixed;
+  //   left: 0;
+  //   right: 0;
+  //   margin: auto;
+  // }
+  // .welcome_left,
+  // .welcome_right {
+  //   height: 100%;
+  //   display: none;
+  // }
+  // .showBackground {
+  //   display: initial;
+  // }
 }
 </style>
