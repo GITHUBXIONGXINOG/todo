@@ -8,6 +8,7 @@
         placeholder="用户名"
         v-model="account"
         autofocus
+        minlength="3"
         maxlength="20"
       />
       <input

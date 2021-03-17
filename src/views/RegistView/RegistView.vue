@@ -13,7 +13,6 @@ export default {
 </script>
 <style scoped lang="scss">
      .loginView{
-        // background-image: linear-gradient(to bottom right,#e66465, #9198e5);
         height: 100%;
         display: flex;
         justify-content: center;
