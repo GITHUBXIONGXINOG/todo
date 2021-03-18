@@ -124,6 +124,7 @@ export default {
     span {
       color: black;
       pointer-events: none;
+      
     }
     label{
       //禁止点击事件

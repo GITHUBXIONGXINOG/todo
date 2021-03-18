@@ -9,7 +9,11 @@ import './assets/iconfont/iconfont'//导入iconfont
 Vue.use(ElementUI)//使用element
 Vue.config.productionTip = false
 
-
+import loading from './assets/img/load.gif'
+import VueLazyload from 'vue-lazyload'//图片懒加载
+Vue.use(VueLazyload,{
+  loading
+})
  
 
 new Vue({

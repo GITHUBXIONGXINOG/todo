@@ -133,8 +133,7 @@ export default {
     classPage: {
       handler(value) {
         if (this.$route.path != "/home/search") {
-          debugger;
-          console.log(this.searchPage);
+          // console.log(this.searchPage);
           this.comClass = [];
           this.unComClass = [];
           value.forEach((item) => {

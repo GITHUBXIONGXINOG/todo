@@ -19,7 +19,7 @@
       v-for="(item, index) in currentTask.imgList"
       :key="index"
     >
-      <img class="img-thumbnail" :src="item" ref="preview" />
+      <img class="img-thumbnail" v-lazy="item" ref="preview" />
     </div>
     <!-- style="display: none" -->
     <!-- 内联框架 -->
